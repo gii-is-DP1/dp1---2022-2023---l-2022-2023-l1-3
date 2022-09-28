@@ -33,6 +33,7 @@
     </properties>
 
     <developers>
+<<<<<<< HEAD
         <id>goncammej</id>
         <name>Gonzalo Campos Mejías</name>
         <email>goncammej@alum.us.es</email>
@@ -40,6 +41,20 @@
             <role>Developer</role>
         </roles>
     </developers>
+=======
+        <developer>
+        <id>Ale</id>
+        <name>Alejandro</name>
+        <email>alejandrogallardopelayo@gmail.com</email>
+        <roles>
+        <role>developer</role>
+        </roles>
+        
+        
+        </developer>
+    </developers>
+       
+>>>>>>> master
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
