@@ -53,7 +53,7 @@
             <name>Alejandro Medina Duran</name>
             <email>alepridur@alum.us.es</email>
             <roles>
-            <role>developer</role>
+                <role>developer</role>
             </roles>
         </developer>
     </developers>
