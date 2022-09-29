@@ -33,6 +33,22 @@
     </properties>
     <developers>
         <developer>
+            <id>goncammej</id>
+            <name>Gonzalo Campos Mejías</name>
+            <email>goncammej@alum.us.es</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Ale</id>
+            <name>Alejandro</name>
+            <email>alejandrogallardopelayo@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
             <id>alejandromd</id>
             <name>Alejandro Medina Duran</name>
             <email>alepridur@alum.us.es</email>
