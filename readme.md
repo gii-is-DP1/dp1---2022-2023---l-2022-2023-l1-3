@@ -62,3 +62,5 @@ La oca es un juego de mesa en el que participa un mínimo de 2 jugadores y un m�
 - Dados: Casillas 26 y 53. Si se cae en estas casillas, se suma la marcación de la casilla de los dados (26 o 53) y se avanza tanto como resulte.
 - Calavera: Casilla 58. Si se cae en esta casilla, hay que volver a la Casilla 1.
 - Meta: Es necesario sacar los puntos justos para entrar, en caso de exceso se retroceden tantas casillas como puntos sobrantes.
+
+Video Explicativo de las normas de los juegos: https://youtu.be/uSh-yGSh_Tg
