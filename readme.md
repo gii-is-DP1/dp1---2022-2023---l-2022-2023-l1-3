@@ -1,117 +1,64 @@
-# Spring PetClinic Sample Application 
+# Xtreme Parchis&Oca
 
-This is a fork of https://github.com/spring-projects/spring-petclinic to be used for the DP1 course. The main changes that have been performed were:
-- Trimming several parts of the application to keep the example low
-- Reorganize some parts of the code according to best practices introduced in the course
+Diseño, pruebas e implementación online de los tradicionales juegos de mesa parchís y oca.
 
-## Understanding the Spring Petclinic application with a few diagrams
-<a href="https://speakerdeck.com/michaelisvy/spring-petclinic-sample-application">See the presentation here</a>
+## Instrucciones de los juegos
 
-## Running petclinic locally
-Petclinic is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
+### Parchís
 
+El parchís es un juego de “carreras” en el que participan 4 jugadores, cada uno representando un color diferente: amarillo, azul, verde y rojo. Se utiliza un dado para determinar el avance que las fichas realizan a través de un recorrido en forma de cruz. Se emplean 4 fichas de cada color y el objetivo es completar el recorrido con todas las fichas.
 
-```
-git clone https://github.com/gii-is-DP1/spring-petclinic.git
-cd spring-petclinic
-./mvnw package
-java -jar target/*.jar
-```
+<div align="center"><img src="https://www.65ymas.com/uploads/s1/15/68/71/el-parchis-tambien-se-juega-en-app-sabes-como.jpeg" alt="tablero_parchis" width="300" height="300"/></div>
 
-You can then access petclinic here: http://localhost:8080/
+#### Tablero
 
-<img width="1042" alt="petclinic-screenshot" src="https://cloud.githubusercontent.com/assets/838318/19727082/2aee6d6c-9b8e-11e6-81fe-e889a5ddfded.png">
+El tablero del parchís tiene varias zonas diferenciadas:
 
-Or you can run it from Maven directly using the Spring Boot Maven plugin. If you do this it will pick up changes that you make in the project immediately (changes to Java source files require a compile as well - most people use an IDE for this):
+- La casilla de salida, situadas en las esquinas del tablero.
+- Un recorrido común de 68 casillas.
+- Pasillo y casilla final de los 4 colores, que convergen en el centro del tablero.
 
-```
-./mvnw spring-boot:run
-```
+#### Movimiento de fichas
 
-## In case you find a bug/suggested improvement for Spring Petclinic
-Our issue tracker is available here: https://github.com/gii-is-DP1/spring-petclinic/issues
+Inicialmente cada jugador cuenta con un par de fichas en la casilla inicial del recorrido, y el resto de fichas situadas en casa. 
 
+Los participantes en su turno deben tirar el dado y avanzar con una de sus fichas el número de casillas indicado por el número obtenido, teniendo en cuenta las siguientes reglas: 
 
-## Database configuration
+- En caso de tirar un 5 y tener fichas en casa, una de ellas entra en juego obligatoriamente situándose en la casilla de salida. 
+- Las fichas avanzan siguiendo el recorrido en sentido inverso a las agujas del reloj.
+- Cuando una ficha completa una vuelta al tablero y llega a la casilla que conecta con el pasillo de su color, se desvía hacia la casilla destino (hacia el centro del tablero).
+- En caso de tirar un 6 y tener todas las fichas del mismo color fuera de casa, se avanzan 7 casillas.
+- El jugador que ha obtenido un 6 juega de nuevo.
+- En cada casilla del recorrido puede haber un máximo de dos fichas. Una ficha no puede jugarse si el movimiento le llevara a una casilla en la que ya hay dos fichas (barrera).
+- Una ficha no puede moverse si para completar el avance tuviera que atravesar una barrera. Las barreras son pares de fichas de un mismo color situadas en la misma casilla.
+- Para alcanzar el final del recorrido es necesario avanzar el número exacto de casillas que restan hasta completarlo. No es posible mover la ficha si el número del dado es superior.
+- Cuando una ficha completa su recorrido, el jugador debe avanzar 10 casillas con otra de sus fichas.
+- Puede darse el caso de que todas las fichas estén bloqueadas (por estar en casa, o tras una barrera, o en el final del recorrido). En este caso, simplemente no se realiza ningún movimiento.
 
-In its default configuration, Petclinic uses an in-memory database (H2) which
-gets populated at startup with data. 
+#### Capturas
 
-## Working with Petclinic in your IDE
+Una ficha “come” a otra de diferente color si finaliza su avance en la casilla ocupada por esta última.
 
-### Prerequisites
-The following items should be installed in your system:
-* Java 8 or newer.
-* git command line tool (https://help.github.com/articles/set-up-git)
-* Your preferred IDE 
-  * Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in `Help -> About` dialog. If m2e is
-  not there, just follow the install process here: https://www.eclipse.org/m2e/
-  * [Spring Tools Suite](https://spring.io/tools) (STS)
-  * IntelliJ IDEA
-  * [VS Code](https://code.visualstudio.com)
+- Las casillas de salida y las casillas marcadas con un círculo son seguros, donde las capturas no son posibles. Por tanto, en los seguros pueden coincidir dos fichas de diferente color.
+- Si en la casilla de salida se encuentran dos fichas de diferente color y una nueva ficha sale de su casa, la ficha de diferente color (o si ambas lo son, la última ficha que hubiera llegado a la casilla) resulta capturada.
+- Las fichas comidas vuelven a su casa, de manera que vuelven a entrar en juego cuando el jugador obtiene un 5 en su tirada.
+- Quien come una ficha tiene el premio de avanzar 20 casillas con cualquiera de sus fichas.
+- Si un jugador obtiene un 6 tres veces consecutivas, el tercer movimiento no se realiza, y la ficha movida con el segundo 6 vuelve a su casa, salvo que ya hubiese alcanzado el pasillo final del recorrido.
 
-### Steps:
+### Oca
 
-1) On the command line
-```
-git clone https://github.com/gii-is-DP1/spring-petclinic.git
-```
-2) Inside Eclipse or STS
-```
-File -> Import -> Maven -> Existing Maven project
-```
+La oca es un juego de mesa en el que participa un mínimo de 2 jugadores y un máximo de 4. El objetivo es llegar a la casilla central, saltando posiciones, según la tirada del dado y sometido a unas reglas de juego, establecidas por cada casilla. 
 
-Then either build on the command line `./mvnw generate-resources` or using the Eclipse launcher (right click on project and `Run As -> Maven install`) to generate the css. Run the application main method by right clicking on it and choosing `Run As -> Java Application`.
+<div align="center"><img src="https://juegosmesa-14eb7.kxcdn.com/wp-content/uploads/2020/02/instrucciones-como-jugar-a-la-oca.jpg.webp" alt="tablero_oca" width="300" height="300"/></div>
 
-3) Inside IntelliJ IDEA
+#### Casillas especiales
 
-In the main menu, choose `File -> Open` and select the Petclinic [pom.xml](pom.xml). Click on the `Open` button.
-
-CSS files are generated from the Maven build. You can either build them on the command line `./mvnw generate-resources`
-or right click on the `spring-petclinic` project then `Maven -> Generates sources and Update Folders`.
-
-A run configuration named `PetClinicApplication` should have been created for you if you're using a recent Ultimate
-version. Otherwise, run the application by right clicking on the `PetClinicApplication` main class and choosing
-`Run 'PetClinicApplication'`.
-
-4) Navigate to Petclinic
-
-Visit [http://localhost:8080](http://localhost:8080) in your browser.
-
-
-## Looking for something in particular?
-
-|Spring Boot Configuration | Class or Java property files  |
-|--------------------------|---|
-|The Main Class | [PetClinicApplication](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java) |
-|Properties Files | [application.properties](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/resources) |
-|Caching | [CacheConfiguration](https://github.com/gii-is-DP1/spring-petclinic/blob/master/src/main/java/org/springframework/samples/petclinic/system/CacheConfiguration.java) |
-
-## Interesting Spring Petclinic branches and forks
-
-The Spring Petclinic master branch in the main [spring-projects](https://github.com/spring-projects/spring-petclinic)
-GitHub org is the "canonical" implementation, currently based on Spring Boot and Thymeleaf. There are
-[quite a few forks](https://spring-petclinic.github.io/docs/forks.html) in a special GitHub org
-[spring-petclinic](https://github.com/spring-petclinic). If you have a special interest in a different technology stack
-that could be used to implement the Pet Clinic then please join the community there.
-
-# Contributing
-
-The [issue tracker](https://github.com/gii-is-DP1/spring-petclinic/issues) is the preferred channel for bug reports, features requests and submitting pull requests.
-
-For pull requests, editor preferences are available in the [editor config](.editorconfig) for easy use in common text editors. Read more and download plugins at <https://editorconfig.org>. If you have not previously done so, please fill out and submit the [Contributor License Agreement](https://cla.pivotal.io/sign/spring).
-
-# License
-
-The Spring PetClinic sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
-
-[spring-petclinic]: https://github.com/spring-projects/spring-petclinic
-[spring-framework-petclinic]: https://github.com/spring-petclinic/spring-framework-petclinic
-[spring-petclinic-angularjs]: https://github.com/spring-petclinic/spring-petclinic-angularjs 
-[javaconfig branch]: https://github.com/spring-petclinic/spring-framework-petclinic/tree/javaconfig
-[spring-petclinic-angular]: https://github.com/spring-petclinic/spring-petclinic-angular
-[spring-petclinic-microservices]: https://github.com/spring-petclinic/spring-petclinic-microservices
-[spring-petclinic-reactjs]: https://github.com/spring-petclinic/spring-petclinic-reactjs
-[spring-petclinic-graphql]: https://github.com/spring-petclinic/spring-petclinic-graphql
-[spring-petclinic-kotlin]: https://github.com/spring-petclinic/spring-petclinic-kotlin
-[spring-petclinic-rest]: https://github.com/spring-petclinic/spring-petclinic-rest
+- Oca: Casillas 5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54 y 59. Si se cae en una de estas casillas, se puede avanzar hasta la siguiente casilla en la que hay una oca y volver a tirar.
+- Puente: Casilla 6 y 12. Si se cae en estas casillas se salta a la casilla 19 (la Posada) y se pierde un turno. En algunos tableros, solo figura como puente la casilla 6.
+- Posada: Casilla 19. Si se cae en esta casilla se pierde un turno.
+- Pozo: Casilla 31. Si se cae en esta casilla, NO se puede volver a jugar hasta que no pase otro jugador por esa casilla.
+- Laberinto: Casilla 42. Si se cae en esta casilla, se está obligado a retroceder a la casilla 30.
+- Cárcel: Casilla 56. Si se cae en esta casilla, hay que permanecer dos turnos sin jugar.
+- Dados: Casillas 26 y 53. Si se cae en estas casillas, se suma la marcación de la casilla de los dados (26 o 53) y se avanza tanto como resulte.
+- Calavera: Casilla 58. Si se cae en esta casilla, hay que volver a la Casilla 1.
+- Meta: Es necesario sacar los puntos justos para entrar, en caso de exceso se retroceden tantas casillas como puntos sobrantes.
