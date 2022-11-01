@@ -18,11 +18,11 @@
     border: none;
     display: flex;
     flex-direction: column;
-    height: 72vh;
-    min-height: 842.16px;
-    min-width: 1423.16px;
-    padding: 190px 250px;
-    width: 82%;
+    min-height: 80%;
+    max-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
     }
     .title {
     -webkit-text-stroke: 3px var(--white) ;
@@ -96,7 +96,7 @@
     <h1 class="title">Xtreme Parchis&Oca</h1>
     <a class="button" href="http://localhost:8080/login"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Iniciar Sesion</div></a>
-    <a class="button" href = "http://localhost:8080/users/new"><div class="large valign-text-middle vt323-normal-
+    <a class="button" href = "http://localhost:8080/players/create"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Registrarme</div></a>
 
     </div>

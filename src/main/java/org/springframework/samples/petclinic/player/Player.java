@@ -36,9 +36,7 @@ public class Player extends Person {
     @NotEmpty
     private String email = "";
 
-    @Column(name = "profile_pic")
-    @NotEmpty
-    private String profilePic = "";
+
 
     //@Column(name = "enabled")
     //private Boolean enabled = false;
