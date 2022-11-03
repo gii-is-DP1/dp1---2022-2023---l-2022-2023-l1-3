@@ -1,31 +1,27 @@
-package org.springframework.samples.petclinic.player;
+package org.springframework.samples.petclinic.admin;
 
 import java.util.Collection;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.petclinic.game.Game;
-import org.springframework.samples.petclinic.game.GamePlayerRecord;
-import org.springframework.samples.petclinic.model.Person;
 
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@Entity
-@Table(name = "player")
-public class Player extends Person {
-
+@Table(name="admin")
+public class Admin {
+    
     @NotEmpty
     @Column(name="first_name")
     private String fisrtName="";
@@ -48,10 +44,6 @@ public class Player extends Person {
     @NotEmpty
     private String email = "";
 
-
-
-    //@Column(name = "enabled")
-    //private Boolean enabled = false;
 
     @ManyToMany
     @JoinColumn(name="games")
