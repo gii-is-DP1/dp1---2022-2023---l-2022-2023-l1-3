@@ -75,7 +75,7 @@
         <div class="form-group has-feedback">
             <div class="form-element">
                 <label for="username">Usuario:</label><br>
-                <input type="text" id="username" name="username"><br>
+                <input type="text" id="username" name="userName"><br>
             </div>
             <div class="form-element">
                 <label for="password">Contrase&ntilde;a:</label><br>

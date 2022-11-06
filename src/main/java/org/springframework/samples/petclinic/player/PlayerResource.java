@@ -75,13 +75,15 @@ public class PlayerResource {
         String result = "";
         if (bindingResult.hasErrors()) {
             result = USERS_LOGIN;
-            System.out.println("ERROR");
+            System.out.println("ERROR AL INICIAR SESION");
+
         }
         Player p = playerService.findByUsername(loginForm.getUserName());
+
         if (p!=null && p.getPassword().equals(loginForm.getPassword())){
-            System.out.println("Hola Mundo!!!");
-            result = "welcome";
+            result = "redirect:/players";
         }
+
         return result;
     }
 
