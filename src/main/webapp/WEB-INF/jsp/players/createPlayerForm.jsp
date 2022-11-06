@@ -69,30 +69,30 @@
 	</defs>
 
 <g>
-	<text x="0" y="100">NEW PLAYER</text>
+	<text x="0" y="100">REGISTRO</text>
 </g>
 </svg>
     <form:form modelAttribute="player" class="form-horizontal">
         <div class="form-group has-feedback">
             <div class="form-element">
-                <label for="fname">First name:</label><br>
+                <label for="fname">Nombre:</label><br>
                 <input type="text" id="fname" name="firstName"><br>
             </div>
             <div class="form-element">
-                <label for="sname">Last name:</label><br>
+                <label for="sname">Apellido:</label><br>
                 <input type="text" id="sname" name="lastName"><br>
             </div>
             <div class="form-element">
-                <label for="fname">Username:</label><br>
-                <input type="text" id="fname" name="username"><br>
+                <label for="username">Nombre de usuario:</label><br>
+                <input type="text" id="username" name="username"><br>
             </div>
             <div class="form-element">
-                <label for="fname">Password:</label><br>
-                <input type="text" id="fname" name="password"><br>
+                <label for="password">Clave:</label><br>
+                <input type="text" id="password" name="password"><br>
             </div>
             <div class="form-element">
-                <label for="fname">Email:</label><br>
-                <input type="text" id="fname" name="email"><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br>
             </div>
             
         </div>
