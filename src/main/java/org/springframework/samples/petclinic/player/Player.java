@@ -22,6 +22,8 @@ import lombok.Setter;
 @Table(name = "player")
 public class Player extends Person {
 
+    public Player(){}
+
     @Column(name = "username", unique = true)
     @NotEmpty
     @Size(min = 4, max = 10)
@@ -35,7 +37,6 @@ public class Player extends Person {
     @Email
     @NotEmpty
     private String email = "";
-
 
 
     //@Column(name = "enabled")
