@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.player.Player;
 import org.springframework.samples.petclinic.player.PlayerService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +29,7 @@ public class PlayerResource {
     private final PlayerService playerService;
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String USERS_LIST = "players/playersList";
+    private static final String USERS_LOGIN = "players/loginPlayerForm";
 
     @Autowired
     public PlayerResource(PlayerService playerService) {
@@ -59,6 +61,28 @@ public class PlayerResource {
             map.addAttribute("message", "Player succesfully save");
         }
         return view;
+    }
+
+    @GetMapping("/login")
+    public String showForm(ModelMap map) {
+        String view = USERS_LOGIN;
+        map.addAttribute("loginForm", new LoginForm());
+        return view;
+    }
+
+    @PostMapping("/login")
+    public String validateLoginInfo(Model model, @Valid LoginForm loginForm, BindingResult bindingResult) {
+        String result = "";
+        if (bindingResult.hasErrors()) {
+            result = USERS_LOGIN;
+            System.out.println("ERROR");
+        }
+        Player p = playerService.findByUsername(loginForm.getUserName());
+        if (p!=null && p.getPassword().equals(loginForm.getPassword())){
+            System.out.println("Hola Mundo!!!");
+            result = "welcome";
+        }
+        return result;
     }
 
     

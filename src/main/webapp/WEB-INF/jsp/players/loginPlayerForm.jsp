@@ -6,12 +6,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/createPlayer.css">
+    <meta charset="UTF-8">
 </head>
-<body>
 
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
 <meta name="apple-mobile-web-app-title" content="CodePen">
@@ -21,8 +20,8 @@
 
 
 <body translate="no" class="vsc-initialized">
+    <a href="<spring:url value="/" htmlEscape="true"/>" class="previous"> < Regresar</a>
   <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600px" height="100px" viewBox="0 0 600 100">
-<style type="text/css"></style>
 	<defs>
 
 		<filter id="filter">
@@ -69,37 +68,24 @@
 	</defs>
 
 <g>
-	<text x="0" y="100">NEW ADMIN</text>
+	<text x="0" y="100">LOGIN</text>
 </g>
 </svg>
-    <form:form modelAttribute="administrator" class="form-horizontal">
+    <form:form modelAttribute="loginForm" class="form-horizontal">
         <div class="form-group has-feedback">
-            <div class="form-element">
-                <label for="first_name">Nombre:</label><br>
-                <input type="text" id="first_name" name="firstName"><br>
-            </div>
-            <div class="form-element">
-                <label for="last_name">Apellido:</label><br>
-                <input type="text" id="last_name" name="lastName"><br>
-            </div>
             <div class="form-element">
                 <label for="username">Usuario:</label><br>
                 <input type="text" id="username" name="username"><br>
             </div>
             <div class="form-element">
-                <label for="password">Contraseña:</label><br>
+                <label for="password">Contrase&ntilde;a:</label><br>
                 <input type="text" id="password" name="password"><br>
-            </div>
-            <div class="form-element">
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email"><br>
             </div>
             
         </div>
         <div class="form-group submit-buttons">
             <div class="col-sm-offset-2 col-sm-10">
-               <input type="hidden" name="id" value="${card.id}"/>
-               <button class="button" type="submit">Registrarme</button>
+               <button class="button" type="submit">Iniciar Sesi&oacute;n</button>
             </div>
         </div>
 
