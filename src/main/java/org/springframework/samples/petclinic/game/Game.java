@@ -2,17 +2,22 @@ package org.springframework.samples.petclinic.game;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.tablero.Tablero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,5 +50,9 @@ public class Game extends BaseEntity {
 
     @OneToMany(mappedBy = "player")
     Set<GamePlayerRecord> players;
+
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name="tablero_id")
+    private Tablero tablero;
 
 }

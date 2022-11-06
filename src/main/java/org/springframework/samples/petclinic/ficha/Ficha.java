@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.tablero.Tablero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,4 +28,10 @@ public class Ficha extends BaseEntity {
 	@JoinColumn(name = "fichaType_id")
     @NotNull
     private FichaType fichaType;
+
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name="tablero_id")
+    private Tablero tablero;
+
 }

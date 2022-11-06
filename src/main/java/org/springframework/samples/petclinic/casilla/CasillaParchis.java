@@ -6,6 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.tablero.Tablero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +15,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class CasillaParchis extends Casilla{
+public class CasillaParchis extends BaseEntity{
 
 /*
     @NotNull
@@ -22,7 +24,14 @@ public class CasillaParchis extends Casilla{
 */
 @ManyToOne
 @NotNull
-@JoinColumn(name="casillaparchistype_id")
+@JoinColumn(name="casilla_parchis_type_id")
 private CasillaParchisType casillaParchisType;
+
+
+@ManyToOne
+@JoinColumn(name = "tablero_id")
+@NotNull
+private Tablero tablero;
+
 
 }

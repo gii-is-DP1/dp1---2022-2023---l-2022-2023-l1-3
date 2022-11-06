@@ -8,6 +8,7 @@
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
 <head>
+    <title>Xtreme Parchis&Oca</title>
 	<link rel="stylesheet" href="/resources/css/base.css">
 	<link rel="stylesheet" href="/resources/css/welcome.css">
 </head>
