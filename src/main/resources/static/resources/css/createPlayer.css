@@ -8,7 +8,6 @@ body {
     border: none;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 .title {
@@ -72,6 +71,7 @@ body {
 
 input[type=text] {
     width: 100%;
+    font-size: 18px;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;

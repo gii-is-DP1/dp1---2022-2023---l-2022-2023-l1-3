@@ -1,16 +1,19 @@
 package org.springframework.samples.petclinic.player;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import org.springframework.samples.petclinic.game.GamePlayerRecord;
+import org.springframework.samples.petclinic.game.Game;
 import org.springframework.samples.petclinic.model.Person;
 
 import lombok.Getter;
@@ -39,10 +42,11 @@ public class Player extends Person {
     private String email = "";
 
 
+    @ManyToMany
+    @JoinColumn(name = "games")
+    private List<Game> games;
+
     //@Column(name = "enabled")
     //private Boolean enabled = false;
-
-    //@OneToMany(mappedBy = "game")
-    //Set<GamePlayerRecord> games;
 
 }
