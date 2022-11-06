@@ -103,3 +103,13 @@ text {
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 6px -4px 4px #FF0000;
 }
+
+.previous {
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 25px;
+    font-size: 1.6vw;
+    text-decoration: none;
+}

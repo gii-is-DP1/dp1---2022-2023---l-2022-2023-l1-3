@@ -69,25 +69,25 @@
 	</defs>
 
 <g>
-	<text x="0" y="100">NEW Admin</text>
+	<text x="0" y="100">NEW ADMIN</text>
 </g>
 </svg>
     <form:form modelAttribute="administrator" class="form-horizontal">
         <div class="form-group has-feedback">
             <div class="form-element">
-                <label for="first_name">First name:</label><br>
+                <label for="first_name">Nombre:</label><br>
                 <input type="text" id="first_name" name="firstName"><br>
             </div>
             <div class="form-element">
-                <label for="last_name">Last name:</label><br>
+                <label for="last_name">Apellido:</label><br>
                 <input type="text" id="last_name" name="lastName"><br>
             </div>
             <div class="form-element">
-                <label for="username">Username:</label><br>
+                <label for="username">Usuario:</label><br>
                 <input type="text" id="username" name="username"><br>
             </div>
             <div class="form-element">
-                <label for="password">Password:</label><br>
+                <label for="password">Contraseña:</label><br>
                 <input type="text" id="password" name="password"><br>
             </div>
             <div class="form-element">

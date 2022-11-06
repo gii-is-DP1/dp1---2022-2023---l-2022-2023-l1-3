@@ -5,14 +5,14 @@
     --white: Mrgba(255, 255, 255, 1);
     
     --font-size-m: 64px;
-    --font-size-1: 128px;
-    --font-size-2: 64px;
+    --font-size-1: 10vw;
+    --font-size-2: 4vw;
     
     --font-family-vt323: "VT323";
 }
 
 * {
-    font-family: var(--font-family-vt323);+
+    font-family: var(--font-family-vt323);
     color: #fff;
     margin: 0;
     padding: 0;

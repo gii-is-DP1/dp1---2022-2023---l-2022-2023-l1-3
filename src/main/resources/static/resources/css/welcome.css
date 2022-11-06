@@ -25,8 +25,7 @@ body {
 }
 .button {
     display: inline-block;
-    padding: 15px 25px;
-    font-size: 24px;
+    padding: 1vw 1vw;
     cursor: pointer;
     text-align: center;
     font-family: var(--font-family-vt323);
@@ -71,7 +70,7 @@ body {
 
 canvas {
   width: 100vw;
-  height: 50vh;
+  height: 100vh;
 	display: block;
 	margin: 0 auto;
 	position: absolute;
