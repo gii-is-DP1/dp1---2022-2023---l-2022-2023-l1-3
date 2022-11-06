@@ -1,3 +1,6 @@
+@import "compass/css3";
+@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono);
+
 body {
     font-family: var(--font-family-vt323);
     align-items: center;
@@ -79,4 +82,24 @@ input[type=text] {
 
 input[type=text]:focus {
     background-color: lightblue;
+}
+
+svg {
+    width: 600px;
+    height: 120px;
+    display: block;
+    position: relative;
+    overflow: hidden; 
+    margin: 0 auto;
+    background: black;
+}
+
+text {
+    filter: url(#filter);
+    fill: white;
+    font-family: 'Share Tech Mono', sans-serif;
+    font-size: 100px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 6px -4px 4px #FF0000;
 }
