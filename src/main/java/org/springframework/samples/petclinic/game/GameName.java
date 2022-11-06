@@ -13,13 +13,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class GameState extends BaseEntity{
+public class GameName extends BaseEntity{
     
     @NotEmpty
-    private String state= "ABIERTA"; // "CERRADA"
+    private String nombreJuego; // PARCHIS, OCA
 
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
 }
-
