@@ -37,7 +37,23 @@
             <name>Gonzalo Campos Mejías</name>
             <email>goncammej@alum.us.es</email>
             <roles>
-                <role>Developer</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>alblopnov</id>
+            <name>Alberto Miguel López-Benjumea Novella</name>
+            <email>alblopnov@alum.us.es</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>marborre</id>
+            <name>Manolo Borrego Reina</name>
+            <email>marborre@alum.us.es</email>
+            <roles>
+                <role>developer</role>
             </roles>
         </developer>
         <developer>

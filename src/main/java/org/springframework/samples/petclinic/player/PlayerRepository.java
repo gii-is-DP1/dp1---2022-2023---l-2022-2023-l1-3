@@ -14,5 +14,7 @@ public interface PlayerRepository extends  CrudRepository<Player, Integer>{
 
     @Query("SELECT p FROM Player p where lower(p.username) = lower(:username)")
     public Player findByUsername(@Param("username") String username);
+
+    Player save(Player p);
     
 }

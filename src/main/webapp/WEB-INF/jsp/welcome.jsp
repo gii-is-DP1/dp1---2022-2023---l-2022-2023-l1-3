@@ -7,20 +7,21 @@
 
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
-<petclinic:layout pageName="home">
-    <h2><fmt:message key="welcome"/></h2>
-    <div class="row">
-            <div class="col-md-12">
-                <spring:url value="/resources/images/logoUS.jpg" htmlEscape="true" var="petsImage"/>
-                <img class="img-responsive" src="${petsImage}"/>
-            </div>
-            <h2> Project: ${title}</h2>
-            <p><h2> Group: ${group}</h2></p>
-            <p><ul>
-                <c:forEach items="${persons}" var="person">
-                    <li> ${person.firstName} ${person.lastName}</li>
-                </c:forEach>
-            </ul></p>
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@import url("https://fonts.googleapis.com/css?family=VT323:400");
+<%@include file="/WEB-INF/css/welcome.css"%>
+</style>
+</head>
+<div class="welcome screen">
+    <h1 class="title">Xtreme Parchis&Oca</h1>
+    <a class="button" href="http://localhost:8080/login"><div class="large valign-text-middle vt323-normal-
+        licorice-64px">Iniciar Sesion</div></a>
+    <a class="button" href = "http://localhost:8080/players/create"><div class="large valign-text-middle vt323-normal-
+            licorice-64px">Registrarme</div></a>
 
-</petclinic:layout>
+    </div>
+</div>
+</div>

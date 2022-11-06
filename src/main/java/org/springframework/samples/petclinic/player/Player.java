@@ -10,8 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-//import org.springframework.samples.petclinic.game.GamePlayerRecord;
-import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.game.GamePlayerRecord;
 import org.springframework.samples.petclinic.model.Person;
 
 import lombok.Getter;
@@ -39,9 +38,6 @@ public class Player extends Person {
     @NotEmpty
     private String email = "";
 
-    @Column(name = "profile_pic")
-    @NotEmpty
-    private String profilePic = "";
 
     //@Column(name = "enabled")
     //private Boolean enabled = false;

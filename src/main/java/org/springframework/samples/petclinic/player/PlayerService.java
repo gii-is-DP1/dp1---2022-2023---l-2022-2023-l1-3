@@ -2,10 +2,10 @@ package org.springframework.samples.petclinic.player;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PlayerService {
@@ -18,9 +18,13 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Collection<Player> getAll(){
         return playerRepository.findAll();
+    }
+
+    public Player save(Player p){
+        return this.playerRepository.save(p);       
     }
 
 }
