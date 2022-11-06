@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.game;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,7 +18,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.samples.petclinic.administrator.Administrator;
+import org.springframework.samples.petclinic.chat.Chat;
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.player.Player;
 import org.springframework.samples.petclinic.tablero.Tablero;
 
 import lombok.Getter;
@@ -48,11 +53,18 @@ public class Game extends BaseEntity {
     @NotNull
     private Boolean isPublic = true;
 
-    @OneToMany(mappedBy = "player")
-    Set<GamePlayerRecord> players;
-
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="tablero_id")
     private Tablero tablero;
+
+    @ManyToMany(mappedBy = "games")
+    private List<Administrator> administrators;
+
+    @ManyToMany(mappedBy = "games")
+    private List<Player> players;
+
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name="chat_id")
+    private Chat chat;
 
 }

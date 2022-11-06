@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.administrator;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,5 +39,6 @@ public class Administrator extends Person{
     @NotEmpty
     private String email = "";
 
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Game> games;
 }
