@@ -2,9 +2,9 @@ package org.springframework.samples.petclinic.ficha;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.model.NamedEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +13,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "fichaType")
-public class FichaType extends NamedEntity {
-    
+public class FichaType extends BaseEntity {
+ 
+    @NotEmpty
+    private String color;
 }

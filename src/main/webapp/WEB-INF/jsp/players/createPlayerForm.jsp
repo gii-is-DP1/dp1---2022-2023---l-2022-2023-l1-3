@@ -10,6 +10,7 @@
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/createPlayer.css">
+    <title>New Player</title>
 </head>
 <body>
 
