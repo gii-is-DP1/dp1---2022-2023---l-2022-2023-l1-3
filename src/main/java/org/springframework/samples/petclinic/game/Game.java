@@ -38,17 +38,8 @@ public class Game extends BaseEntity {
     @Min(1)
     @Max(4)
     private Integer numPlayers;
-    
-    @Column(name = "state")
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private GameState gameState = GameState.ABIERTA;
 
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private GameType gameType;
-
+ 
     @Column(name = "isPublic")
     @NotNull
     private Boolean isPublic = true;
@@ -66,5 +57,6 @@ public class Game extends BaseEntity {
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="chat_id")
     private Chat chat;
+
 
 }

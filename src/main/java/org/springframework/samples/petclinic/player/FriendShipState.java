@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.game;
+package org.springframework.samples.petclinic.player;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -10,16 +10,17 @@ import org.springframework.samples.petclinic.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
 @Getter
 @Setter
-public class GameState extends BaseEntity{
-    
-    @NotEmpty
-    private String state= "ABIERTA"; // "CERRADA"
+public class FriendShipState extends BaseEntity{
 
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
+@NotEmpty
+private String fsState; // PENDING , ACCEPTED , REJECTED
+/* 
+@ManyToOne
+@JoinColumn(name = "player_id")
+private Player player;
+    */
 }
-

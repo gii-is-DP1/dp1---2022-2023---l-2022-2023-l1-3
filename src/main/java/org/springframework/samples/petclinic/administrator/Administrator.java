@@ -39,6 +39,6 @@ public class Administrator extends Person{
     @NotEmpty
     private String email = "";
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Game> games;
 }
