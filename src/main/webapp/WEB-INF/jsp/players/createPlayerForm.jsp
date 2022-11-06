@@ -7,15 +7,11 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<!DOCTYPE html>
-<html>
 <head>
-    <style>
-        @import url("https://fonts.googleapis.com/css?family=VT323:400");
-        <%@include file="/WEB-INF/css/player.css"%>
-    </style>
+    <link rel="stylesheet" href="/resources/css/base.css">
+    <link rel="stylesheet" href="/resources/css/player.css">
 </head>
-
+<body>
     <h2 class="title">
         <c:if test="${player['new']}">New </c:if> Player
     </h2>
@@ -51,4 +47,4 @@
         </div>
 
     </form:form>
-</html>
+</body>

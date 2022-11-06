@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.player;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -18,8 +19,7 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
-    @Transactional
-    public Collection<Player> getAll(){
+    public List<Player> getAllPlayers(){
         return playerRepository.findAll();
     }
 
