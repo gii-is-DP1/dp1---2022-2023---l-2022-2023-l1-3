@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -26,18 +27,18 @@ public class PlayerResource {
 
     private final PlayerService playerService;
     private static final String VIEWS_FORM = "players/createPlayerForm";
+    private static final String USERS_LIST = "players/playersList";
 
     @Autowired
     public PlayerResource(PlayerService playerService) {
         this.playerService = playerService;
     }
 
-    @GetMapping(path = "/users/list")
-    public Collection<Player> getPlayers(Map<String, Object> model) {
-
-        List<Player> players = playerService.getAll().stream().collect(Collectors.toList());
-        model.put("players", players);
-        return players;
+    @GetMapping
+    public ModelAndView showProductList() {
+        ModelAndView mav = new ModelAndView(USERS_LIST);
+        mav.addObject("players", playerService.getAllPlayers());
+        return mav;
     }
 
     @GetMapping(path="/create")

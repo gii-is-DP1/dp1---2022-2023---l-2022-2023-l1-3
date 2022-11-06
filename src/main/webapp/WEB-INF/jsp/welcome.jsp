@@ -7,21 +7,19 @@
 
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
-<!DOCTYPE html>
-<html>
 <head>
-<style>
-@import url("https://fonts.googleapis.com/css?family=VT323:400");
-<%@include file="/WEB-INF/css/welcome.css"%>
-</style>
+	<link rel="stylesheet" href="/resources/css/base.css">
+	<link rel="stylesheet" href="/resources/css/welcome.css">
 </head>
-<div class="welcome screen">
-    <h1 class="title">Xtreme Parchis&Oca</h1>
+
+<div class="welcome">
+    <h1 style="margin-top: 0.5em; margin-bottom: 0.10em;" class="title"><span class="text">Xtreme</span> Parchis&Oca</h1>
+    
     <a class="button" href="http://localhost:8080/login"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Iniciar Sesion</div></a>
     <a class="button" href = "http://localhost:8080/players/create"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Registrarme</div></a>
+</div>
+<canvas id="frame"></canvas>
 
-    </div>
-</div>
-</div>
+<script src="/resources/js/fire.js"></script>

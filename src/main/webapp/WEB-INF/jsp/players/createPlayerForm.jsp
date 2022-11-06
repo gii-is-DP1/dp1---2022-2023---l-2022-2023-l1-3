@@ -7,25 +7,17 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<!DOCTYPE html>
-<html>
 <head>
-    <style>
-        @import url("https://fonts.googleapis.com/css?family=VT323:400");
-        <%@include file="/WEB-INF/css/player.css"%>
-    </style>
+    <link rel="stylesheet" href="/resources/css/base.css">
+    <link rel="stylesheet" href="/resources/css/createPlayer.css">
 </head>
+<body>
+
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
 <meta name="apple-mobile-web-app-title" content="CodePen">
 
 <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
 <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">  
-  
-  
-<style>
-@import "compass/css3";
-@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono);
-</style>
 
 
 <body translate="no" class="vsc-initialized">
@@ -112,4 +104,4 @@
         </div>
 
     </form:form>
-</html>
+</body>

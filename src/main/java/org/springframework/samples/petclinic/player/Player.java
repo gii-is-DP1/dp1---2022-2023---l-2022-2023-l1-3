@@ -33,7 +33,7 @@ public class Player extends Person {
     @NotEmpty
     private String password = "No pass";
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @Email
     @NotEmpty
     private String email = "";
