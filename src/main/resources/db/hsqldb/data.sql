@@ -77,4 +77,5 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-INSERT INTO player VALUES (1,'James','Carter','Hamil','abcd','aasldfja');
+INSERT INTO player(id, first_name, last_name, username, password, email) VALUES (1,'James', 'Carter', 'Hamil','abcd','aaasss@gmail.com');
+INSERT INTO player(id, first_name, last_name, username, password, email) VALUES (2,'Elon', 'Musk', 'elon','musk','elon777@gmail.com');

@@ -7,11 +7,13 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
+
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/createPlayer.css">
+    <meta charset="UTF-8">
+    <title>New Player</title>
 </head>
-<body>
 
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
 <meta name="apple-mobile-web-app-title" content="CodePen">
@@ -21,8 +23,8 @@
 
 
 <body translate="no" class="vsc-initialized">
+    <a href="<spring:url value="/" htmlEscape="true" />" class="previous"> < Regresar</a>
   <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600px" height="100px" viewBox="0 0 600 100">
-<style type="text/css"></style>
 	<defs>
 
 		<filter id="filter">
@@ -69,30 +71,30 @@
 	</defs>
 
 <g>
-	<text x="0" y="100">NEW PLAYER</text>
+	<text x="0" y="100">REGISTRO</text>
 </g>
 </svg>
     <form:form modelAttribute="player" class="form-horizontal">
         <div class="form-group has-feedback">
             <div class="form-element">
-                <label for="fname">First name:</label><br>
+                <label for="fname">Nombre:</label><br>
                 <input type="text" id="fname" name="firstName"><br>
             </div>
             <div class="form-element">
-                <label for="sname">Last name:</label><br>
+                <label for="sname">Apellido:</label><br>
                 <input type="text" id="sname" name="lastName"><br>
             </div>
             <div class="form-element">
-                <label for="fname">Username:</label><br>
-                <input type="text" id="fname" name="username"><br>
+                <label for="username">Nombre de usuario:</label><br>
+                <input type="text" id="username" name="username"><br>
             </div>
             <div class="form-element">
-                <label for="fname">Password:</label><br>
-                <input type="text" id="fname" name="password"><br>
+                <label for="password">Clave:</label><br>
+                <input type="text" id="password" name="password"><br>
             </div>
             <div class="form-element">
-                <label for="fname">Email:</label><br>
-                <input type="text" id="fname" name="email"><br>
+                <label for="email">Email:</label><br>
+                <input type="text" id="email" name="email"><br>
             </div>
             
         </div>
@@ -105,3 +107,4 @@
 
     </form:form>
 </body>
+

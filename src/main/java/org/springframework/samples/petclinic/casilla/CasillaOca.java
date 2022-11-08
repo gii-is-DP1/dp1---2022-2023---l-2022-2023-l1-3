@@ -7,6 +7,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.tablero.Tablero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +16,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class CasillaOca extends Casilla{
+public class CasillaOca extends BaseEntity{
     
     @NotNull
     @Value("0")
@@ -23,7 +25,13 @@ public class CasillaOca extends Casilla{
     
     @ManyToOne
     @NotNull
-    @JoinColumn(name="casillaocatype_id")
+    @JoinColumn(name="casilla_oca_type_id")
     private CasillaOcaType casillaOcaType;
+
+    @ManyToOne
+    @JoinColumn(name = "tablero_id")
+    @NotNull
+    private Tablero tablero; 
+
     
 }
