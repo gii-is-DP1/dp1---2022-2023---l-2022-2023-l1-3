@@ -30,6 +30,9 @@ public class PlayerResource {
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String USERS_LIST = "players/playersList";
     private static final String USERS_LOGIN = "players/loginPlayerForm";
+    private static final String VIEW_GAMEHOME = "players/gameHome";
+    private static final String VIEW_CREATEGAME = "players/createGame";
+
 
     @Autowired
     public PlayerResource(PlayerService playerService) {
@@ -81,11 +84,25 @@ public class PlayerResource {
         Player p = playerService.findByUsername(loginForm.getUserName());
 
         if (p!=null && p.getPassword().equals(loginForm.getPassword())){
-            result = "redirect:/players";
+            result = "redirect:/players/gameHome";
         }
 
         return result;
     }
 
-    
+
+    @GetMapping(path="/gameHome")
+    public ModelAndView gameHome() {
+        ModelAndView mav = new ModelAndView(VIEW_GAMEHOME);
+       // mav.addObject("players", playerService.getAllPlayers());
+        return mav;
+    }
+
+    @GetMapping(path="/createGame")
+    public ModelAndView createGame() {
+        ModelAndView mav = new ModelAndView(VIEW_CREATEGAME);
+       // mav.addObject("players", playerService.getAllPlayers());
+        return mav;
+    }
+
 }
