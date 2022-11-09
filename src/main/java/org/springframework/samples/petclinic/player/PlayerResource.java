@@ -30,6 +30,9 @@ public class PlayerResource {
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String USERS_LIST = "players/playersList";
     private static final String USERS_LOGIN = "players/loginPlayerForm";
+    private static final String VIEW_GAMEHOME = "players/gameHome";
+    private static final String VIEW_CREATEGAME = "players/createGame";
+
 
     @Autowired
     public PlayerResource(PlayerService playerService) {
@@ -63,33 +66,6 @@ public class PlayerResource {
         return view;
     }
 
-    /* 
-    @GetMapping("/login")
-    public String showForm(ModelMap map) {
-        String view = USERS_LOGIN;
-        map.put("loginForm", new LoginForm());
-        return view;
-    }
-
-    @PostMapping("/login")
-    public String validateLoginInfo(ModelMap map, @Valid LoginForm loginForm, BindingResult bindingResult) {
-        String view = "";
-        if (bindingResult.hasErrors()) {
-            map.put("loginForm", loginForm);
-            view = USERS_LOGIN;
-        }
-        Player p = playerService.findByUsername(loginForm.getUserName());
-
-        if (p!=null && p.getPassword().equals(loginForm.getPassword())){
-            view = "redirect:/players";
-        }
-
-        return view;
-    }
-
-    */
-
-
     @GetMapping("/login")
     public ModelAndView userLogin() {
         ModelAndView mav = new ModelAndView(USERS_LOGIN);
@@ -99,7 +75,7 @@ public class PlayerResource {
 
     @PostMapping("/login")
     public ModelAndView processLoginForm(@Valid LoginForm loginForm, BindingResult result) {
-        ModelAndView mav = new ModelAndView("redirect:/players");
+        ModelAndView mav = new ModelAndView("redirect:/players/gameHome");
         Player p = playerService.findByUsername(loginForm.getUsername());
         if (result.hasErrors() || !(p!=null && p.getPassword().equals(loginForm.getPassword()))) {
             mav = new ModelAndView(USERS_LOGIN);
@@ -108,5 +84,19 @@ public class PlayerResource {
         }
         return mav;
     }
-    
+
+    @GetMapping(path="/gameHome")
+    public ModelAndView gameHome() {
+        ModelAndView mav = new ModelAndView(VIEW_GAMEHOME);
+       // mav.addObject("players", playerService.getAllPlayers());
+        return mav;
+    }
+
+    @GetMapping(path="/createGame")
+    public ModelAndView createGame() {
+        ModelAndView mav = new ModelAndView(VIEW_CREATEGAME);
+       // mav.addObject("players", playerService.getAllPlayers());
+        return mav;
+    }
+
 }
