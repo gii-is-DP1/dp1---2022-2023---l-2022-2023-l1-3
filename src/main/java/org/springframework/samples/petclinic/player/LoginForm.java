@@ -16,12 +16,10 @@ import lombok.Setter;
 public class LoginForm {
 
     @NotNull
-    @Size(min = 2, max = 30)
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @NotNull
-    @Min(5)
     private String password;
 
 }

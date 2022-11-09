@@ -4,20 +4,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="xtreme" tagdir="/WEB-INF/tags" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/createPlayer.css">
-    <meta charset="UTF-8">
+    <title>Xtreme Parchis&Oca</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/resources/favicon/site.webmanifest">
 </head>
-
-<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
-<meta name="apple-mobile-web-app-title" content="CodePen">
-
-<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
-<link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">  
-
 
 <body translate="no" class="vsc-initialized">
     <a href="<spring:url value="/" htmlEscape="true"/>" class="previous"> < Regresar</a>
@@ -68,26 +66,20 @@
 	</defs>
 
 <g>
-	<text x="0" y="100">LOGIN</text>
+	<text x="150" y="100">LOGIN</text>
 </g>
 </svg>
-    <form:form modelAttribute="loginForm" class="form-horizontal">
-        <div class="form-group has-feedback">
-            <div class="form-element">
-                <label for="username">Usuario:</label><br>
-                <input type="text" id="username" name="userName"><br>
-            </div>
-            <div class="form-element">
-                <label for="password">Contrase&ntilde;a:</label><br>
-                <input type="text" id="password" name="password"><br>
-            </div>
-            
-        </div>
-        <div class="form-group submit-buttons">
-            <div class="col-sm-offset-2 col-sm-10">
-               <button class="button" type="submit">Iniciar Sesi&oacute;n</button>
-            </div>
-        </div>
 
+
+    <form:form modelAttribute="loginForm" class="form-horizontal">
+		<c:out value="${message}"/>
+            <xtreme:inputField label="Usuario" name="username"/>
+            <xtreme:inputField name="password" label="Contraseña"/>
+            <div class="form-group submit-buttons">
+				<div class="col-sm-offset-2 col-sm-10">
+				   <input type="hidden" name="id" value="${card.id}"/>
+				   <button class="button" type="submit">Iniciar sesión</button>
+				</div>
+			</div>
     </form:form>
 </body>
