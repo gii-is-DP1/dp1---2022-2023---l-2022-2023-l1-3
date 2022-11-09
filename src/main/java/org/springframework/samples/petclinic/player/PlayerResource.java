@@ -40,9 +40,9 @@ public class PlayerResource {
     }
 
     @GetMapping
-    public ModelAndView showProductList() {
+    public ModelAndView showPlayerList() {
         ModelAndView mav = new ModelAndView(USERS_LIST);
-        mav.addObject("players", playerService.getAllPlayers());
+        mav.addObject("players", this.playerService.getAllPlayers());
         return mav;
     }
 
@@ -67,29 +67,23 @@ public class PlayerResource {
     }
 
     @GetMapping("/login")
-    public String showForm(ModelMap map) {
-        String view = USERS_LOGIN;
-        map.addAttribute("loginForm", new LoginForm());
-        return view;
+    public ModelAndView userLogin() {
+        ModelAndView mav = new ModelAndView(USERS_LOGIN);
+        mav.addObject("loginForm", new LoginForm());
+        return mav;
     }
 
     @PostMapping("/login")
-    public String validateLoginInfo(Model model, @Valid LoginForm loginForm, BindingResult bindingResult) {
-        String result = "";
-        if (bindingResult.hasErrors()) {
-            result = USERS_LOGIN;
-            System.out.println("ERROR AL INICIAR SESION");
-
+    public ModelAndView processLoginForm(@Valid LoginForm loginForm, BindingResult result) {
+        ModelAndView mav = new ModelAndView("redirect:/players/gameHome");
+        Player p = playerService.findByUsername(loginForm.getUsername());
+        if (result.hasErrors() || !(p!=null && p.getPassword().equals(loginForm.getPassword()))) {
+            mav = new ModelAndView(USERS_LOGIN);
+            mav.addObject("loginForm", loginForm);
+            mav.addObject("message", "El usuario o la contraseña no son correctos");
         }
-        Player p = playerService.findByUsername(loginForm.getUserName());
-
-        if (p!=null && p.getPassword().equals(loginForm.getPassword())){
-            result = "redirect:/players/gameHome";
-        }
-
-        return result;
+        return mav;
     }
-
 
     @GetMapping(path="/gameHome")
     public ModelAndView gameHome() {

@@ -4,15 +4,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="xtreme" tagdir="/WEB-INF/tags" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/createPlayer.css">
-    <meta charset="UTF-8">
-    <title>New Player</title>
+    <title>Xtreme Parchis&Oca</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/resources/favicon/site.webmanifest">
 </head>
 
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
@@ -71,40 +75,21 @@
 	</defs>
 
 <g>
-	<text x="0" y="100">REGISTRO</text>
+	<text x="75" y="100">REGISTRO</text>
 </g>
 </svg>
     <form:form modelAttribute="player" class="form-horizontal">
-        <div class="form-group has-feedback">
-            <div class="form-element">
-                <label for="fname">Nombre:</label><br>
-                <input type="text" id="fname" name="firstName"><br>
-            </div>
-            <div class="form-element">
-                <label for="sname">Apellido:</label><br>
-                <input type="text" id="sname" name="lastName"><br>
-            </div>
-            <div class="form-element">
-                <label for="username">Nombre de usuario:</label><br>
-                <input type="text" id="username" name="username"><br>
-            </div>
-            <div class="form-element">
-                <label for="password">Clave:</label><br>
-                <input type="text" id="password" name="password"><br>
-            </div>
-            <div class="form-element">
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email"><br>
-            </div>
-            
-        </div>
+        <c:out value="${message}"/>
+        <xtreme:inputField label="Nombre" name="firstName"/>
+        <xtreme:inputField name="lastName" label="Apellido"/>
+        <xtreme:inputField name="username" label="Usuario"/>
+        <xtreme:inputField name="password" label="Contraseña"/>
+        <xtreme:inputField name="email" label="Email"/>
         <div class="form-group submit-buttons">
             <div class="col-sm-offset-2 col-sm-10">
                <input type="hidden" name="id" value="${card.id}"/>
                <button class="button" type="submit">Registrarme</button>
             </div>
         </div>
-
     </form:form>
 </body>
-

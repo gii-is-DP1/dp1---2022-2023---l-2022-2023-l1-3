@@ -30,16 +30,16 @@ public class Player extends Person {
     @Column(name = "username", unique = true)
     @NotEmpty
     @Size(min = 4, max = 10)
-    private String username = "No name";
+    private String username;
 
     @Column(name = "password")
     @NotEmpty
-    private String password = "No pass";
+    private String password;
 
     @Column(name = "email", unique = true)
     @Email
     @NotEmpty
-    private String email = "";
+    private String email;
 
 
     @ManyToMany
