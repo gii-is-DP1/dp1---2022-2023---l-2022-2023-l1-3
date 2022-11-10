@@ -47,23 +47,34 @@ public class PlayerResource {
     }
 
     @GetMapping(path="/create")
-    public String viewForm(ModelMap map){
-        String view = VIEWS_FORM;
-        map.addAttribute("player", new Player());
-        return view;
+    public ModelAndView viewForm(){
+        ModelAndView mav = new ModelAndView(VIEWS_FORM);
+        mav.addObject("player", new Player());
+        return mav;
     }
 
     @PostMapping(path = "/create")
-    public String createProduct(@Valid Player player, BindingResult res, ModelMap map){
-        String view = "welcome";
+    public ModelAndView createPlayer(@Valid Player player, BindingResult res){
+        ModelAndView mav = new ModelAndView("welcome");
+        Player p = playerService.findByUsername(player.getUsername());
         if(res.hasErrors()){
-            map.addAttribute("player", player);
-            return VIEWS_FORM;
-        }else{
-           playerService.save(player);
-            map.addAttribute("message", "Player succesfully save");
+            mav = new ModelAndView(VIEWS_FORM);
+            mav.addObject("player", player);
+        } 
+        
+        if(p!=null) {
+            mav = new ModelAndView(VIEWS_FORM);
+            mav.addObject("player", player);
+            if(p!=null && p.getUsername().equals(player.getUsername())) {
+                mav.addObject("message", "El nombre de usuario ya está registrado.");
+            }
+            if(p!=null && p.getEmail().equals(player.getEmail())) {
+                mav.addObject("message", "El email de usuario ya está registrado");
+            }
+        } else{
+            playerService.save(player);
         }
-        return view;
+        return mav;
     }
 
     @GetMapping("/login")
@@ -77,10 +88,12 @@ public class PlayerResource {
     public ModelAndView processLoginForm(@Valid LoginForm loginForm, BindingResult result) {
         ModelAndView mav = new ModelAndView("redirect:/players/gameHome");
         Player p = playerService.findByUsername(loginForm.getUsername());
-        if (result.hasErrors() || !(p!=null && p.getPassword().equals(loginForm.getPassword()))) {
+        if (result.hasErrors()) {
             mav = new ModelAndView(USERS_LOGIN);
             mav.addObject("loginForm", loginForm);
-            mav.addObject("message", "El usuario o la contraseña no son correctos");
+            if (!(p!=null && p.getPassword().equals(loginForm.getPassword()))) {
+                mav.addObject("message", "El usuario o la contraseña no son correctos");
+            }
         }
         return mav;
     }
