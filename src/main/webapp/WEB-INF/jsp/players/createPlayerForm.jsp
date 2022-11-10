@@ -79,7 +79,7 @@
 </g>
 </svg>
     <form:form modelAttribute="player" class="form-horizontal">
-        <c:out value="${message}"/>
+        <span class="help-inline"><c:out value="${message}"/></span>
         <xtreme:inputField label="Nombre" name="firstName"/>
         <xtreme:inputField name="lastName" label="Apellido"/>
         <xtreme:inputField name="username" label="Usuario"/>

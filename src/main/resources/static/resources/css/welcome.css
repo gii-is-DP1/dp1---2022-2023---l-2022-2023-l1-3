@@ -87,6 +87,15 @@ canvas {
     animation: glitch .5s infinite;
 }
 
+.logo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 25px;
+    height: 100px;
+    width: 100px;
+}
+
 @-webkit-keyframes glitch {
     0% {
       text-shadow: -20px 0px 0px #00aaff;
