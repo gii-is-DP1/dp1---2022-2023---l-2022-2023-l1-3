@@ -72,7 +72,7 @@
 
 
     <form:form modelAttribute="loginForm" class="form-horizontal">
-		<c:out value="${message}"/>
+		<span class="help-inline"><c:out value="${message}"/></span>
             <xtreme:inputField label="Usuario" name="username"/>
             <xtreme:inputField name="password" label="Contraseña"/>
             <div class="form-group submit-buttons">
