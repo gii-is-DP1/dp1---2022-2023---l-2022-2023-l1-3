@@ -8,10 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdministratorRepository extends CrudRepository<Administrator, Integer>{
-
-    
-
-
     Administrator save(Administrator p);
     
 }
