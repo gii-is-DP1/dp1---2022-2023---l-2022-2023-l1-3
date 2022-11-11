@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.casilla;
+package org.springframework.samples.petclinic.cells;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -7,8 +7,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.samples.petclinic.board.OcaBoard;
 import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.tablero.Tablero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class CasillaOca extends BaseEntity{
+public class OcaCell extends BaseEntity{
     
     @NotNull
     @Value("0")
@@ -26,12 +26,12 @@ public class CasillaOca extends BaseEntity{
     @ManyToOne
     @NotNull
     @JoinColumn(name="casilla_oca_type_id")
-    private CasillaOcaType casillaOcaType;
+    private OcaCellType casillaOcaType;
 
     @ManyToOne
     @JoinColumn(name = "tablero_id")
     @NotNull
-    private Tablero tablero; 
+    private OcaBoard board; 
 
     
 }

@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.casilla;
+package org.springframework.samples.petclinic.cells;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class CasillaOcaType extends BaseEntity{
+public class OcaCellType extends BaseEntity{
     
     @NotEmpty
     private String tipoCasilla; // enumerate
