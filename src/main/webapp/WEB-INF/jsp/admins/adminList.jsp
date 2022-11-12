@@ -26,19 +26,19 @@
 </tr>
 </thead>
 <tbody>
-<c:forEach items="${admins}" var="user">
+<c:forEach items="${admins}" var="admin">
     <tr>
         <td>
-            <c:out value="${user.firstName}"/>
+            <c:out value="${admin.firstName}"/>
         </td>
         <td>
-            <c:out value="${user.lastName}"/>
+            <c:out value="${admin.lastName}"/>
         </td>
         <td>
-            <c:out value="${user.user.username}"/>    
+            <c:out value="${admin.user.username}"/>    
         </td>
         <td>
-            <c:out value="${user.email}"/>        
+            <c:out value="${admin.email}"/>        
         </td>
     </tr>
 </c:forEach>

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.user.Authorities;
+import org.springframework.samples.xtreme.user.AuthoritiesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -32,6 +33,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class PlayerController {
 
     private final PlayerService playerService;
+    private final AuthoritiesService authoritiesService;
+
 
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String PLAYERS_LIST = "players/playersList";
@@ -40,8 +43,9 @@ public class PlayerController {
 
 
     @Autowired
-    public PlayerController(PlayerService playerService) {
+    public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService) {
         this.playerService = playerService;
+        this.authoritiesService = authoritiesService;
     }
 
     @GetMapping
@@ -86,7 +90,14 @@ public class PlayerController {
                 mav.addObject("message", "El email de usuario ya está registrado");
             }
         } else{
+            Authorities a= new Authorities();
+            a.setId(player.getId());
+            a.setAuthority("player");
+            a.setUser(player.getUser());
+
             playerService.save(player);
+            authoritiesService.saveAuthorities(a);
+
         }
         return mav;
     }

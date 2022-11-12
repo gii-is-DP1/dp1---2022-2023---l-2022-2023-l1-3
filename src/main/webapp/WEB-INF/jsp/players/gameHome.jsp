@@ -23,12 +23,16 @@
         licorice-64px">Unirse a partida</div></a>
     
     
-
+        <c:if test="${esAdmin}">
+            <div>    
+                <a class="button" href = "<spring:url value="/players"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                licorice-64px">Lista de jugadores</div></a>
+                <a class="button" href = "<spring:url value="/admins/create"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                licorice-64px">Crear admin</div></a>
+                <a class="button" href = "<spring:url value="/admins"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                licorice-64px">Lista admins</div></a>
+            </div>
+        </c:if>
 <canvas id="frame"></canvas>
-<c:if test="${esAdmin}">
-<div>    
-    <a class="button" href = "<spring:url value="/players"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-    licorice-64px">Lista de jugadores</div></a>
-</div>
-</c:if>
+
 </body>
