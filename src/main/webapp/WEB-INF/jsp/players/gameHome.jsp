@@ -11,6 +11,7 @@
     <title>Xtreme Parchis&Oca</title>
 	<link rel="stylesheet" href="/resources/css/base.css">
 	<link rel="stylesheet" href="/resources/css/form.css">
+    <a href="<spring:url value="/users/logout" htmlEscape="true"/>" class="previous"> < logout</a>
     <h3>
         <c:if test="${esAdmin}">Estas logueado como admin</c:if>
     </h3>

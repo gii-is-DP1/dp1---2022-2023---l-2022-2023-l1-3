@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/players/create", "/users/login").permitAll()
+				.antMatchers("/players/create", "/users/login","/users/logout").permitAll()
 				.antMatchers("/players/gameHome","/players/createGame").hasAnyAuthority("admin","player")
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/admins/**", "/players","/admins").hasAnyAuthority("admin")				
@@ -45,10 +45,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
-				 	/*.loginPage("/login")*/
+				 	.loginPage("/users/login").defaultSuccessUrl("/players/gameHome")
 				 	.failureUrl("/login-error")
 				.and()
-					.logout()
+					.logout().logoutUrl("/users/logout")
 						.logoutSuccessUrl("/"); 
                 // Configuración para que funcione la consola de administración 
                 // de la BD H2 (deshabilitar las cabeceras de protección contra

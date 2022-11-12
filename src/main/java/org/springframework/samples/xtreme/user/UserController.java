@@ -26,6 +26,7 @@ public class UserController {
     
     private static final String LOGIN_FORM = "users/loginForm";
     private static final String GAME_HOME = "players/gameHome";
+    private static final String LOGOUT = "users/logout";
 
 	private final UserService userService;
     private final AdminService adminService;
@@ -74,4 +75,10 @@ public class UserController {
         return mav;
     }
         
+    @GetMapping(path = "/logout")
+    public ModelAndView userLogout() {
+        ModelAndView mav = new ModelAndView(LOGOUT);
+        return mav;
+    }
+
 }
