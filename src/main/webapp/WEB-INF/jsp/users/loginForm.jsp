@@ -9,7 +9,7 @@
 
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
-    <link rel="stylesheet" href="/resources/css/createPlayer.css">
+    <link rel="stylesheet" href="/resources/css/form.css">
     <title>Xtreme Parchis&Oca</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
@@ -73,8 +73,8 @@
 
     <form:form modelAttribute="user" class="form-horizontal">
 		<span class="help-inline"><c:out value="${message}"/></span>
-            <xtreme:inputField name="username" label="Usuario"/>
-            <xtreme:inputField name="password" label="Contraseña"/>
+            <xtreme:inputField name="username" type="text" label="Usuario"/>
+			<xtreme:inputField name="password" type="password" label="Contraseña"/>
             <div class="form-group submit-buttons">
 				<div class="col-sm-offset-2 col-sm-10">
 				   <button class="button" type="submit">Iniciar sesión</button>
@@ -82,3 +82,7 @@
 			</div>
     </form:form>
 </body>
+
+<script>
+	document.getElementById('password').type = 'password';
+</script>

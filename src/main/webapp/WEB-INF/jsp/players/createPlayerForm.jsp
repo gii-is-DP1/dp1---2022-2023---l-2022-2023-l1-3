@@ -11,7 +11,7 @@
 
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
-    <link rel="stylesheet" href="/resources/css/createPlayer.css">
+    <link rel="stylesheet" href="/resources/css/form.css">
     <title>Xtreme Parchis&Oca</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
@@ -80,11 +80,11 @@
 </svg>
     <form:form modelAttribute="player" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>
-        <xtreme:inputField name="firstName" label="Nombre"/>
-        <xtreme:inputField name="lastName" label="Apellido"/>
-        <xtreme:inputField name="user.username" label="Usuario"/>
-        <xtreme:inputField name="user.password" label="Contraseña"/>
-        <xtreme:inputField name="email" label="Email"/>
+        <xtreme:inputField name="firstName" type="text" label="Nombre"/>
+        <xtreme:inputField name="lastName" type="text" label="Apellido"/>
+        <xtreme:inputField name="user.username" type="text" label="Usuario"/>
+        <xtreme:inputField name="user.password" type="text" label="Contraseña"/>
+        <xtreme:inputField name="email" type="text" label="Email"/>
         <div class="form-group submit-buttons">
             <div class="col-sm-offset-2 col-sm-10">
                <button class="button" type="submit">Registrarme</button>

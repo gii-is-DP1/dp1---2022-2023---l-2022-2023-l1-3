@@ -1,6 +1,7 @@
 package org.springframework.samples.xtreme.user;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import javax.validation.Valid;
 
@@ -52,13 +53,13 @@ public class UserController {
             mav = new ModelAndView(LOGIN_FORM);
             mav.addObject("user", user);
         }
-        if (u.isPresent()) {
-            if (!u.get().getUsername().equals(user.getUsername()) || !u.get().getPassword().equals(user.getPassword())) {
-                mav = new ModelAndView(LOGIN_FORM);
-                mav.addObject("user", user);
-                mav.addObject("message", "El usuario o la contraseña no son correctos");
-            }
+
+        if(u.isEmpty() || !u.get().getUsername().equals(user.getUsername()) || !u.get().getPassword().equals(user.getPassword())) {
+            mav = new ModelAndView(LOGIN_FORM);
+            mav.addObject("user", user);
+            mav.addObject("message", "El usuario o la contraseña no son correctos");
         }
+
         return mav;
     }
         

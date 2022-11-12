@@ -14,10 +14,16 @@
 --INSERT INTO users(username,password,enabled) VALUES ('alegalpel','Thealexan28',TRUE);
 --INSERT INTO authorities(id,username,authority) VALUES (5,'alegalpel','owner');
 
+-- Admins
+INSERT INTO users(username,password,enabled) VALUES ('xtreme','xtr3m3',TRUE);
+INSERT INTO admins(id, first_name, last_name, username, email) VALUES (1,'Parchis','Oca','xtreme','xtreme@xtreme.com');
+INSERT INTO authorities(id,username,authority) VALUES (1,'xtreme','admin');
+
+-- Players
 INSERT INTO users(username,password,enabled) VALUES ('Hamil','abcd',TRUE);
 INSERT INTO players(id, first_name, last_name, username, email) VALUES (1,'James','Carter','Hamil','aaasss@gmail.com');
-INSERT INTO authorities(id,username,authority) VALUES (1,'Hamil','player');
+INSERT INTO authorities(id,username,authority) VALUES (2,'Hamil','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('elon','musk',TRUE);
 INSERT INTO players(id, first_name, last_name, username, email) VALUES (2,'Elon','Musk','elon','elon777@gmail.com');
-INSERT INTO authorities(id,username,authority) VALUES (2,'elon','player');
+INSERT INTO authorities(id,username,authority) VALUES (3,'elon','player');

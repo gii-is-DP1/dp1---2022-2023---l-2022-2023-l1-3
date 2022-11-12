@@ -40,9 +40,5 @@ public class Player extends Person {
     @ManyToMany
     @JoinColumn(name = "games")
     private List<Game> games;
-    
-
-    //@Column(name = "enabled")
-    //private Boolean enabled = false;
 
 }

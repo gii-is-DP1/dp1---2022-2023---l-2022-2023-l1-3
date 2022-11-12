@@ -1,5 +1,6 @@
 package org.springframework.samples.xtreme.player;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
@@ -27,12 +29,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class PlayerController {
 
     private final PlayerService playerService;
+    private final Authentication authentication;
+
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String USERS_LIST = "players/playersList";
+    private static final String VIEW_GAMEHOME = "players/gameHome";
 
     @Autowired
-    public PlayerController(PlayerService playerService) {
+    public PlayerController(PlayerService playerService, Authentication authentication) {
         this.playerService = playerService;
+        this.authentication = authentication;
     }
 
     @GetMapping
@@ -51,7 +57,7 @@ public class PlayerController {
 
     @PostMapping(path = "/create")
     public ModelAndView createPlayer(@Valid Player player, BindingResult res){
-        ModelAndView mav = new ModelAndView("welcome");
+        ModelAndView mav = new ModelAndView("redirect:/");
         Player p = playerService.findByUsername(player.getUser().getUsername());
         if(res.hasErrors()){
             mav = new ModelAndView(VIEWS_FORM);
@@ -72,14 +78,15 @@ public class PlayerController {
         return mav;
     }
 
-    /* 
+    
     @GetMapping(path="/gameHome")
     public ModelAndView gameHome() {
         ModelAndView mav = new ModelAndView(VIEW_GAMEHOME);
-       // mav.addObject("players", playerService.getAllPlayers());
+        //mav.addObject("user", authentication.getAuthetication());
         return mav;
     }
 
+    /* 
     @GetMapping(path="/createGame")
     public ModelAndView createGame() {
         ModelAndView mav = new ModelAndView(VIEW_CREATEGAME);

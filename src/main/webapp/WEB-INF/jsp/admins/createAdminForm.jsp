@@ -4,13 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="xtreme" tagdir="/WEB-INF/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
-    <link rel="stylesheet" href="/resources/css/createPlayer.css">
+    <link rel="stylesheet" href="/resources/css/form.css">
 </head>
 <body>
 
@@ -73,33 +73,15 @@
 	<text x="0" y="100">NEW ADMIN</text>
 </g>
 </svg>
-    <form:form modelAttribute="administrator" class="form-horizontal">
-        <div class="form-group has-feedback">
-            <div class="form-element">
-                <label for="first_name">Nombre:</label><br>
-                <input type="text" id="first_name" name="firstName"><br>
-            </div>
-            <div class="form-element">
-                <label for="last_name">Apellido:</label><br>
-                <input type="text" id="last_name" name="lastName"><br>
-            </div>
-            <div class="form-element">
-                <label for="username">Usuario:</label><br>
-                <input type="text" id="username" name="username"><br>
-            </div>
-            <div class="form-element">
-                <label for="password">Contraseña:</label><br>
-                <input type="text" id="password" name="password"><br>
-            </div>
-            <div class="form-element">
-                <label for="email">Email:</label><br>
-                <input type="text" id="email" name="email"><br>
-            </div>
-            
-        </div>
+    <form:form modelAttribute="admin" class="form-horizontal">
+        <span class="help-inline"><c:out value="${message}"/></span>
+        <xtreme:inputField name="firstName" type="text" label="Nombre"/>
+        <xtreme:inputField name="lastName" type="text" label="Apellido"/>
+        <xtreme:inputField name="user.username" type="text" label="Usuario"/>
+        <xtreme:inputField name="user.password" type="text" label="Contraseña"/>
+        <xtreme:inputField name="email" type="text" label="Email"/>
         <div class="form-group submit-buttons">
             <div class="col-sm-offset-2 col-sm-10">
-               <input type="hidden" name="id" value="${card.id}"/>
                <button class="button" type="submit">Registrarme</button>
             </div>
         </div>

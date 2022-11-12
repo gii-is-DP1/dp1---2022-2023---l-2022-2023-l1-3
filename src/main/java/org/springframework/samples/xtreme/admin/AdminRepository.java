@@ -14,4 +14,6 @@ public interface AdminRepository extends CrudRepository<Admin, Integer>{
     
     public List<Admin> findAll();
     
+    @Query("SELECT a FROM Admin a WHERE a.user.username = ?1")
+    public Admin findByUsername(String username);
 }
