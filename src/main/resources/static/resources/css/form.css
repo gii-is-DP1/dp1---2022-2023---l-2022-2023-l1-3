@@ -1,0 +1,88 @@
+@import "compass/css3";
+@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono);
+
+body {
+    align-items: center;
+    border: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    display: inherit;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    font-family: var(--font-family-vt323);
+    text-decoration: none;
+    justify-content: space-between;
+    outline: none;
+    color: #fff;
+    background-color: #272927;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+.button:hover {background-color: #0b0b0b}
+
+.button:active {
+    background-color: #080808;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.form-group {
+    margin-top: 2%;
+    margin-bottom: 10px;
+}
+
+.form-group label{
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-horizontal {
+    width: 60%;
+    height: 75%;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=text]:focus, input[type=password]:focus{
+    background-color: lightblue;
+}
+
+svg {
+    width: 600px;
+    height: 120px;
+    display: block;
+    position: relative;
+    overflow: hidden; 
+    margin: 0 auto;
+    background: black;
+}
+
+text {
+    filter: url(#filter);
+    fill: white;
+    font-family: 'Share Tech Mono', sans-serif;
+    font-size: 100px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 6px -4px 4px #FF0000;
+}

@@ -26,7 +26,7 @@
 </tr>
 </thead>
 <tbody>
-<c:forEach items="${players}" var="user">
+<c:forEach items="${admins}" var="user">
     <tr>
         <td>
             <c:out value="${user.firstName}"/>

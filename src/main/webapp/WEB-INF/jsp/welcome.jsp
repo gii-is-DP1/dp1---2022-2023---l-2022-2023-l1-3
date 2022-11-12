@@ -21,7 +21,7 @@
     <img src="/resources/img/Xtreme_Oca_2006.jpeg" alt="Logo Xtremo" class = "logo">
     <h1 style="margin-top: 0.5em; margin-bottom: 0.10em;" class="title"><span class="text">Xtreme</span> Parchis&Oca</h1>
     
-    <a class="button" href="<spring:url value="/players/login"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+    <a class="button" href="<spring:url value="/users/login"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Iniciar Sesión</div></a>
     <a class="button" href = "<spring:url value="/players/create"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Registrarme</div></a>

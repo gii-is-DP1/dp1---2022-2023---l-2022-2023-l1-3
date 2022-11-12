@@ -8,16 +8,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-
 <head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/form.css">
-    <title>Xtreme Parchis&Oca</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/resources/favicon/site.webmanifest">
 </head>
+<body>
 
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
 <meta name="apple-mobile-web-app-title" content="CodePen">
@@ -27,8 +22,8 @@
 
 
 <body translate="no" class="vsc-initialized">
-    <a href="<spring:url value="/" htmlEscape="true" />" class="previous"> < Regresar</a>
   <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600px" height="100px" viewBox="0 0 600 100">
+<style type="text/css"></style>
 	<defs>
 
 		<filter id="filter">
@@ -75,10 +70,10 @@
 	</defs>
 
 <g>
-	<text x="75" y="100">REGISTRO</text>
+	<text x="0" y="100">NEW ADMIN</text>
 </g>
 </svg>
-    <form:form modelAttribute="player" class="form-horizontal">
+    <form:form modelAttribute="admin" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>
         <xtreme:inputField name="firstName" type="text" label="Nombre"/>
         <xtreme:inputField name="lastName" type="text" label="Apellido"/>
@@ -90,5 +85,6 @@
                <button class="button" type="submit">Registrarme</button>
             </div>
         </div>
+
     </form:form>
 </body>
