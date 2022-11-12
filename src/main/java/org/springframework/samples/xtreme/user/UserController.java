@@ -68,11 +68,8 @@ public class UserController {
         Boolean esAdmin=false;
         if(!u.getAuthorities().isEmpty()){
          esAdmin= u.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
-       //System.out.println(esAdmin);
         }
-       /* Authentication a=SecurityContextHolder.getContext().getAuthentication();
-        User u2=(User) a.getPrincipal();
-        System.out.println(u2.getAuthorities());*/
+
         mav.addObject("esAdmin", esAdmin);
         return mav;
     }

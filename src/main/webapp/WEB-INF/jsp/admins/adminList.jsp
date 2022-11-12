@@ -15,7 +15,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
     <link rel="manifest" href="/resources/favicon/site.webmanifest">
 </head>
-
+<body>
+    
 <table class="minimalistBlack">
 <thead>
 <tr>
@@ -44,3 +45,10 @@
 </c:forEach>
 </tbody>
 </table>
+
+<div>
+    <footer>
+    <a href="<spring:url value="/players/gameHome" htmlEscape="true"/>" class="previous2"> < Regresar</a>
+    </footer>
+</div>
+</body>

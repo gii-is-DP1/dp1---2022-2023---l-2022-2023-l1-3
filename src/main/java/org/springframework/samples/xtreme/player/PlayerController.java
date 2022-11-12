@@ -16,6 +16,7 @@ import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.user.Authorities;
 import org.springframework.samples.xtreme.user.AuthoritiesService;
+import org.springframework.samples.xtreme.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -26,7 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Controller
 @RequestMapping(path="/players")
@@ -58,16 +60,6 @@ public class PlayerController {
     @GetMapping(path="/create")
     public ModelAndView viewForm(){
         ModelAndView mav = new ModelAndView(VIEWS_FORM);
-/*
-        Authorities a= new Authorities();
-        a.setAuthority("player");
-
-        Set<Authorities> cjto= new HashSet<Authorities>();
-        cjto.add(a);
-
-        Player p= new Player();
-        p.getUser().setAuthorities(cjto);*/
-
         mav.addObject("player", new Player());
         return mav;
     }
@@ -102,12 +94,23 @@ public class PlayerController {
         return mav;
     }
 
-    // TODO: Checkear el tipo de authority del usuario logueado para mostrarle unos botones u otros en home
-    // Mirar jsp createOwner de la carpeta user (ejemplo uso if)
+
     @GetMapping(path="/gameHome")
     public ModelAndView gameHome() {
         ModelAndView mav = new ModelAndView(VIEW_GAMEHOME);
-        //mav.addObject("user", authentication.getAuthetication());
+
+        // obtener el usuario actualmente logueado
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        Boolean esAdmin = false;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+           System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
+           System.out.println("su rol es: "+ userDetails.getAuthorities());
+            esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
+          }
+
+        mav.addObject("esAdmin", esAdmin);
         return mav;
     }
 
