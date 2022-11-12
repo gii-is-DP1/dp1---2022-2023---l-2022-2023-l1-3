@@ -29,16 +29,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class PlayerController {
 
     private final PlayerService playerService;
-    private final Authentication authentication;
 
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String USERS_LIST = "players/playersList";
     private static final String VIEW_GAMEHOME = "players/gameHome";
 
     @Autowired
-    public PlayerController(PlayerService playerService, Authentication authentication) {
+    public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
-        this.authentication = authentication;
     }
 
     @GetMapping
@@ -78,7 +76,8 @@ public class PlayerController {
         return mav;
     }
 
-    
+    // TODO: Checkear el tipo de authority del usuario logueado para mostrarle unos botones u otros en home
+    // Mirar jsp createOwner de la carpeta user (ejemplo uso if)
     @GetMapping(path="/gameHome")
     public ModelAndView gameHome() {
         ModelAndView mav = new ModelAndView(VIEW_GAMEHOME);

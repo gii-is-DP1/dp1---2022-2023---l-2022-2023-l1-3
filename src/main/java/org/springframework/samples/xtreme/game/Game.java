@@ -22,7 +22,6 @@ import org.springframework.samples.xtreme.admin.Admin;
 import org.springframework.samples.xtreme.chat.Chat;
 import org.springframework.samples.xtreme.model.BaseEntity;
 import org.springframework.samples.xtreme.player.Player;
-import org.springframework.samples.xtreme.tablero.Tablero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,9 +43,9 @@ public class Game extends BaseEntity {
     @NotNull
     private Boolean isPublic = true;
 
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name="tablero_id")
-    private Tablero tablero;
+    //@OneToOne(cascade= CascadeType.ALL)
+    //@JoinColumn(name="tablero_id")
+    //private Tablero tablero;
 
     @ManyToMany(mappedBy = "games")
     private List<Admin> administrators;
