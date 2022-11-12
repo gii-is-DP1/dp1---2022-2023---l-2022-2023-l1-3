@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.admin.AdminService;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     
     private static final String LOGIN_FORM = "users/loginForm";
+    private static final String GAME_HOME = "players/gameHome";
 
 	private final UserService userService;
     private final AdminService adminService;
@@ -47,19 +50,30 @@ public class UserController {
 
     @PostMapping("/login")
     public ModelAndView processLoginForm(@Valid User user, BindingResult result) {
-        ModelAndView mav = new ModelAndView("redirect:/");
-        Optional<User> u = userService.findByUsername(user.getUsername());
+        ModelAndView mav = new ModelAndView(GAME_HOME);
+        User u = userService.findByUsername(user.getUsername()).get();
         if (result.hasErrors()) {
             mav = new ModelAndView(LOGIN_FORM);
             mav.addObject("user", user);
         }
 
-        if(u.isEmpty() || !u.get().getUsername().equals(user.getUsername()) || !u.get().getPassword().equals(user.getPassword())) {
+        if(u==null || !u.getUsername().equals(user.getUsername())
+            || !u.getPassword().equals(user.getPassword())) {
+
             mav = new ModelAndView(LOGIN_FORM);
             mav.addObject("user", user);
             mav.addObject("message", "El usuario o la contraseña no son correctos");
         }
-
+        
+        Boolean esAdmin=false;
+        if(!u.getAuthorities().isEmpty()){
+         esAdmin= u.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
+       //System.out.println(esAdmin);
+        }
+       /* Authentication a=SecurityContextHolder.getContext().getAuthentication();
+        User u2=(User) a.getPrincipal();
+        System.out.println(u2.getAuthorities());*/
+        mav.addObject("esAdmin", esAdmin);
         return mav;
     }
         

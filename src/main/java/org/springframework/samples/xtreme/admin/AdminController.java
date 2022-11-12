@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.samples.xtreme.user.Authorities;
+import org.springframework.samples.xtreme.user.AuthoritiesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -17,18 +19,21 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminController{
     
     private AdminService adminService;
+    private final AuthoritiesService authoritiesService;
+
     private static final String VIEWS_FORM = "admins/createAdminForm";
     private static final String USERS_LIST = "admins/adminList";
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService,AuthoritiesService authoritiesService) {
         this.adminService = adminService;
+        this.authoritiesService = authoritiesService;
     }
 
     @GetMapping
     public ModelAndView showAdminList() {
         ModelAndView mav = new ModelAndView(USERS_LIST);
-        mav.addObject("players", this.adminService.getAllAdmins());
+        mav.addObject("admins", this.adminService.getAllAdmins());
         return mav;
     }
 
@@ -57,7 +62,14 @@ public class AdminController{
                 mav.addObject("message", "El email de usuario ya está registrado");
             }
         } else{
+            Authorities aut= new Authorities();
+            aut.setId(admin.getId());
+            aut.setAuthority("admin");
+            aut.setUser(admin.getUser());
+            
             adminService.save(admin);
+            authoritiesService.saveAuthorities(aut);
+
         }
         return mav;
     }

@@ -33,6 +33,14 @@ public class Player extends Person {
     @NotEmpty
     private String email;
 
+ /*
+    @Column(name = "online")
+    @NotEmpty
+    private Boolean online= false;
+
+    @Column(name = "pic_profile")
+    private String picProfile;
+*/
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;

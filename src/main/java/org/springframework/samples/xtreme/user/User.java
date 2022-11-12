@@ -25,7 +25,7 @@ public class User{
 	@NotEmpty
 	String password;
 	
-	boolean enabled;
+	boolean enabled=true;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;

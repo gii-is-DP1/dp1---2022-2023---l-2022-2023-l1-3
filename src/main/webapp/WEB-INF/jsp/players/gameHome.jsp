@@ -10,8 +10,10 @@
 <head>
     <title>Xtreme Parchis&Oca</title>
 	<link rel="stylesheet" href="/resources/css/base.css">
-	<link rel="stylesheet" href="/resources/css/createPlayer.css">
-
+	<link rel="stylesheet" href="/resources/css/form.css">
+    <h3>
+        <c:if test="${esAdmin}">Estas logueado como admin</c:if>
+    </h3>
 </head>
 <body>
     <h1 style="margin-top: 0.5em; margin-bottom: 0.10em;" class="title">Xtreme Parchis&Oca</h1>
@@ -20,8 +22,17 @@
     <a class="button" href = "<spring:url value="/players/joinGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Unirse a partida</div></a>
     
-    <c:if test="${authoriti}">New </c:if> Owner
     
-
+        <c:if test="${esAdmin}">
+            <div>    
+                <a class="button" href = "<spring:url value="/players"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                licorice-64px">Lista de jugadores</div></a>
+                <a class="button" href = "<spring:url value="/admins/create"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                licorice-64px">Crear admin</div></a>
+                <a class="button" href = "<spring:url value="/admins"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                licorice-64px">Lista admins</div></a>
+            </div>
+        </c:if>
 <canvas id="frame"></canvas>
+
 </body>
