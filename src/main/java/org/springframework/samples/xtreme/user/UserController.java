@@ -64,8 +64,12 @@ public class UserController {
             mav.addObject("user", user);
             mav.addObject("message", "El usuario o la contraseña no son correctos");
         }
-       Boolean esAdmin= u.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
-       System.out.println(esAdmin);
+        
+        Boolean esAdmin=false;
+        if(!u.getAuthorities().isEmpty()){
+         esAdmin= u.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
+       //System.out.println(esAdmin);
+        }
        /* Authentication a=SecurityContextHolder.getContext().getAuthentication();
         User u2=(User) a.getPrincipal();
         System.out.println(u2.getAuthorities());*/

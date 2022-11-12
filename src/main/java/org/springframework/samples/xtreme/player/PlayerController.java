@@ -2,8 +2,10 @@ package org.springframework.samples.xtreme.player;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -12,6 +14,7 @@ import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
+import org.springframework.samples.xtreme.user.Authorities;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -31,8 +34,10 @@ public class PlayerController {
     private final PlayerService playerService;
 
     private static final String VIEWS_FORM = "players/createPlayerForm";
-    private static final String USERS_LIST = "players/playersList";
+    private static final String PLAYERS_LIST = "players/playersList";
     private static final String VIEW_GAMEHOME = "players/gameHome";
+    private static final String CREATE_GAME = "players/createGame";
+
 
     @Autowired
     public PlayerController(PlayerService playerService) {
@@ -41,7 +46,7 @@ public class PlayerController {
 
     @GetMapping
     public ModelAndView showPlayerList() {
-        ModelAndView mav = new ModelAndView(USERS_LIST);
+        ModelAndView mav = new ModelAndView(PLAYERS_LIST);
         mav.addObject("players", this.playerService.getAllPlayers());
         return mav;
     }
@@ -49,6 +54,16 @@ public class PlayerController {
     @GetMapping(path="/create")
     public ModelAndView viewForm(){
         ModelAndView mav = new ModelAndView(VIEWS_FORM);
+/*
+        Authorities a= new Authorities();
+        a.setAuthority("player");
+
+        Set<Authorities> cjto= new HashSet<Authorities>();
+        cjto.add(a);
+
+        Player p= new Player();
+        p.getUser().setAuthorities(cjto);*/
+
         mav.addObject("player", new Player());
         return mav;
     }
@@ -85,13 +100,13 @@ public class PlayerController {
         return mav;
     }
 
-    /* 
+    
     @GetMapping(path="/createGame")
     public ModelAndView createGame() {
-        ModelAndView mav = new ModelAndView(VIEW_CREATEGAME);
+        ModelAndView mav = new ModelAndView(CREATE_GAME);
        // mav.addObject("players", playerService.getAllPlayers());
         return mav;
     }
-    */
+    
 
 }
