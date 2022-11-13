@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.xtreme.friendship.FriendshipService;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.user.Authorities;
@@ -36,18 +37,22 @@ public class PlayerController {
 
     private final PlayerService playerService;
     private final AuthoritiesService authoritiesService;
+    private final FriendshipService friendshipService;
 
 
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String PLAYERS_LIST = "players/playersList";
     private static final String VIEW_GAMEHOME = "players/gameHome";
     private static final String CREATE_GAME = "players/createGame";
+    private static final String FRIENDS = "players/friends";
 
 
     @Autowired
-    public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService) {
+    public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService,
+    FriendshipService friendshipService) {
         this.playerService = playerService;
         this.authoritiesService = authoritiesService;
+        this.friendshipService=friendshipService;
     }
 
     @GetMapping
@@ -122,5 +127,21 @@ public class PlayerController {
         return mav;
     }
     
+    @GetMapping(path = "/friends")
+    public ModelAndView friends(){
+        ModelAndView mav= new ModelAndView(FRIENDS);
 
+        // obtener el usuario actualmente logueado
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
+            }
+        if(userDetails!= null){
+        mav.addObject("myfriends", friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername()));
+        }
+        
+        return mav;
+    }
 }
