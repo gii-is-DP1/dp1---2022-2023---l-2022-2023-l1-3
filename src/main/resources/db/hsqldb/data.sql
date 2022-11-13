@@ -27,3 +27,5 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'Hamil','player');
 INSERT INTO users(username,password,enabled) VALUES ('elon','musk',TRUE);
 INSERT INTO players(id, first_name, last_name, username, email) VALUES (2,'Elon','Musk','elon','elon777@gmail.com');
 INSERT INTO authorities(id,username,authority) VALUES (3,'elon','player');
+
+INSERT INTO friendships (state,player1,player2) VALUES ('ACCEPTED',1,2); -- SE PONE EL PLAYER ID

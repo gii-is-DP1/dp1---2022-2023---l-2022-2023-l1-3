@@ -34,6 +34,12 @@
                 licorice-64px">Lista admins</div></a>
             </div>
         </c:if>
+
+    <c:if test="${esAdmin == false}">
+        <a class="button" href = "<spring:url value="/players/friends"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+        licorice-64px">Lista amigos</div></a>
+    </c:if>
+
 <canvas id="frame"></canvas>
 
 </body>
