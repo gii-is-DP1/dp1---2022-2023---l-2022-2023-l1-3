@@ -22,7 +22,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +42,7 @@ public class PlayerController {
     private final PlayerService playerService;
     private final AuthoritiesService authoritiesService;
     private final FriendshipService friendshipService;
+    private final PlayerValidator playerValidator;
 
 
     private static final String VIEWS_FORM = "players/createPlayerForm";
@@ -49,10 +54,16 @@ public class PlayerController {
 
     @Autowired
     public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService,
-    FriendshipService friendshipService) {
+    FriendshipService friendshipService, PlayerValidator playerValidator) {
         this.playerService = playerService;
         this.authoritiesService = authoritiesService;
         this.friendshipService=friendshipService;
+        this.playerValidator=playerValidator;
+    }
+
+    @InitBinder("player")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(playerValidator);
     }
 
     @GetMapping
@@ -70,31 +81,14 @@ public class PlayerController {
     }
 
     @PostMapping(path = "/create")
-    public ModelAndView createPlayer(@Valid Player player, BindingResult res){
+    public ModelAndView createPlayer(@Valid @ModelAttribute("player") Player player, BindingResult res){
         ModelAndView mav = new ModelAndView("redirect:/");
-        Player p = playerService.findByUsername(player.getUser().getUsername());
+
         if(res.hasErrors()){
             mav = new ModelAndView(VIEWS_FORM);
             mav.addObject("player", player);
-        } 
-        if(p!=null) {
-            mav = new ModelAndView(VIEWS_FORM);
-            mav.addObject("player", player);
-            if(p!=null && p.getUser().getUsername().equals(player.getUser().getUsername())) {
-                mav.addObject("message", "El nombre de usuario ya está registrado.");
-            }
-            if(p!=null && p.getEmail().equals(player.getEmail())) {
-                mav.addObject("message", "El email de usuario ya está registrado");
-            }
         } else{
-            Authorities a= new Authorities();
-            a.setId(player.getId());
-            a.setAuthority("player");
-            a.setUser(player.getUser());
-
             playerService.save(player);
-            authoritiesService.saveAuthorities(a);
-
         }
         return mav;
     }

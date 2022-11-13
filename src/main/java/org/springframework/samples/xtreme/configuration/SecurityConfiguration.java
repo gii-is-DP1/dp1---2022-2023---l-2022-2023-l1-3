@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/players/create", "/users/login","/users/logout").permitAll()
+				.antMatchers("/players/create", "/users/login","/users/logout", "/users/logout-screen").permitAll()
 				.antMatchers("/players/gameHome","/players/createGame","/players/friends").hasAnyAuthority("admin","player")
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/admins/**", "/players","/admins").hasAnyAuthority("admin")				
@@ -48,8 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				 	.loginPage("/users/login").defaultSuccessUrl("/players/gameHome")
 				 	.failureUrl("/login-error")
 				.and()
-					.logout().logoutUrl("/users/logout")
-						.logoutSuccessUrl("/"); 
+					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/users/logout")).logoutSuccessUrl("/users/logout-screen");
                 // Configuración para que funcione la consola de administración 
                 // de la BD H2 (deshabilitar las cabeceras de protección contra
                 // ataques de tipo csrf y habilitar los framesets si su contenido

@@ -82,7 +82,3 @@
 			</div>
     </form:form>
 </body>
-
-<script>
-	document.getElementById('password').type = 'password';
-</script>

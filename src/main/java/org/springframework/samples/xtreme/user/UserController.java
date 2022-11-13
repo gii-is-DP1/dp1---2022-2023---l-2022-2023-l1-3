@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,19 +29,22 @@ public class UserController {
     private static final String GAME_HOME = "players/gameHome";
     private static final String LOGOUT = "users/logout";
 
-	private final UserService userService;
-    private final AdminService adminService;
+    private final UserValidator userValidator;
 
 	@Autowired
-	public UserController(UserService userService, AdminService adminService) {
-		this.userService = userService;
-        this.adminService = adminService;
+	public UserController(UserValidator userValidator) {
+        this.userValidator = userValidator;
 	}
 
 	@InitBinder
 	public void setDisallowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+
+    @InitBinder("user")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(userValidator);
+    }
 
     @GetMapping("/login")
     public ModelAndView userLogin() {
@@ -50,32 +54,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView processLoginForm(@Valid User user, BindingResult result) {
+    public ModelAndView processLoginForm(@Valid @ModelAttribute("user") User user, BindingResult result) {
         ModelAndView mav = new ModelAndView(GAME_HOME);
-        User u = userService.findByUsername(user.getUsername()).get();
         if (result.hasErrors()) {
             mav = new ModelAndView(LOGIN_FORM);
             mav.addObject("user", user);
         }
-
-        if(u==null || !u.getUsername().equals(user.getUsername())
-            || !u.getPassword().equals(user.getPassword())) {
-
-            mav = new ModelAndView(LOGIN_FORM);
-            mav.addObject("user", user);
-            mav.addObject("message", "El usuario o la contraseña no son correctos");
-        }
-        
-        Boolean esAdmin=false;
-        if(!u.getAuthorities().isEmpty()){
-         esAdmin= u.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
-        }
-
-        mav.addObject("esAdmin", esAdmin);
         return mav;
     }
         
-    @GetMapping(path = "/logout")
+    @GetMapping(path = "/logout-screen")
     public ModelAndView userLogout() {
         ModelAndView mav = new ModelAndView(LOGOUT);
         return mav;
