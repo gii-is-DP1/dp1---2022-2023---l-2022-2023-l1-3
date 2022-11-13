@@ -29,3 +29,4 @@ INSERT INTO players(id, first_name, last_name, username, email) VALUES (2,'Elon'
 INSERT INTO authorities(id,username,authority) VALUES (3,'elon','player');
 
 INSERT INTO friendships (state,player1,player2) VALUES ('ACCEPTED',1,2); -- SE PONE EL PLAYER ID
+
