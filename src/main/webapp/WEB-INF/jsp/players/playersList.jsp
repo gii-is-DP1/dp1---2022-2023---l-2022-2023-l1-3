@@ -17,7 +17,8 @@
 
 </head>
 <body>
-    
+
+<a style="position: relative;" href="<spring:url value="players/gameHome" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
 <div>
 <table class="minimalistBlack">
@@ -48,10 +49,5 @@
 </c:forEach>
 </tbody>
 </table>
-</div>
-<div>
-    <footer>
-    <a href="<spring:url value="players/gameHome" htmlEscape="true"/>" class="previous2"> < Regresar</a>
-    </footer>
 </div>
 </body>

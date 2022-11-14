@@ -16,7 +16,9 @@
     <link rel="manifest" href="/resources/favicon/site.webmanifest">
 </head>
 <body>
-    
+
+<a style="position: relative;" href="<spring:url value="/players/gameHome" htmlEscape="true"/>" class="previous"> < Regresar</a>
+
 <table class="minimalistBlack">
 <thead>
 <tr>
@@ -45,10 +47,4 @@
 </c:forEach>
 </tbody>
 </table>
-
-<div>
-    <footer>
-    <a href="<spring:url value="/players/gameHome" htmlEscape="true"/>" class="previous2"> < Regresar</a>
-    </footer>
-</div>
 </body>

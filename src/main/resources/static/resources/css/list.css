@@ -8,6 +8,7 @@ table.minimalistBlack {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 table.minimalistBlack td, table.minimalistBlack th {

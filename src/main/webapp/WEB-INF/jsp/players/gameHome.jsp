@@ -15,12 +15,12 @@
     <link rel="manifest" href="/resources/favicon/site.webmanifest">
 	<link rel="stylesheet" href="/resources/css/base.css">
 	<link rel="stylesheet" href="/resources/css/form.css">
-    <a href="<spring:url value="/users/logout" htmlEscape="true"/>" class="previous"> < logout</a>
     <h3>
         <c:if test="${esAdmin}">Estas logueado como admin</c:if>
     </h3>
 </head>
 <body>
+    <a href="<spring:url value="/users/logout" htmlEscape="true"/>" class="previous"> < logout</a></logout>
     <h1 style="margin-top: 0.5em; margin-bottom: 0.10em;" class="title">Xtreme Parchis&Oca</h1>
     <a class="button" href="<spring:url value="/players/createGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
     licorice-64px">Crear partida</div></a>
