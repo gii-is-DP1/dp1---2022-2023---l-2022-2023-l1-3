@@ -13,6 +13,8 @@ import javax.validation.Valid;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.friendship.FriendshipService;
+import org.springframework.samples.xtreme.game.Game;
+import org.springframework.samples.xtreme.game.GameService;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.user.Authorities;
@@ -42,7 +44,10 @@ public class PlayerController {
     private final PlayerService playerService;
     private final AuthoritiesService authoritiesService;
     private final FriendshipService friendshipService;
+
     private final PlayerValidator playerValidator;
+    private final GameService gameService;
+
 
 
     private static final String VIEWS_FORM = "players/createPlayerForm";
@@ -54,13 +59,14 @@ public class PlayerController {
 
     @Autowired
     public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService,
-    FriendshipService friendshipService, PlayerValidator playerValidator) {
+    FriendshipService friendshipService, PlayerValidator playerValidator, GameService gameService) {
         this.playerService = playerService;
         this.authoritiesService = authoritiesService;
         this.friendshipService=friendshipService;
         this.playerValidator=playerValidator;
+        this.gameService=gameService;
     }
-
+    
     @InitBinder("player")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(playerValidator);
@@ -117,7 +123,30 @@ public class PlayerController {
     @GetMapping(path="/createGame")
     public ModelAndView createGame() {
         ModelAndView mav = new ModelAndView(CREATE_GAME);
-       // mav.addObject("players", playerService.getAllPlayers());
+        mav.addObject("game",new Game());
+      
+        return mav;
+    }
+
+    @PostMapping(path = "/createGame")
+    public ModelAndView createGame(@Valid Game game, BindingResult res){
+        ModelAndView mav = new ModelAndView("redirect:/lobby");
+       
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            Player player = playerService.findByUsername(userDetails.getUsername());
+            game.setCreatorPlayer(player.getUser().getUsername());
+          }
+
+        if(res.hasErrors()||game.getGameName()==null||game.getCreatorPlayer()==null){
+            mav = new ModelAndView(CREATE_GAME);
+            mav.addObject("game", game);
+            
+        }else{
+            gameService.save(game);
+        }
         return mav;
     }
     

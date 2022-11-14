@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,6 +20,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.xtreme.admin.Admin;
+import org.springframework.samples.xtreme.board.OcaBoard;
+import org.springframework.samples.xtreme.board.ParchisBoard;
 import org.springframework.samples.xtreme.chat.Chat;
 import org.springframework.samples.xtreme.model.BaseEntity;
 import org.springframework.samples.xtreme.player.Player;
@@ -33,19 +36,28 @@ import lombok.Setter;
 public class Game extends BaseEntity {
 
     @Column(name="num_players")
-    @NotNull
-    @Min(1)
+    //@NotNull
+    @Min(2)
     @Max(4)
     private Integer numPlayers;
 
+    @NotNull
+    private String gameName;
+
+    @Column(name="name_game")
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private TypeGame typeGame;
+
+    
+    @JoinColumn(name="name_creator_player")
+    //@NotNull
+    private String creatorPlayer;
+
  
     @Column(name = "isPublic")
-    @NotNull
-    private Boolean isPublic = true;
-
-    //@OneToOne(cascade= CascadeType.ALL)
-    //@JoinColumn(name="tablero_id")
-    //private Tablero tablero;
+    //@NotNull
+    private Boolean isPublic = false;
 
     @ManyToMany(mappedBy = "games")
     private List<Admin> administrators;
