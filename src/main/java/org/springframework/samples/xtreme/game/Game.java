@@ -49,10 +49,6 @@ public class Game extends BaseEntity {
     @NotNull
     private TypeGame typeGame;
 
-    //@OneToOne
-    //@JoinColumn(name="game_type")
-    //private GameType gameType;
-
     
     @JoinColumn(name="name_creator_player")
     //@NotNull
@@ -62,14 +58,6 @@ public class Game extends BaseEntity {
     @Column(name = "isPublic")
     //@NotNull
     private Boolean isPublic = false;
-
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name="oca_board_id")
-    private OcaBoard ocaBoard;
-
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name="parchis_board_id")
-    private ParchisBoard parchisBoard;
 
     @ManyToMany(mappedBy = "games")
     private List<Admin> administrators;
