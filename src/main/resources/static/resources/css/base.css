@@ -33,14 +33,7 @@ input[type=text] {
     font-size: 1.6vw;
     text-decoration: none;
 }
-.previous2 {
-    color: white;
-    position: absolute;
-    left: 0;
-    margin: 25px;
-    font-size: 1.6vw;
-    text-decoration: none;
-}
+
 .help-inline{
     color:red!important;
 }
