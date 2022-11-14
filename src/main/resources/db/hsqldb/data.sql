@@ -28,5 +28,14 @@ INSERT INTO users(username,password,enabled) VALUES ('elon','musk',TRUE);
 INSERT INTO players(id, first_name, last_name, username, email) VALUES (2,'Elon','Musk','elon','elon777@gmail.com');
 INSERT INTO authorities(id,username,authority) VALUES (3,'elon','player');
 
+INSERT INTO users(username,password,enabled) VALUES ('harry','maguire',TRUE);
+INSERT INTO players(id, first_name, last_name, username, email) VALUES (3,'harry','maguire','harry','diablosRojos@gmail.com');
+INSERT INTO authorities(id,username,authority) VALUES (4,'harry','player');
+
+INSERT INTO users(username,password,enabled) VALUES ('xavi','xavineta',TRUE);
+INSERT INTO players(id, first_name, last_name, username, email) VALUES (4,'Xavi','Hernandez','xavi','europaLeague@gmail.com');
+INSERT INTO authorities(id,username,authority) VALUES (5,'xavi','player');
+
 INSERT INTO friendships (state,player1,player2) VALUES ('ACCEPTED',1,2); -- SE PONE EL PLAYER ID
+INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',3,4);
 
