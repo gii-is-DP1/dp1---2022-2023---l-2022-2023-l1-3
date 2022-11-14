@@ -25,26 +25,24 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
         String username = user.getUsername();
-        Optional<User> u = userService.findByUsername(user.getUsername());
+        User u = userService.findByUsername(user.getUsername()).get();
 
         // Username validation
         if (!StringUtils.hasLength(username) || username.length()>10 || username.length()<4) {
 			errors.rejectValue("username", REQUIRED+" and between 4 and 10 characters", REQUIRED+" and between 4 and 10 character");
 		}
 
+        if (u!=null && !u.getUsername().equals(user.getUsername())) {
+            errors.rejectValue("username", "Username does not match", "Username does not match");
+        }
+
         // Password validation
         if (user.getPassword() == null) {
 			errors.rejectValue("password", REQUIRED, REQUIRED);
 		}
 
-        if (!u.get().getUsername().equals(user.getUsername())) {
-            errors.rejectValue("username", "Username does not match", "Username does not match");
-        }
-
-        if (!u.get().getPassword().equals(user.getPassword())) {
+        if (u!=null && !u.getPassword().equals(user.getPassword())) {
             errors.rejectValue("password", "Password does not match", "Password does not match");
         }
-    
-    }
-    
+    }  
 }

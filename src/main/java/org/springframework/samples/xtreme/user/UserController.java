@@ -36,14 +36,10 @@ public class UserController {
         this.userValidator = userValidator;
 	}
 
-	@InitBinder
-	public void setDisallowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
-
     @InitBinder("user")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(userValidator);
+        //binder.setDisallowedFields("id");
     }
 
     @GetMapping("/login")
@@ -55,7 +51,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ModelAndView processLoginForm(@Valid @ModelAttribute("user") User user, BindingResult result) {
-        ModelAndView mav = new ModelAndView(GAME_HOME);
+        ModelAndView mav = new ModelAndView("redirect:/players/gameHome");
         if (result.hasErrors()) {
             mav = new ModelAndView(LOGIN_FORM);
             mav.addObject("user", user);
