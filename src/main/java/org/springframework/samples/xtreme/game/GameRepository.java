@@ -11,5 +11,8 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
 
     @Query(value = "SELECT g FROM Game g WHERE g.isPublic = false")
     public Collection<Game> findByPrivateGame();
+
+    
+    
     
 }
