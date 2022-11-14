@@ -9,7 +9,10 @@ import org.springframework.samples.xtreme.user.AuthoritiesService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,16 +21,23 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(path = "/admins")
 public class AdminController{
     
-    private AdminService adminService;
+    private final AdminService adminService;
     private final AuthoritiesService authoritiesService;
+    private final AdminValidator adminValidator;
 
     private static final String VIEWS_FORM = "admins/createAdminForm";
     private static final String USERS_LIST = "admins/adminList";
 
     @Autowired
-    public AdminController(AdminService adminService,AuthoritiesService authoritiesService) {
+    public AdminController(AdminService adminService,AuthoritiesService authoritiesService,AdminValidator adminValidator) {
         this.adminService = adminService;
         this.authoritiesService = authoritiesService;
+        this.adminValidator = adminValidator;
+    }
+
+    @InitBinder("admin")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(adminValidator);
     }
 
     @GetMapping
@@ -45,31 +55,14 @@ public class AdminController{
     }
 
     @PostMapping(path = "/create")
-    public ModelAndView createAdmin(@Valid Admin admin, BindingResult res){
+    public ModelAndView createAdmin(@Valid @ModelAttribute("admin") Admin admin, BindingResult res){
         ModelAndView mav = new ModelAndView("redirect:/");
         Admin a = adminService.findByUsername(admin.getUser().getUsername());
         if(res.hasErrors()){
             mav = new ModelAndView(VIEWS_FORM);
             mav.addObject("admin", admin);
-        } 
-        if(a!=null) {
-            mav = new ModelAndView(VIEWS_FORM);
-            mav.addObject("admin", admin);
-            if(a.getUser().getUsername().equals(admin.getUser().getUsername())) {
-                mav.addObject("message", "El nombre de usuario ya está registrado.");
-            }
-            if(a.getEmail().equals(admin.getEmail())) {
-                mav.addObject("message", "El email de usuario ya está registrado");
-            }
         } else{
-            Authorities aut= new Authorities();
-            aut.setId(admin.getId());
-            aut.setAuthority("admin");
-            aut.setUser(admin.getUser());
-            
             adminService.save(admin);
-            authoritiesService.saveAuthorities(aut);
-
         }
         return mav;
     }
