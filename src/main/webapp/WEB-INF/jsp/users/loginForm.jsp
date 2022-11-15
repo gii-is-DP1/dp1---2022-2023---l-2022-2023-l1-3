@@ -72,7 +72,12 @@
 
 
     <form:form modelAttribute="user" class="form-horizontal">
-		<span class="help-inline"><c:out value="${message}"/></span>
+		<c:if test="${not empty param.error}">
+            <p style="color:red">
+                Your login attempt was not
+                successful, try again.
+            </p>
+        </c:if>
             <xtreme:inputField name="username" type="text" label="Usuario"/>
 			<xtreme:inputField name="password" type="password" label="Contraseña"/>
             <div class="form-group submit-buttons">

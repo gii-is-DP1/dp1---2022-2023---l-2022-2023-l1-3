@@ -46,8 +46,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
-				 	.loginPage("/users/login").defaultSuccessUrl("/players/gameHome")
-				 	.failureUrl("/login-error")
+					.usernameParameter("username")
+					.passwordParameter("password")
+					.loginPage("/users/login").failureUrl("/users/login?error=true")
 				.and()
 					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/users/logout")).logoutSuccessUrl("/users/logout-screen");
                 // Configuración para que funcione la consola de administración 
