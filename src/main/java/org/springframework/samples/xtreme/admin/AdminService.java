@@ -31,7 +31,7 @@ public class AdminService {
         this.userService.saveUser(p.getUser());  
         this.authoritiesService.saveAuthorities(p.getUser().getUsername(), "admin"); 
     }
-
+    
     @Transactional(readOnly = true)
     public Admin findByUsername(String username){
         return this.adminRepository.findByUsername(username);
