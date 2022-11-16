@@ -44,7 +44,7 @@ public class Game extends BaseEntity {
     @NotNull
     private String gameName;
 
-    @Column(name="name_game")
+    @Column(name="type_game")
     @Enumerated(EnumType.STRING)
     @NotNull
     private TypeGame typeGame;

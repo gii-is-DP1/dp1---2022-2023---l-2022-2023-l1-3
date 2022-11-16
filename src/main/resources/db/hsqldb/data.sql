@@ -39,3 +39,6 @@ INSERT INTO authorities(id,username,authority) VALUES (5,'xavi','player');
 INSERT INTO friendships (state,player1,player2) VALUES ('ACCEPTED',1,2); -- SE PONE EL PLAYER ID
 INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',3,4);
 
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id) VALUES
+(1,3,'PARCHIS', 'Partida 1', 1, TRUE, null);
+

@@ -24,7 +24,7 @@ public class GameService {
         return gameRepository.findById(gameId);
     }
 
-    @Transactional
+    
     public Collection<Game> getAll(){
         return gameRepository.findAll();
     }

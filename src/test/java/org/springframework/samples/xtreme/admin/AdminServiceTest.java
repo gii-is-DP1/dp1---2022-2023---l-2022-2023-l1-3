@@ -3,6 +3,7 @@ package org.springframework.samples.xtreme.admin;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -68,6 +69,18 @@ public class AdminServiceTest {
         }catch(Exception e){
             fail("No se ha guardado correctamente");
         }
+    }
+
+    @Test
+    public void testFindByUserNameSccesful(){
+        Admin admin = adminService.findByUsername("xtreme");
+        assertNotNull(admin);
+    }
+
+    @Test
+    public void testFindByUserNameFail(){
+        Admin admin = adminService.findByUsername("extremo");
+        assertNull(admin);
     }
 
 
