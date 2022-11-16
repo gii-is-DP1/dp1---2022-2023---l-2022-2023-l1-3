@@ -29,9 +29,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,7 +58,8 @@ public class PlayerController {
     private static final String VIEW_GAMEHOME = "players/gameHome";
     private static final String CREATE_GAME = "players/createGame";
     private static final String FRIENDS = "players/friends";
-
+    private static final String PROFILE = "players/viewProfile";
+    private static final String EDIT_PROFILE = "players/editProfile";
 
     @Autowired
     public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService,
@@ -146,4 +150,60 @@ public class PlayerController {
         
         return mav;
     }
+    @GetMapping(path="/{username}")
+    public ModelAndView showProfile(@PathVariable String username){
+        ModelAndView mav = new ModelAndView(PROFILE);
+        Player player = this.playerService.findByUsername(username);
+        mav.addObject("isBanned", player.getUser().isEnabled());
+        mav.addObject("player", player);
+        // obtener el usuario actualmente logueado
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        Boolean esAdmin = false;
+        Boolean esUserEqual = false;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
+            esUserEqual = userDetails.getUsername().equals(username);
+        }
+        
+        mav.addObject("esAdmin", esAdmin);
+        mav.addObject("esUserEqual", esUserEqual);
+        return mav;
+    }
+    @PostMapping(path="/{username}")
+    public ModelAndView showProfilePost(@Valid @ModelAttribute("player") Player player, BindingResult res, @PathVariable("username") String username){
+        ModelAndView mav = new ModelAndView("redirect:/users/"+ username);
+
+        if(res.hasErrors()){
+            mav = new ModelAndView(PROFILE);
+            mav.addObject("isBanned", player.getUser().isEnabled());
+            mav.addObject("player", player);
+        } else{
+            playerService.save(player);
+        }
+        return mav;
+    }
+    
+    @GetMapping(path="/{username}/edit")
+    public ModelAndView editProfile(@PathVariable("username") String username){
+        ModelAndView mav = new ModelAndView(EDIT_PROFILE);
+        Player player = this.playerService.findByUsername(username);
+        mav.addObject("player", player);
+        return mav;
+    }
+
+    @PostMapping(path="/{username}/edit")
+    public ModelAndView editProfilePost(@Valid @ModelAttribute("player") Player player, BindingResult res, @PathVariable("username") String username){
+        ModelAndView mav = new ModelAndView("redirect:/users/"+ username);
+
+        if(res.hasErrors()){
+            mav = new ModelAndView(EDIT_PROFILE);
+            mav.addObject("player", player);
+        } else{
+            playerService.save(player);
+        }
+        return mav;
+    }
+    
 }

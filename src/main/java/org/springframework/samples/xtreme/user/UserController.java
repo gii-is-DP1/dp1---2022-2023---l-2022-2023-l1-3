@@ -24,6 +24,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,14 @@ public class UserController {
     private static final String LOGIN_FORM = "users/loginForm";
     private static final String LOGOUT = "users/logout";
     private static final String HOME = "users/home";
+    private static final String PROFILE = "users/profile";
+    private static final String EDIT_PROFILE = "users/profile";
+    private final UserService userService;
+    
+    @Autowired
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -74,4 +83,5 @@ public class UserController {
         return mav;
     }
 
+    
 }
