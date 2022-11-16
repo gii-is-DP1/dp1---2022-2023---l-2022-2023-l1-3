@@ -22,11 +22,13 @@
 <body>
     <a href="<spring:url value="/users/logout" htmlEscape="true"/>" class="previous"> < logout</a></logout>
     <h1 style="margin-top: 0.5em; margin-bottom: 0.10em;" class="title">Xtreme Parchis&Oca</h1>
-    <a class="button" href="<spring:url value="/players/createGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-    licorice-64px">Crear partida</div></a>
-    <a class="button" href = "<spring:url value="/players/joinGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-        licorice-64px">Unirse a partida</div></a>
-    
+
+        <c:if test="${esAdmin == false}">
+            <a class="button" href="<spring:url value="/players/createGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            licorice-64px">Crear partida</div></a>
+            <a class="button" href = "<spring:url value="/players/joinGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            licorice-64px">Unirse a partida</div></a>
+        </c:if>
     
         <c:if test="${esAdmin}">
             <div>    

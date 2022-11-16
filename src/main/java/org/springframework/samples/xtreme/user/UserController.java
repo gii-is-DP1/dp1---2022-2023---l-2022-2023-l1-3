@@ -15,6 +15,7 @@ import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class UserController {
     
     private static final String LOGIN_FORM = "users/loginForm";
     private static final String LOGOUT = "users/logout";
+    private static final String HOME = "users/home";
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -50,6 +52,25 @@ public class UserController {
     @GetMapping(path = "/logout-screen")
     public ModelAndView userLogout() {
         ModelAndView mav = new ModelAndView(LOGOUT);
+        return mav;
+    }
+
+    @GetMapping(path="/home")
+    public ModelAndView gameHome() {
+        ModelAndView mav = new ModelAndView(HOME);
+
+        // obtener el usuario actualmente logueado
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        Boolean esAdmin = false;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+           System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
+           System.out.println("su rol es: "+ userDetails.getAuthorities());
+            esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
+          }
+
+        mav.addObject("esAdmin", esAdmin);
         return mav;
     }
 

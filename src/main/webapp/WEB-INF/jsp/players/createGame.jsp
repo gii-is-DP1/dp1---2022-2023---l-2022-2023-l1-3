@@ -27,7 +27,7 @@
 
 
 <body translate="no" class="vsc-initialized">
-    <a href="<spring:url value="/players/gameHome" htmlEscape="true" />" class="previous"> < Regresar</a>
+    <a href="<spring:url value="/users/home" htmlEscape="true" />" class="previous"> < Regresar</a>
   <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600px" height="100px" viewBox="0 0 600 100">
 	<defs>
 

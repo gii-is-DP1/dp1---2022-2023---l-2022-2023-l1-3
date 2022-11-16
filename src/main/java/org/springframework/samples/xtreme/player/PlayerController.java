@@ -98,27 +98,6 @@ public class PlayerController {
         }
         return mav;
     }
-
-
-    @GetMapping(path="/gameHome")
-    public ModelAndView gameHome() {
-        ModelAndView mav = new ModelAndView(VIEW_GAMEHOME);
-
-        // obtener el usuario actualmente logueado
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        Boolean esAdmin = false;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-           System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
-           System.out.println("su rol es: "+ userDetails.getAuthorities());
-            esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
-          }
-
-        mav.addObject("esAdmin", esAdmin);
-        return mav;
-    }
-
     
     @GetMapping(path="/createGame")
     public ModelAndView createGame() {
