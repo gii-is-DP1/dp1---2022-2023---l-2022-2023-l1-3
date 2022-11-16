@@ -35,7 +35,4 @@ public class Admin extends Person{
     @Email
     @NotEmpty
     private String email;
-
-    @ManyToMany
-    private List<Game> games;
 }

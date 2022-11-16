@@ -137,7 +137,7 @@ public class PlayerController {
         if (principal instanceof UserDetails) {
             userDetails = (UserDetails) principal;
             Player player = playerService.findByUsername(userDetails.getUsername());
-            game.setCreatorPlayer(player.getUser().getUsername());
+            game.setCreatorPlayer(player);
           }
 
         if(res.hasErrors()||game.getGameName()==null||game.getCreatorPlayer()==null){
