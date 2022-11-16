@@ -34,6 +34,10 @@ public class PlayerService {
         this.userService.saveUser(p.getUser());
         this.authoritiesService.saveAuthorities(p.getUser().getUsername(), "player");
     }
+    public void update(Player p){
+        this.playerRepository.save(p); 
+        this.userService.updateUser(p.getUser());
+    }
 
     @Transactional(readOnly = true)
     public Player findByUsername(String username){

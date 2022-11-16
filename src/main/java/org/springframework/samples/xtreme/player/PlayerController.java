@@ -23,6 +23,7 @@ import org.springframework.samples.xtreme.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,8 +33,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -172,16 +175,16 @@ public class PlayerController {
         return mav;
     }
     @PostMapping(path="/{username}")
-    public ModelAndView showProfilePost(@Valid @ModelAttribute("player") Player player, BindingResult res, @PathVariable("username") String username){
+    public ModelAndView showProfilePost(@RequestParam String enabled, @PathVariable("username") String username){
         ModelAndView mav = new ModelAndView("redirect:/users/"+ username);
-
-        if(res.hasErrors()){
-            mav = new ModelAndView(PROFILE);
-            mav.addObject("isBanned", player.getUser().isEnabled());
-            mav.addObject("player", player);
-        } else{
-            playerService.save(player);
+        Player player = this.playerService.findByUsername(username);
+        if(enabled.equals("true")){
+            player.getUser().setEnabled(true);
+        }else{
+            player.getUser().setEnabled(false);
         }
+        playerService.update(player);
+        
         return mav;
     }
     
@@ -189,6 +192,15 @@ public class PlayerController {
     public ModelAndView editProfile(@PathVariable("username") String username){
         ModelAndView mav = new ModelAndView(EDIT_PROFILE);
         Player player = this.playerService.findByUsername(username);
+        // obtener el usuario actualmente logueado
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        Boolean esUserEqual = false;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            esUserEqual = userDetails.getUsername().equals(username);
+        }
+        mav.addObject("esUserEqual", esUserEqual);
         mav.addObject("player", player);
         return mav;
     }
@@ -201,7 +213,7 @@ public class PlayerController {
             mav = new ModelAndView(EDIT_PROFILE);
             mav.addObject("player", player);
         } else{
-            playerService.save(player);
+            playerService.update(player);
         }
         return mav;
     }

@@ -19,28 +19,23 @@
 </head>
 <body>
     <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
-
-    <h1><c:out value = "${player.user.username}"/></h1>
-    <h2><c:out value = "${player.email}"/></h2>
     <c:if test = "${esUserEqual}">
-        <a class="button" href="<spring:url value="/users/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-        licorice-64px">Editar perfil</div></a>
-
-    </c:if>
-    <c:if test = "${esAdmin}">
-        <form class="form-horizontal">
-        <select name = "enabled" selected="${player.user.enabled}">
-			<option value= "true">Activo</option>
-			<option value= "false">Baneado</option>
-		  </select>
+    <form:form modelAttribute="player" class="form-horizontal">
+        <span class="help-inline"><c:out value="${message}"/></span>
+        <xtreme:inputField name="firstName" type="text" label="Nombre" val = "${player.firstName}"/>
+        <xtreme:inputField name="lastName" type="text" label="Apellido" val = "${player.lastName}"/>
+        <xtreme:inputField name="user.username" type="text" label="Usuario" val = "${player.user.username}"/>
+        <xtreme:inputField name="user.password" type="text" label="Contraseña" val = "${player.user.password}"/>
+        <xtreme:inputField name="email" type="text" label="Email" val = "${player.email}"/>
         <div class="form-group submit-buttons">
             <div class="col-sm-offset-2 col-sm-10">
-               <button class="button" type="submit">Guardar cambios</button>
+               <button class="button" type="submit">Actualizar</button>
             </div>
         </div>
-    </form>
-        <a class="button" href="<spring:url value="/users/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-        licorice-64px">Editar perfil</div></a>
+    </form:form>
+    </c:if>
+    <c:if test = "${esUserEqual==false}">
+    <h1>NO DEBERIAS ESTAR AQUI</h1>
 
     </c:if>
 
