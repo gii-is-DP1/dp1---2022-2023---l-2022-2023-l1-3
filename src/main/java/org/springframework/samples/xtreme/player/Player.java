@@ -34,7 +34,7 @@ public class Player extends Person {
     @NotEmpty
     private String email;
 
- /*
+/*
     @Column(name = "online")
     @NotEmpty
     private Boolean online= false;
@@ -42,6 +42,7 @@ public class Player extends Person {
     @Column(name = "pic_profile")
     private String picProfile;
 */
+
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
