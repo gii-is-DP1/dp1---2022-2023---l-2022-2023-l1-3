@@ -72,14 +72,18 @@ public class UserController {
         Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails=null;
         Boolean esAdmin = false;
+        String user = "";
         if (principal instanceof UserDetails) {
+
             userDetails = (UserDetails) principal;
            System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
            System.out.println("su rol es: "+ userDetails.getAuthorities());
             esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
+            user = userDetails.getUsername();
           }
 
         mav.addObject("esAdmin", esAdmin);
+        mav.addObject("user", user);
         return mav;
     }
 

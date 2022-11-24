@@ -23,7 +23,7 @@
     <h1><c:out value = "${player.user.username}"/></h1>
     <h2><c:out value = "${player.email}"/></h2>
     <c:if test = "${esUserEqual}">
-        <a class="button" href="<spring:url value="/users/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+        <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Editar perfil</div></a>
 
     </c:if>
@@ -39,7 +39,7 @@
             </div>
         </div>
     </form>
-        <a class="button" href="<spring:url value="/users/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+        <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Editar perfil</div></a>
 
     </c:if>

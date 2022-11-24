@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
@@ -47,6 +48,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @RequestMapping(path="/players")
 public class PlayerController {
 
+    
     private final PlayerService playerService;
     private final AuthoritiesService authoritiesService;
     private final FriendshipService friendshipService;
@@ -73,6 +75,8 @@ public class PlayerController {
         this.playerValidator=playerValidator;
         this.gameService=gameService;
     }
+    @Autowired
+    EntityManager em;
     
     @InitBinder("player")
     protected void initBinder(WebDataBinder binder) {
@@ -201,6 +205,7 @@ public class PlayerController {
             esUserEqual = userDetails.getUsername().equals(username);
         }
         mav.addObject("esUserEqual", esUserEqual);
+        System.out.println(esUserEqual);
         mav.addObject("player", player);
         return mav;
     }
@@ -208,13 +213,14 @@ public class PlayerController {
     @PostMapping(path="/{username}/edit")
     public ModelAndView editProfilePost(@Valid @ModelAttribute("player") Player player, BindingResult res, @PathVariable("username") String username){
         ModelAndView mav = new ModelAndView("redirect:/users/"+ username);
-
         if(res.hasErrors()){
             mav = new ModelAndView(EDIT_PROFILE);
             mav.addObject("player", player);
         } else{
             playerService.update(player);
+            
         }
+        
         return mav;
     }
     
