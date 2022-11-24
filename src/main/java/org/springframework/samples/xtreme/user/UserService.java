@@ -2,6 +2,8 @@ package org.springframework.samples.xtreme.user;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ public class UserService {
 	private UserRepository userRepository;
 
 	@Autowired
+	EntityManager em;
+
+	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -22,8 +27,15 @@ public class UserService {
 		user.setEnabled(true);
 		userRepository.save(user);
 	}
-	
+	@Transactional
+	public void updateUser(User user) throws DataAccessException {
+		userRepository.save(user);
+		em.flush();
+
+	}
+	@Transactional
 	public Optional<User> findByUsername(String username) {
 		return userRepository.findById(username);
 	}
+	
 }

@@ -7,6 +7,8 @@
               description="Label appears in red color if input is considered as invalid after submission" %>
 <%@ attribute name="type" required="true" rtexprvalue="true"
               description="Type of the input" %>
+<%@ attribute name="val" required="false" rtexprvalue="true"
+              description="value of the input" %>
 
 <spring:bind path="${name}">
     <c:set var="cssGroup" value="form-group ${status.error ? 'has-error' : '' }"/>
@@ -15,7 +17,7 @@
         <label class="col-sm-2 control-label">${label}</label>
 
         <div class="col-sm-10">
-            <form:input class="form-control" type="${type}" path="${name}"/>
+            <form:input class="form-control" type="${type}" path="${name}" value="${val}"/>
             <c:if test="${valid}">
                 <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
             </c:if>
