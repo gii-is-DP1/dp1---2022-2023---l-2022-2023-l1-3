@@ -28,7 +28,7 @@
         <xtreme:inputField name="user.password" type="text" label="Contraseña" val = "${player.user.password}"/>
         <xtreme:inputField name="email" type="text" label="Email" val = "${player.email}"/>
         <div class="form-group submit-buttons">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-2 col-sm-10" >
                <button class="button" type="submit">Actualizar</button>
             </div>
         </div>

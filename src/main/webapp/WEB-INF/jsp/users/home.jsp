@@ -24,10 +24,13 @@
     <h1 style="margin-top: 0.5em; margin-bottom: 0.10em;" class="title">Xtreme Parchis&Oca</h1>
 
         <c:if test="${esAdmin == false}">
+            <div style = 'margin-bottom: 6vh; margin-top: 6vh'>
             <a class="button" href="<spring:url value="/players/createGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-            licorice-64px">Crear partida</div></a>
+            licorice-64px">Crear partida</div></a></div>
+            <div style = 'margin-bottom: 6vh'>
             <a class="button" href = "<spring:url value="/players/joinGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Unirse a partida</div></a>
+            </div>
         </c:if>
     
         <c:if test="${esAdmin}">
@@ -42,12 +45,16 @@
         </c:if>
 
     <c:if test="${esAdmin == false}">
+        <div style = 'margin-bottom: 6vh'>
         <a class="button" href = "<spring:url value="/players/friends"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Lista amigos</div></a>
+        </div>
     </c:if>
     <c:if test="${esAdmin == false}">
+        <div>
         <a class="button" href = "<spring:url value="/players/${user}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">ver perfil</div></a>
+        </div>
     </c:if>
 
 
