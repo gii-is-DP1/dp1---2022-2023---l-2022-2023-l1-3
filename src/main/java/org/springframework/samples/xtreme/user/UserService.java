@@ -14,8 +14,6 @@ public class UserService {
 
 	private UserRepository userRepository;
 
-	@Autowired
-	EntityManager em;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -27,15 +25,25 @@ public class UserService {
 		user.setEnabled(true);
 		userRepository.save(user);
 	}
-	@Transactional
-	public void updateUser(User user) throws DataAccessException {
-		userRepository.save(user);
-		em.flush();
 
-	}
+	@Transactional
+    public void save(User u){
+        this.userRepository.save(u);
+    }
+
+
 	@Transactional
 	public Optional<User> findByUsername(String username) {
 		return userRepository.findById(username);
 	}
+
+	@Transactional
+    public void remove(User u){
+        this.userRepository.delete(u); 
+    }
 	
+	@Transactional
+    public void removeById(String userId){
+        this.userRepository.deleteById(userId);
+    }
 }

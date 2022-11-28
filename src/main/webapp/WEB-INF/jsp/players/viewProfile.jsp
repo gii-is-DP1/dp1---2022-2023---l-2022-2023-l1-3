@@ -28,17 +28,17 @@
 
     </c:if>
     <c:if test = "${esAdmin}">
-        <form class="form-horizontal">
-        <select name = "enabled" selected="${player.user.enabled}">
-			<option value= "true">Activo</option>
-			<option value= "false">Baneado</option>
+    <form:form modelAttribute="player" class="form-horizontal">
+        <select name = "enabled">
+			<option value= "activado">Activo</option>
+			<option value= "baneado">Baneado</option>
 		  </select>
         <div class="form-group submit-buttons">
             <div class="col-sm-offset-2 col-sm-10">
                <button class="button" type="submit">Guardar cambios</button>
             </div>
         </div>
-    </form>
+    </form:form>
         <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Editar perfil</div></a>
 
