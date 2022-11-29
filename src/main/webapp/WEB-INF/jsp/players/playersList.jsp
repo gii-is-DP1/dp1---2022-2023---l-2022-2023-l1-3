@@ -28,6 +28,7 @@
 <th>Apellido</th>
 <th>Usuario</th>
 <th>Email</th>
+<th>Acceso</th>
 </tr>
 </thead>
 <tbody>
@@ -44,6 +45,10 @@
         </td>
         <td>
             <c:out value="${player.email}"/>        
+        </td>
+        <td>
+            <a class="button" href = "<spring:url value="/players/${player.user.username}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            licorice-64px">Modificar acceso</div></a>       
         </td>
     </tr>
 </c:forEach>
