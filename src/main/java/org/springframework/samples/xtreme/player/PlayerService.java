@@ -19,8 +19,7 @@ public class PlayerService {
     private PlayerRepository playerRepository;
     private UserService userService;
     private AuthoritiesService authoritiesService;
-    @Autowired
-    EntityManager em;
+
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository, UserService userService, AuthoritiesService authoritiesService) {
@@ -38,16 +37,23 @@ public class PlayerService {
         this.userService.saveUser(p.getUser());
         this.authoritiesService.saveAuthorities(p.getUser().getUsername(), "player");
     }
-    @Transactional
-    public void update(Player p){
-        this.playerRepository.save(p); 
-        this.userService.updateUser(p.getUser());
-        em.flush();
-    }
+
 
     @Transactional(readOnly = true)
     public Player findByUsername(String username){
         return this.playerRepository.findByUsername(username);
     }
 
+    @Transactional
+    public void remove(Player p){
+        this.userService.remove(p.getUser());
+        this.playerRepository.delete(p); 
+    }
+
+    @Transactional
+    public void removeById(Integer playerId){
+        Player p= this.playerRepository.findById(playerId).get();
+        this.userService.remove(p.getUser());
+        this.playerRepository.delete(p); 
+    }
 }

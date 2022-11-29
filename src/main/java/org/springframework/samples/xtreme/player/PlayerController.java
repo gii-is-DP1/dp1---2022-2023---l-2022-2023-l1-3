@@ -21,6 +21,7 @@ import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.user.Authorities;
 import org.springframework.samples.xtreme.user.AuthoritiesService;
 import org.springframework.samples.xtreme.user.User;
+import org.springframework.samples.xtreme.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,6 +54,7 @@ public class PlayerController {
     private final PlayerService playerService;
     private final AuthoritiesService authoritiesService;
     private final FriendshipService friendshipService;
+    private final UserService userService;
 
     private final PlayerValidator playerValidator;
     private final GameService gameService;
@@ -60,7 +63,7 @@ public class PlayerController {
 
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String PLAYERS_LIST = "players/playersList";
-    private static final String VIEW_GAMEHOME = "players/gameHome";
+    private static final String VIEW_GAMEHOME = "users/home";
     private static final String CREATE_GAME = "players/createGame";
     private static final String FRIENDS = "players/friends";
     private static final String PROFILE = "players/viewProfile";
@@ -68,15 +71,16 @@ public class PlayerController {
 
     @Autowired
     public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService,
-    FriendshipService friendshipService, PlayerValidator playerValidator, GameService gameService) {
+    FriendshipService friendshipService, PlayerValidator playerValidator, GameService gameService,
+    UserService userService) {
         this.playerService = playerService;
         this.authoritiesService = authoritiesService;
         this.friendshipService=friendshipService;
         this.playerValidator=playerValidator;
         this.gameService=gameService;
+        this.userService=userService;
     }
-    @Autowired
-    EntityManager em;
+
     
     @InitBinder("player")
     protected void initBinder(WebDataBinder binder) {
@@ -178,16 +182,21 @@ public class PlayerController {
         mav.addObject("esUserEqual", esUserEqual);
         return mav;
     }
+
+    // HACER QUE DESDE LA LISTA DE VER TODOS LOS JUGADORES NOS LLEVE A: /players/{username}
     @PostMapping(path="/{username}")
     public ModelAndView showProfilePost(@RequestParam String enabled, @PathVariable("username") String username){
-        ModelAndView mav = new ModelAndView("redirect:/users/"+ username);
-        Player player = this.playerService.findByUsername(username);
-        if(enabled.equals("true")){
-            player.getUser().setEnabled(true);
+        ModelAndView mav = new ModelAndView("redirect:/players/"+ username);
+        
+        User user = this.playerService.findByUsername(username).getUser();
+        System.out.println("--- el usuario "+ user.getUsername()+" esta: "+ enabled);
+
+       if(enabled.equals("activado")){
+            user.setEnabled(true);
         }else{
-            player.getUser().setEnabled(false);
+            user.setEnabled(false);
         }
-        playerService.update(player);
+        this.userService.save(user);
         
         return mav;
     }
@@ -211,17 +220,21 @@ public class PlayerController {
     }
 
     @PostMapping(path="/{username}/edit")
-    public ModelAndView editProfilePost(@Valid @ModelAttribute("player") Player player, BindingResult res, @PathVariable("username") String username){
-        ModelAndView mav = new ModelAndView("redirect:/users/"+ username);
-        if(res.hasErrors()){
-            mav = new ModelAndView(EDIT_PROFILE);
-            mav.addObject("player", player);
-        } else{
-            playerService.update(player);
-            
-        }
+    public ModelAndView editProfilePost(@Valid @ModelAttribute("player") Player updatePlayer, BindingResult res, @PathVariable("username") String username){
+        ModelAndView mav = new ModelAndView("redirect:/"+ VIEW_GAMEHOME);
         
+        Player player=this.playerService.findByUsername(username);
+
+        player.setEmail(updatePlayer.getEmail());
+        player.setFirstName(updatePlayer.getFirstName());
+        player.setLastName(updatePlayer.getLastName());
+        player.getUser().setPassword(updatePlayer.getUser().getPassword());
+        //player.getUser().setUsername(updatePlayer.getUser().getUsername());
+
+        this.playerService.save(player);
+
         return mav;
+    
     }
     
 }
