@@ -19,7 +19,8 @@
         <c:if test="${esAdmin}">Estas logueado como admin</c:if>
     </h3>
 </head>
-<body>
+<body style = 'overflow-y: hidden;'>
+    
     <a href="<spring:url value="/users/logout" htmlEscape="true"/>" class="previous"> < logout</a></logout>
     <h1 style="margin-top: 0.5em; margin-bottom: 0.10em;" class="title">Xtreme Parchis&Oca</h1>
 

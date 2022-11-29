@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
+    <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
     <c:if test = "${esUserEqual}">
     <form:form modelAttribute="player" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>
