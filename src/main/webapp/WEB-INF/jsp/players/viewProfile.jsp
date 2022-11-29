@@ -20,7 +20,7 @@
 <body>
     
     <c:if test = "${esUserEqual}">
-        <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
+        <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
         <h1><c:out value = "${player.user.username}"/></h1>
         <h2><c:out value = "${player.email}"/></h2>
@@ -29,7 +29,7 @@
 
     </c:if>
     <c:if test = "${esAdmin}">
-        <a style="position: relative;" href="<spring:url value="/players" htmlEscape="true"/>" class="previous"> < Regresar</a>
+        <a style="position: absolute;" href="<spring:url value="/players" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
         <h1><c:out value = "${player.user.username}"/></h1>
         <h2><c:out value = "${player.email}"/></h2>
