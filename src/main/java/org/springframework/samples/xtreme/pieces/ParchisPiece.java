@@ -65,5 +65,14 @@ public class ParchisPiece extends BaseEntity{
     }
 
 
+    public Integer getPositionXInPixels(Integer size) {
+        //TODO
+        return null;
+    }
+  
+    public Integer getPositionYInPixels(Integer size) {
+        //TODO
+        return null;
+    }
     
 }

@@ -80,11 +80,4 @@ public class ParchisCell extends BaseEntity{
         return finalSquare.contains(this.position);
     }
 
-
-
-
-
-
-
-
 }
