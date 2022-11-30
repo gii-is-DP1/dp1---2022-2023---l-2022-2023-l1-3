@@ -19,7 +19,7 @@
 <body>
 
 <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
-
+<h1>Tus amigos</h1>
 <div>
 <table class="minimalistBlack">
 <thead>
@@ -55,4 +55,40 @@
 </tbody>
 </table>
 </div>
+<h1>Solicitudes de amistad</h1>
+<div>
+    <table class="minimalistBlack">
+    <thead>
+    <tr>
+    <th>Nombre jugador 1</th>
+    <th>Usuario jugador 1</th>
+    <th>Nombre jugador 2</th>
+    <th>Usuario jugador 2</th>
+    <th>Estado solicitud</th>
+    
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${myfriendsPending}" var="friend">
+        <tr>
+            <td>
+                <c:out value="${friend.player1.firstName}"/>
+            </td>
+            <td>
+                <c:out value="${friend.player1.user.username}"/>
+            </td>
+            <td>
+                <c:out value="${friend.player2.firstName}"/>    
+            </td>
+            <td>
+                <c:out value="${friend.player2.user.username}"/>        
+            </td>
+            <td>
+                <c:out value="${friend.friendshipState}"/>        
+            </td>
+        </tr>
+    </c:forEach>
+    </tbody>
+    </table>
+    </div>
 </body>

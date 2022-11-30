@@ -43,15 +43,24 @@ public class FriendshipService {
 
     @Transactional
     public Friendship saveFriendship(Friendship friendship){
-
-        Player player1 = playerRepository.findByUsername(friendship.getPlayer1().getUser().getUsername());
-        Player player2 = playerRepository.findByUsername(friendship.getPlayer2().getUser().getUsername());
-
-        friendship.setPlayer1(player1);
-        friendship.setPlayer2(player2);
-
         return friendshipRepository.save(friendship);
     }
 
-    
+    @Transactional
+    public Friendship saveFriendshipAccepted(Friendship friendship){
+        friendship.setFriendshipState(FriendshipState.ACCEPTED);
+        return friendshipRepository.save(friendship);
+    }
+
+    @Transactional
+    public Friendship saveFriendshipPending(Friendship friendship){
+        friendship.setFriendshipState(FriendshipState.PENDING);
+        return friendshipRepository.save(friendship);
+    }
+
+    @Transactional
+    public Friendship saveFriendshipCancelled(Friendship friendship){
+        friendship.setFriendshipState(FriendshipState.CANCELLED);
+        return friendshipRepository.save(friendship);
+    }
 }

@@ -34,14 +34,13 @@ public class Player extends Person {
     @NotEmpty
     private String email;
 
-/*
+
     @Column(name = "online")
-    @NotEmpty
     private Boolean online= false;
 
     @Column(name = "pic_profile")
-    private String picProfile;
-*/
+    private String picProfile="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdnLgVOTqJ1bMAiB3nUFTSK5p7SvctUcHF0g&usqp=CAU";
+
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)

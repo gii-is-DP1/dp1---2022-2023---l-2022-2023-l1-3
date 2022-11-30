@@ -21,7 +21,7 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'xtreme','admin');
 
 -- Players
 INSERT INTO users(username,password,enabled) VALUES ('Hamil','abcd',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email) VALUES (1,'James','Carter','Hamil','aaasss@gmail.com');
+INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (1,'James','Carter','Hamil','aaasss@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdnLgVOTqJ1bMAiB3nUFTSK5p7SvctUcHF0g&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (2,'Hamil','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('elon','musk',TRUE);
@@ -82,6 +82,7 @@ INSERT INTO authorities(id,username,authority) VALUES (16,'user10','player');
 
 INSERT INTO friendships (state,player1,player2) VALUES ('ACCEPTED',1,2); -- SE PONE EL PLAYER ID
 INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',3,4);
+INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',1,4);
 
 INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id) VALUES
 (1,3,'PARCHIS', 'Partida 1', 1, TRUE, null);

@@ -1,5 +1,6 @@
 package org.springframework.samples.xtreme.player;
 
+
 import java.security.Principal;
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,7 +14,9 @@ import javax.validation.Valid;
 
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.xtreme.friendship.Friendship;
 import org.springframework.samples.xtreme.friendship.FriendshipService;
+import org.springframework.samples.xtreme.friendship.FriendshipState;
 import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.game.GameService;
 import org.springframework.samples.xtreme.player.Player;
@@ -154,13 +157,39 @@ public class PlayerController {
         if (principal instanceof UserDetails) {
             userDetails = (UserDetails) principal;
             System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
-            }
+            Player p= playerService.findByUsername(userDetails.getUsername());
+            Friendship fs= new Friendship();
+            fs.setPlayer1(p);
+            fs.setFriendshipState(FriendshipState.PENDING);
+            mav.addObject("friendship", fs);    
+        }
         if(userDetails!= null){
         mav.addObject("myfriends", friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername()));
-        }
-        
+        mav.addObject("myfriendsPending", friendshipService.getPendingFriendshipsByUsername(userDetails.getUsername()));
+    } 
         return mav;
     }
+
+    /* 
+    // implementar este metodo, poniendo en la tabla de solicitudes pendientes dos botones, uno para aceptar y otro para rechazar la solicitud
+    @PostMapping(path = "/friends")
+    public ModelAndView friendshipPost(@Valid @ModelAttribute("friendship") Friendship fs, BindingResult res){
+        ModelAndView mav = new ModelAndView("redirect:/"+ FRIENDS);
+        
+        if(res.hasErrors()){
+            mav = new ModelAndView(FRIENDS);
+            mav.addObject("friendship", fs);
+        } else{
+            if(fs.getPlayer1()!=null && fs.getPlayer2()!=null){
+                friendshipService.saveFriendshipAccepted(fs);
+            }
+
+        }
+        return mav;
+    }
+    */
+    
+
     @GetMapping(path="/{username}")
     public ModelAndView showProfile(@PathVariable String username){
         ModelAndView mav = new ModelAndView(PROFILE);
@@ -183,7 +212,6 @@ public class PlayerController {
         return mav;
     }
 
-    // HACER QUE DESDE LA LISTA DE VER TODOS LOS JUGADORES NOS LLEVE A: /players/{username}
     @PostMapping(path="/{username}")
     public ModelAndView showProfilePost(@RequestParam String enabled, @PathVariable("username") String username){
         ModelAndView mav = new ModelAndView("redirect:/players/"+ username);
@@ -225,8 +253,10 @@ public class PlayerController {
         
         Player player=this.playerService.findByUsername(username);
 
+        player.setPicProfile(updatePlayer.getPicProfile());
         player.setEmail(updatePlayer.getEmail());
         player.setFirstName(updatePlayer.getFirstName());
+        player.setOnline(true);
         player.setLastName(updatePlayer.getLastName());
         player.getUser().setPassword(updatePlayer.getUser().getPassword());
         //player.getUser().setUsername(updatePlayer.getUser().getUsername());
