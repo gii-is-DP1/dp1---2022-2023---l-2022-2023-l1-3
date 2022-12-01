@@ -18,15 +18,19 @@
 
 </head>
 <body>
-        <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
+        <a style="position: absolute;" href="<spring:url value="/players/friends" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
-        <h1><c:out value = "${player.user.username}"/></h1>
-        <h2><c:out value = "${player.email}"/></h2>
+        Foto de perfil: <img src="${player.picProfile}" width="150" height="132">
+        <h1>firstName: <c:out value = "${player.firstName}"/></h1>
+        <h1>lastName: <c:out value = "${player.lastName}"/></h1>
+        <h1>Username: <c:out value = "${player.user.username}"/></h1>
+        <h2>Email: <c:out value = "${player.email}"/></h2>
+    
         <form:form modelAttribute="friendship" class="form-horizontal">
 
             <div class="form-group submit-buttons">
                 <div class="col-sm-offset-2 col-sm-10">
-                <button class="button" type="submit">Guardar cambios</button>
+                <button class="button" type="submit">Enviar solicitud</button>
                 </div>
             </div>
 

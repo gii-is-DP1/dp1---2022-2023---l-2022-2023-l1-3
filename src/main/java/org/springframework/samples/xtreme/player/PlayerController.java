@@ -73,6 +73,7 @@ public class PlayerController {
     private static final String PROFILE = "players/viewProfile";
     private static final String EDIT_PROFILE = "players/editProfile";
     private static final String CREATE_FRIENDSHIP = "players/createFriend";
+    private static final String LIST_PLAYERS = "players/listNewFriends";
 
 
     @Autowired
@@ -159,8 +160,8 @@ public class PlayerController {
         UserDetails userDetails=null;
         if (principal instanceof UserDetails) {
             userDetails = (UserDetails) principal;
-            System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
             Player p= playerService.findByUsername(userDetails.getUsername());
+
             Friendship fs= new Friendship();
             fs.setPlayer1(p);
             fs.setFriendshipState(FriendshipState.PENDING);
@@ -172,15 +173,43 @@ public class PlayerController {
             amigosByUsername.addAll(amigosByUsername2);
             mav.addObject("myfriends", amigosByUsername);
 
-        }   
-        if(userDetails!= null){
-    
-        mav.addObject("myfriendsPending", friendshipService.getPendingFriendshipsByUsername(userDetails.getUsername()));
-        mav.addObject("players", playerService.getAllPlayers());
-    } 
+            Collection<Friendship> colPending = friendshipService.getPendingFriendshipsByUsername(userDetails.getUsername());
+            List<Player> amigosByUsernamePending = colPending.stream().filter(x->x.getPlayer1().equals(p)).map(x->x.getPlayer2()).collect(Collectors.toList());    
+            List<Player> amigosByUsernamePending2 = colPending.stream().filter(x->x.getPlayer2().equals(p)).map(x->x.getPlayer1()).collect(Collectors.toList());    
+            amigosByUsernamePending.addAll(amigosByUsernamePending2);
+            mav.addObject("myfriendsPending", amigosByUsernamePending);
+           
+        }
         return mav;
     }
 
+    @GetMapping(path="/friends/sendFriendship")
+    public ModelAndView viewPlayers(){
+        ModelAndView mav = new ModelAndView(LIST_PLAYERS);
+
+                // obtener el usuario actualmente logueado
+                Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                UserDetails userDetails=null;
+                if (principal instanceof UserDetails) {
+                    userDetails = (UserDetails) principal;
+                    Player p= playerService.findByUsername(userDetails.getUsername());
+
+                    List<Player> jugadores=  playerService.getAllPlayers();
+
+                    Collection<Friendship> misAmigos= friendshipService.getFriendshipsByUsername(userDetails.getUsername());
+                    List<Player> amigos1 = misAmigos.stream().filter(x->x.getPlayer1().equals(p)).map(x->x.getPlayer2()).collect(Collectors.toList());    
+                    List<Player> amigos2 = misAmigos.stream().filter(x->x.getPlayer2().equals(p)).map(x->x.getPlayer1()).collect(Collectors.toList());    
+                    amigos1.addAll(amigos2);
+                    
+                    jugadores.removeAll(amigos1);
+                    jugadores.remove(p);
+                     mav.addObject("players", jugadores);
+            
+                }   
+
+
+        return mav;
+    }
 
     @GetMapping(path = "/friends/{username}")
     public ModelAndView createFriendship(@PathVariable String username){
@@ -203,8 +232,7 @@ public class PlayerController {
 
     @PostMapping(path="/friends/{username}")
     public ModelAndView editProfilePost(@Valid @ModelAttribute("frindship") Friendship friendship, BindingResult res, @PathVariable("username") String username){
-        ModelAndView mav = new ModelAndView("redirect:/"+ VIEW_GAMEHOME);
-        ModelAndView error = new ModelAndView("redirect:/"+FRIENDS);
+        ModelAndView mav = new ModelAndView("redirect:/"+FRIENDS);
 
         Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -213,20 +241,19 @@ public class PlayerController {
         Player player1 = playerService.findByUsername(usuarioActual);
         Player player2 = this.playerService.findByUsername(username);
 
- 
+
         if(player1 != player2){
             friendship.setPlayer1(player1);
             friendship.setPlayer2(player2);
 
-            Boolean existFrienship= (friendship.getPlayer1().equals(player1) || friendship.getPlayer2().equals(player1)) &&
-            (friendship.getPlayer1().equals(player2) || friendship.getPlayer2().equals(player2));
-
+            Collection<Friendship> amigos = friendshipService.getFriendshipsByUsername(player1.getUser().getUsername());
+            Boolean existFrienship= amigos.stream().anyMatch(x->x.getPlayer1().equals(player2) || x.getPlayer2().equals(player2));
+            
             if(!existFrienship){
             friendshipService.saveFriendship(friendship);
-            return mav;
             }
         }
-            return error;
+            return mav;
     }
     
 

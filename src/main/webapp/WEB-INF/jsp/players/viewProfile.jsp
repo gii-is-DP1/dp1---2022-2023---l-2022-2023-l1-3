@@ -25,6 +25,10 @@
     <h1>Username: <c:out value = "${player.user.username}"/></h1>
     <h2>Email: <c:out value = "${player.email}"/></h2>
 
+    <c:if test = "${esUserEqual == false}">
+        <a class="previous" onClick="history.go(-1);" htmlEscape="true"/> < Regresar</a>
+
+    </c:if>
     <c:if test = "${esUserEqual}">
         <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
