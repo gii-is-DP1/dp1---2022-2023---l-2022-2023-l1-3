@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -163,10 +164,17 @@ public class PlayerController {
             Friendship fs= new Friendship();
             fs.setPlayer1(p);
             fs.setFriendshipState(FriendshipState.PENDING);
-            mav.addObject("friendship", fs);    
-        }
+            mav.addObject("friendship", fs);
+
+            Collection<Friendship> col = friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername());
+            List<Player> amigosByUsername = col.stream().filter(x->x.getPlayer1().equals(p)).map(x->x.getPlayer2()).collect(Collectors.toList());    
+            List<Player> amigosByUsername2 = col.stream().filter(x->x.getPlayer2().equals(p)).map(x->x.getPlayer1()).collect(Collectors.toList());    
+            amigosByUsername.addAll(amigosByUsername2);
+            mav.addObject("myfriends", amigosByUsername);
+
+        }   
         if(userDetails!= null){
-        mav.addObject("myfriends", friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername()));
+    
         mav.addObject("myfriendsPending", friendshipService.getPendingFriendshipsByUsername(userDetails.getUsername()));
         mav.addObject("players", playerService.getAllPlayers());
     } 
@@ -281,7 +289,7 @@ public class PlayerController {
 
     @PostMapping(path="/{username}/edit")
     public ModelAndView editProfilePost(@Valid @ModelAttribute("player") Player updatePlayer, BindingResult res, @PathVariable("username") String username){
-        ModelAndView mav = new ModelAndView("redirect:/"+ VIEW_GAMEHOME);
+        ModelAndView mav = new ModelAndView("redirect:/players/{username}");
         
         Player player=this.playerService.findByUsername(username);
 

@@ -24,11 +24,9 @@
 <table class="minimalistBlack">
 <thead>
 <tr>
-<th>Nombre jugador 1</th>
-<th>Usuario jugador 1</th>
-<th>Nombre jugador 2</th>
-<th>Usuario jugador 2</th>
-<th>Estado solicitud</th>
+<th>Nombre jugador</th>
+<th>Apellido jugador</th>
+<th>Usuario jugador </th>
 
 </tr>
 </thead>
@@ -36,19 +34,13 @@
 <c:forEach items="${myfriends}" var="friend">
     <tr>
         <td>
-            <c:out value="${friend.player1.firstName}"/>
+            <c:out value="${friend.firstName}"/>
         </td>
         <td>
-            <c:out value="${friend.player1.user.username}"/>
+            <c:out value="${friend.lastName}"/>
         </td>
         <td>
-            <c:out value="${friend.player2.firstName}"/>    
-        </td>
-        <td>
-            <c:out value="${friend.player2.user.username}"/>        
-        </td>
-        <td>
-            <c:out value="${friend.friendshipState}"/>        
+            <c:out value="${friend.user.username}"/>
         </td>
     </tr>
 </c:forEach>
