@@ -1,5 +1,6 @@
 package org.springframework.samples.xtreme.player;
 
+
 import java.security.Principal;
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,7 +14,9 @@ import javax.validation.Valid;
 
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.xtreme.friendship.Friendship;
 import org.springframework.samples.xtreme.friendship.FriendshipService;
+import org.springframework.samples.xtreme.friendship.FriendshipState;
 import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.game.GameService;
 import org.springframework.samples.xtreme.player.Player;
@@ -68,6 +71,8 @@ public class PlayerController {
     private static final String FRIENDS = "players/friends";
     private static final String PROFILE = "players/viewProfile";
     private static final String EDIT_PROFILE = "players/editProfile";
+    private static final String CREATE_FRIENDSHIP = "players/createFriend";
+
 
     @Autowired
     public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService,
@@ -154,13 +159,69 @@ public class PlayerController {
         if (principal instanceof UserDetails) {
             userDetails = (UserDetails) principal;
             System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
-            }
+            Player p= playerService.findByUsername(userDetails.getUsername());
+            Friendship fs= new Friendship();
+            fs.setPlayer1(p);
+            fs.setFriendshipState(FriendshipState.PENDING);
+            mav.addObject("friendship", fs);    
+        }
         if(userDetails!= null){
         mav.addObject("myfriends", friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername()));
-        }
-        
+        mav.addObject("myfriendsPending", friendshipService.getPendingFriendshipsByUsername(userDetails.getUsername()));
+        mav.addObject("players", playerService.getAllPlayers());
+    } 
         return mav;
     }
+
+
+    @GetMapping(path = "/friends/{username}")
+    public ModelAndView createFriendship(@PathVariable String username){
+       ModelAndView mav= new ModelAndView(CREATE_FRIENDSHIP);
+       Player player = playerService.findByUsername(username);
+       Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       UserDetails userDetails=null;
+       if (principal instanceof UserDetails) {
+           userDetails = (UserDetails) principal;
+           System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
+           }
+       if(userDetails!= null){
+          mav.addObject("player", player);
+          mav.addObject("frienship", new Friendship());
+       }
+
+
+        return mav;
+    }
+
+    @PostMapping(path="/friends/{username}")
+    public ModelAndView editProfilePost(@Valid @ModelAttribute("frindship") Friendship friendship, BindingResult res, @PathVariable("username") String username){
+        ModelAndView mav = new ModelAndView("redirect:/"+ VIEW_GAMEHOME);
+        ModelAndView error = new ModelAndView("redirect:/"+FRIENDS);
+
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String usuarioActual = userDetails.getUsername();
+
+        Player player1 = playerService.findByUsername(usuarioActual);
+        Player player2 = this.playerService.findByUsername(username);
+
+ 
+        if(player1 != player2){
+            friendship.setPlayer1(player1);
+            friendship.setPlayer2(player2);
+
+            Boolean existFrienship= (friendship.getPlayer1().equals(player1) || friendship.getPlayer2().equals(player1)) &&
+            (friendship.getPlayer1().equals(player2) || friendship.getPlayer2().equals(player2));
+
+            if(!existFrienship){
+            friendshipService.saveFriendship(friendship);
+            return mav;
+            }
+        }
+            return error;
+    }
+    
+
     @GetMapping(path="/{username}")
     public ModelAndView showProfile(@PathVariable String username){
         ModelAndView mav = new ModelAndView(PROFILE);
@@ -183,7 +244,6 @@ public class PlayerController {
         return mav;
     }
 
-    // HACER QUE DESDE LA LISTA DE VER TODOS LOS JUGADORES NOS LLEVE A: /players/{username}
     @PostMapping(path="/{username}")
     public ModelAndView showProfilePost(@RequestParam String enabled, @PathVariable("username") String username){
         ModelAndView mav = new ModelAndView("redirect:/players/"+ username);
@@ -225,8 +285,10 @@ public class PlayerController {
         
         Player player=this.playerService.findByUsername(username);
 
+        player.setPicProfile(updatePlayer.getPicProfile());
         player.setEmail(updatePlayer.getEmail());
         player.setFirstName(updatePlayer.getFirstName());
+        player.setOnline(true);
         player.setLastName(updatePlayer.getLastName());
         player.getUser().setPassword(updatePlayer.getUser().getPassword());
         //player.getUser().setUsername(updatePlayer.getUser().getUsername());

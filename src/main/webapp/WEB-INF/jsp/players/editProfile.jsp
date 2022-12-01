@@ -22,6 +22,8 @@
     <c:if test = "${esUserEqual}">
     <form:form modelAttribute="player" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>
+        <xtreme:inputField name="picProfile" type="text" label="Pega la url de tu foto de perfil:" val = "${player.picProfile}"/>
+        <img src="${player.picProfile}" width="150" height="132">
         <xtreme:inputField name="firstName" type="text" label="Nombre" val = "${player.firstName}"/>
         <xtreme:inputField name="lastName" type="text" label="Apellido" val = "${player.lastName}"/>
         <xtreme:inputField name="user.username" type="text" label="Usuario" val = "${player.user.username}"/>

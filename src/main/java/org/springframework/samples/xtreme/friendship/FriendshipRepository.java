@@ -17,7 +17,7 @@ public interface FriendshipRepository extends CrudRepository<Friendship,Integer>
     @Query("SELECT f FROM Friendship f WHERE lower(f.player1.user.username) = lower(?1) or lower(f.player2.user.username) = lower(?1)")
     public Collection<Friendship> findAllByUsername(String username);
 
-    @Query("SELECT f FROM Friendship f WHERE (f.player2.user.username = ?1) and f.friendshipState = 'PENDING'")
+    @Query("SELECT f FROM Friendship f WHERE (lower(f.player1.user.username) = lower(?1) or lower(f.player2.user.username) = lower(?1)) and f.friendshipState = 'PENDING'")
     public Collection<Friendship> findAllPendingFriendshipByUsername(String username);
 
     @Query("SELECT f FROM Friendship f WHERE (lower(f.player1.user.username) = lower(?1) or lower(f.player2.user.username) = lower(?1)) and f.friendshipState = 'ACCEPTED'")
