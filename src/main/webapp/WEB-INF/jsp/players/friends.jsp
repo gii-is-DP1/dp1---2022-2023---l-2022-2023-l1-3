@@ -91,4 +91,37 @@
     </tbody>
     </table>
     </div>
+    <div>
+        <table id="tabla" class="minimalistBlack">
+        <thead>
+        <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Usuario</th>
+        <th>Solicitud amistad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${players}" var="player">
+            <tr>
+                <td>
+                    <c:out value="${player.firstName}"/>
+                </td>
+                <td>
+                    <c:out value="${player.lastName}"/>
+                </td>
+                <td>
+                    <c:out value="${player.user.username}"/>
+                </td>
+                <td>
+                    <a class="button" href = "<spring:url value="/players/friends/${player.user.username}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                    licorice-64px">Enviar solicitud</div></a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+        <tfoot></tfoot>
+        </table>
+    </div>
+
 </body>

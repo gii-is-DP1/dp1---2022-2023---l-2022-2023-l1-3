@@ -71,6 +71,8 @@ public class PlayerController {
     private static final String FRIENDS = "players/friends";
     private static final String PROFILE = "players/viewProfile";
     private static final String EDIT_PROFILE = "players/editProfile";
+    private static final String CREATE_FRIENDSHIP = "players/createFriend";
+
 
     @Autowired
     public PlayerController(PlayerService playerService,AuthoritiesService authoritiesService,
@@ -166,28 +168,58 @@ public class PlayerController {
         if(userDetails!= null){
         mav.addObject("myfriends", friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername()));
         mav.addObject("myfriendsPending", friendshipService.getPendingFriendshipsByUsername(userDetails.getUsername()));
+        mav.addObject("players", playerService.getAllPlayers());
     } 
         return mav;
     }
 
-    /* 
-    // implementar este metodo, poniendo en la tabla de solicitudes pendientes dos botones, uno para aceptar y otro para rechazar la solicitud
-    @PostMapping(path = "/friends")
-    public ModelAndView friendshipPost(@Valid @ModelAttribute("friendship") Friendship fs, BindingResult res){
-        ModelAndView mav = new ModelAndView("redirect:/"+ FRIENDS);
-        
-        if(res.hasErrors()){
-            mav = new ModelAndView(FRIENDS);
-            mav.addObject("friendship", fs);
-        } else{
-            if(fs.getPlayer1()!=null && fs.getPlayer2()!=null){
-                friendshipService.saveFriendshipAccepted(fs);
-            }
 
-        }
+    @GetMapping(path = "/friends/{username}")
+    public ModelAndView createFriendship(@PathVariable String username){
+       ModelAndView mav= new ModelAndView(CREATE_FRIENDSHIP);
+       Player player = playerService.findByUsername(username);
+       Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+       UserDetails userDetails=null;
+       if (principal instanceof UserDetails) {
+           userDetails = (UserDetails) principal;
+           System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
+           }
+       if(userDetails!= null){
+          mav.addObject("player", player);
+          mav.addObject("frienship", new Friendship());
+       }
+
+
         return mav;
     }
-    */
+
+    @PostMapping(path="/friends/{username}")
+    public ModelAndView editProfilePost(@Valid @ModelAttribute("frindship") Friendship friendship, BindingResult res, @PathVariable("username") String username){
+        ModelAndView mav = new ModelAndView("redirect:/"+ VIEW_GAMEHOME);
+        ModelAndView error = new ModelAndView("redirect:/"+FRIENDS);
+
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String usuarioActual = userDetails.getUsername();
+
+        Player player1 = playerService.findByUsername(usuarioActual);
+        Player player2 = this.playerService.findByUsername(username);
+
+ 
+        if(player1 != player2){
+            friendship.setPlayer1(player1);
+            friendship.setPlayer2(player2);
+
+            Boolean existFrienship= (friendship.getPlayer1().equals(player1) || friendship.getPlayer2().equals(player1)) &&
+            (friendship.getPlayer1().equals(player2) || friendship.getPlayer2().equals(player2));
+
+            if(!existFrienship){
+            friendshipService.saveFriendship(friendship);
+            return mav;
+            }
+        }
+            return error;
+    }
     
 
     @GetMapping(path="/{username}")
