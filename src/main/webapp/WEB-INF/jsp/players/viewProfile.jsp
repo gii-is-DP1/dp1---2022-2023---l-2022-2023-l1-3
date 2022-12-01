@@ -19,11 +19,19 @@
 </head>
 <body>
     
+    Foto de perfil: <img src="${player.picProfile}" width="150" height="132">
+    <h1>firstName: <c:out value = "${player.firstName}"/></h1>
+    <h1>lastName: <c:out value = "${player.lastName}"/></h1>
+    <h1>Username: <c:out value = "${player.user.username}"/></h1>
+    <h2>Email: <c:out value = "${player.email}"/></h2>
+
+    <c:if test = "${esUserEqual == false}">
+        <a class="previous" onClick="history.go(-1);" htmlEscape="true"/> < Regresar</a>
+
+    </c:if>
     <c:if test = "${esUserEqual}">
         <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
-        <h1><c:out value = "${player.user.username}"/></h1>
-        <h2><c:out value = "${player.email}"/></h2>
         <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Editar perfil</div></a>
 
@@ -31,8 +39,7 @@
     <c:if test = "${esAdmin}">
         <a style="position: absolute;" href="<spring:url value="/players" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
-        <h1><c:out value = "${player.user.username}"/></h1>
-        <h2><c:out value = "${player.email}"/></h2>
+
     <form:form modelAttribute="player" class="form-horizontal">
         <select name = "enabled">
 			<option value= "activado">Activo</option>

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Entity
-@Table(name ="friendships", uniqueConstraints = @UniqueConstraint(columnNames = {"player1", "player2"})) //para que no se puedan repetir las solicitudes
+@Table(name ="friendships") //para que no se puedan repetir las solicitudes
 public class Friendship extends BaseEntity{
     
     @Column(name = "state")
