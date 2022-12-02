@@ -89,3 +89,6 @@ INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',6,1);
 INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id) VALUES
 (1,3,'PARCHIS', 'Partida 1', 1, TRUE, null);
 
+
+
+

@@ -26,10 +26,10 @@
 
         <c:if test="${esAdmin == false}">
             <div style = 'margin-bottom: 6vh; margin-top: 6vh'>
-            <a class="button" href="<spring:url value="/players/createGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            <a class="button" href="<spring:url value="/games/createGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Crear partida</div></a></div>
             <div style = 'margin-bottom: 6vh'>
-            <a class="button" href = "<spring:url value="/players/joinGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            <a class="button" href = "<spring:url value="/games/joinGame"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Unirse a partida</div></a>
             </div>
         </c:if>
