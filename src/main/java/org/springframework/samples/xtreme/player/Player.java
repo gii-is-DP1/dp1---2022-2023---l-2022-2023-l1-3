@@ -39,7 +39,7 @@ public class Player extends Person {
     private Boolean online= false;
 
     @Column(name = "pic_profile")
-    private String picProfile="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdnLgVOTqJ1bMAiB3nUFTSK5p7SvctUcHF0g&usqp=CAU";
+    private String picProfile="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU";
 
 
     @Valid

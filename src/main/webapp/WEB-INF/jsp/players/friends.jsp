@@ -53,7 +53,7 @@
 </tbody>
 </table>
 </div>
-<h1>Solicitudes de amistad pendientes</h1>
+<h1>Solicitudes de amistad enviadas</h1>
 <div>
     <table class="minimalistBlack">
     <thead>
@@ -91,5 +91,8 @@
 
         <h2>Busca amigos nuevos</h2>
         <a class="button" href="<spring:url value="/players/friends/sendFriendship"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-        licorice-64px">Ver lista de jugadores</div></a></div>
+        licorice-64px">Ver lista de jugadores</div></a>
+        <h2>Revisa tus solicitudes de amistad recibidas</h2>
+        <a class="button" href="<spring:url value="/players/friends/pendingFriendships"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+        licorice-64px">Ver solicitudes de amistad</div></a></div>
 </body>

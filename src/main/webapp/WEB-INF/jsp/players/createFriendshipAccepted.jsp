@@ -18,7 +18,7 @@
 
 </head>
 <body>
-        <a style="position: absolute;" href="<spring:url value="/players/friends/sendFriendship" htmlEscape="true"/>" class="previous"> < Regresar</a>
+        <a style="position: absolute;" href="<spring:url value="/players/friends/pendingFriendships" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
         Foto de perfil: <img src="${player.picProfile}" width="150" height="132">
         <h1>firstName: <c:out value = "${player.firstName}"/></h1>
@@ -26,11 +26,16 @@
         <h1>Username: <c:out value = "${player.user.username}"/></h1>
         <h2>Email: <c:out value = "${player.email}"/></h2>
     
-        <form:form modelAttribute="friendship" class="form-horizontal">
+        <form:form modelAttribute="friendship">
+            
+                <select name = "state">
+                    <option value= "aceptado">Aceptar solicitud</option>
+                    <option value= "rechazado">Rechazar solicitud</option>
+                </select>
 
             <div class="form-group submit-buttons">
                 <div class="col-sm-offset-2 col-sm-10">
-                <button class="button" type="submit">Enviar solicitud</button>
+                <button class="button" type="submit">Confirmar</button>
                 </div>
             </div>
 
