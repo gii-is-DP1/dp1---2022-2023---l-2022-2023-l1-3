@@ -129,38 +129,7 @@ public class PlayerController {
     
 
 
-    @GetMapping(path="/createGame")
-    public ModelAndView createGame() {
-        ModelAndView mav = new ModelAndView(CREATE_GAME);
-        mav.addObject("game",new Game());
-      
-        return mav;
-    }
-
-    @PostMapping(path = "/createGame")
-    public ModelAndView createGame(@Valid Game game, BindingResult res){
-        ModelAndView mav = new ModelAndView("redirect:/lobby");
-       
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-            Player player = playerService.findByUsername(userDetails.getUsername());
-            game.setCreatorPlayer(player);
-          }
-
-        if(res.hasErrors()||game.getGameName()==null||game.getCreatorPlayer()==null){
-            mav = new ModelAndView(CREATE_GAME);
-            mav.addObject("game", game);
-            
-        }else{
-            gameService.save(game);
-        }
-        return mav;
-    }
     
-
-
     @GetMapping(path = "/friends")
     public ModelAndView friends(){
         ModelAndView mav= new ModelAndView(FRIENDS);

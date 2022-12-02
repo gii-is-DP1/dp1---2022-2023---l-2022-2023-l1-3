@@ -1,5 +1,6 @@
 package org.springframework.samples.xtreme.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -57,6 +58,7 @@ public class Game extends BaseEntity {
     //@NotNull
     private Boolean isPublic = false;
 
+    
     @ManyToMany(mappedBy = "games")
     private List<Player> players;
 
