@@ -21,63 +21,63 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'xtreme','admin');
 
 -- Players
 INSERT INTO users(username,password,enabled) VALUES ('Hamil','abcd',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (1,'James','Carter','Hamil','aaasss@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdnLgVOTqJ1bMAiB3nUFTSK5p7SvctUcHF0g&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (1,'James','Carter','Hamil','aaasss@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdnLgVOTqJ1bMAiB3nUFTSK5p7SvctUcHF0g&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (2,'Hamil','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('elon','musk',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (2,'Elon','Musk','elon','elon777@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCNjL_xJ_VGaNFfQQvtjzqHfbXQBMcTmMTw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (2,'Elon','Musk','elon','elon777@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCNjL_xJ_VGaNFfQQvtjzqHfbXQBMcTmMTw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (3,'elon','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('harry','maguire',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (3,'harry','maguire','harry','diablosRojos@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (3,'harry','maguire','harry','diablosRojos@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (4,'harry','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('xavi','xavineta',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (4,'Xavi','Hernandez','xavi','europaLeague@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (4,'Xavi','Hernandez','xavi','europaLeague@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (5,'xavi','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('juan','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (5,'Juan','Martinez','juan','prueba@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (5,'Juan','Martinez','juan','prueba@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (6,'juan','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user1','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (6,'User1','User_lastName1','user1','prueba1@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (6,'User1','User_lastName1','user1','prueba1@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (7,'user1','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user2','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (7,'User2','User_lastName2','user2','prueba2@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (7,'User2','User_lastName2','user2','prueba2@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (8,'user2','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user3','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (8,'User3','User_lastName3','user3','prueba3@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (8,'User3','User_lastName3','user3','prueba3@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (9,'user3','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user4','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (9,'User4','User_lastName4','user4','prueba4@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (9,'User4','User_lastName4','user4','prueba4@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (10,'user4','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user5','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (10,'User5','User_lastName5','user5','prueba5@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (10,'User5','User_lastName5','user5','prueba5@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (11,'user5','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user6','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (11,'User6','User_lastName6','user6','prueba6@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (11,'User6','User_lastName6','user6','prueba6@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (12,'user6','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user7','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (12,'User7','User_lastName7','user7','prueba7@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (12,'User7','User_lastName7','user7','prueba7@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (13,'user7','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user8','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (13,'User8','User_lastName8','user8','prueba8@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (13,'User8','User_lastName8','user8','prueba8@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (14,'user8','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user9','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (14,'User9','User_lastName9','user9','prueba9@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (14,'User9','User_lastName9','user9','prueba9@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (15,'user9','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user10','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,pic_profile) VALUES (15,'User10','User_lastName10','user10','prueba10@gmail.com','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (15,'User10','User_lastName10','user10','prueba10@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (16,'user10','player');
 
 INSERT INTO friendships (state,player1,player2) VALUES ('ACCEPTED',1,2); -- SE PONE EL PLAYER ID

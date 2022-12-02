@@ -398,7 +398,6 @@ public class PlayerController {
         player.setPicProfile(updatePlayer.getPicProfile());
         player.setEmail(updatePlayer.getEmail());
         player.setFirstName(updatePlayer.getFirstName());
-        player.setOnline(true);
         player.setLastName(updatePlayer.getLastName());
         player.getUser().setPassword(updatePlayer.getUser().getPassword());
         //player.getUser().setUsername(updatePlayer.getUser().getUsername());

@@ -35,8 +35,8 @@ public class Player extends Person {
     private String email;
 
 
-    @Column(name = "online")
-    private Boolean online= false;
+    @Column(name = "is_online")
+    private Boolean isOnline= false;
 
     @Column(name = "pic_profile")
     private String picProfile="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU";

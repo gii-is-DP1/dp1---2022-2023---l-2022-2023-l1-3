@@ -39,11 +39,16 @@ public class UserController {
     private static final String HOME = "users/home";
     private static final String PROFILE = "users/profile";
     private static final String EDIT_PROFILE = "users/profile";
+
     private final UserService userService;
+    private final PlayerService playerService;
+
+    private Player actualPlayer;
     
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService,PlayerService playerService){
         this.userService = userService;
+        this.playerService=playerService;
     }
 
     @InitBinder
@@ -61,6 +66,12 @@ public class UserController {
     @GetMapping(path = "/logout-screen")
     public ModelAndView userLogout() {
         ModelAndView mav = new ModelAndView(LOGOUT);
+
+        actualPlayer.setIsOnline(false);
+        this.playerService.save(actualPlayer);
+        actualPlayer=null;
+
+
         return mav;
     }
 
@@ -80,6 +91,11 @@ public class UserController {
            System.out.println("su rol es: "+ userDetails.getAuthorities());
             esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
             user = userDetails.getUsername();
+
+            actualPlayer= this.playerService.findByUsername(user);
+            actualPlayer.setIsOnline(true);
+            this.playerService.save(actualPlayer);
+
           }
 
         mav.addObject("esAdmin", esAdmin);
