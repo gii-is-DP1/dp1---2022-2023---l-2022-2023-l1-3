@@ -28,6 +28,7 @@
 <th>Apellido</th>
 <th>Usuario</th>
 <th>Perfil usuario</th>
+<th>Online</th>
 
 
 </tr>
@@ -47,6 +48,14 @@
         <td>
             <a class="button" href = "<spring:url value="/players/${friend.user.username}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Ver perfil</div></a>
+        </td>
+        <td>
+            <c:if test = "${friend.isOnline}">
+            Online
+            </c:if>
+             <c:if test = "${friend.isOnline == false}">
+            Offline
+            </c:if>
         </td>
     </tr>
 </c:forEach>

@@ -3,6 +3,7 @@ package org.springframework.samples.xtreme.player;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -150,6 +151,7 @@ public class PlayerController {
             List<Player> friends = col.stream().filter(x->x.getPlayer1().equals(p)).map(x->x.getPlayer2()).collect(Collectors.toList());    
             List<Player> friends2 = col.stream().filter(x->x.getPlayer2().equals(p)).map(x->x.getPlayer1()).collect(Collectors.toList());    
             friends.addAll(friends2);
+            friends.sort(Comparator.comparing(Player::getIsOnline).reversed());
             mav.addObject("myfriends", friends);
 
             Collection<Friendship> fs_Pending = friendshipService.getPendingFriendshipsByUsername(userDetails.getUsername());
