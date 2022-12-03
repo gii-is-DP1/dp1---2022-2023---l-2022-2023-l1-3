@@ -34,7 +34,7 @@
         <div class="large valign-text-middle vt323-normal-licorice-64px">
         <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>">Editar perfil</a>
 
-        <a class="button" href="<spring:url value="/players/${player.user.username}/myWins"  htmlEscape="true"/>">Ver historial de partidas</a>
+        <a class="button" href="<spring:url value="/players/${player.user.username}/myMatchPlayed"  htmlEscape="true"/>">Ver historial de partidas</a>
         </div>
 
     </c:if>

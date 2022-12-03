@@ -29,6 +29,7 @@
     <th>Host</th>
     <th>Privacidad</th>
     <th>Estado de la partida</th>
+    <th>Jugadores</th>
     <th>Ganador</th>
     </tr>
     </thead>
@@ -55,9 +56,14 @@
                 <c:out value="${game.stateGame}"/>
             </td>
             <td>
-                <c:if test="${game.usernamePlayerWinner == null}">Partida en juego...</c:if>
-                <c:if test="${game.usernamePlayerWinner != null}">
-                    <c:out value="${game.usernamePlayerWinner}"/>
+                <c:forEach items = "${game.players}" var = "player"> 
+                    <c:out value = "${player.user.username}"/>&nbsp;
+                </c:forEach>
+            </td>
+            <td>
+                <c:if test="${game.playerWinner == null}">Partida en juego...</c:if>
+                <c:if test="${game.playerWinner != null}">
+                    <c:out value="${game.playerWinner.user.username}"/>
                 </c:if>
             </td>
         </tr>

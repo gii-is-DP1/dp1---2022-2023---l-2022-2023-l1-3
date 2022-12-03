@@ -20,6 +20,43 @@
     <a style="position: relative;" href="<spring:url value="/players/${player.user.username}" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
 <div>
+    <h2>Historial de partidas</h2>
+    <table id="tabla" class="minimalistBlack">
+    <thead>
+    <tr>
+    <th>Nombre partida</th>
+    <th>Juego</th>
+    <th>Numero de jugadores</th>
+    <th>Host</th>
+    <th>Ganador</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${games}" var="game">
+        <tr>
+            <td>
+                <c:out value="${game.gameName}"/>
+            </td>
+            <td>
+                <c:out value="${game.typeGame}"/>
+            </td>
+            <td>
+                <c:out value="${game.numPlayers}"/>
+            </td>
+            <td>
+                <c:out value="${game.creatorPlayer.user.username}"/>
+            </td>
+            <td>
+                <c:out value="${game.playerWinner.user.username}"/>
+            </td>
+        </tr>
+    </c:forEach>
+    </tbody>
+    <tfoot></tfoot>
+    </table>
+</div>
+<h2>Mis partidas ganadas</h2>
+<div>
     <table id="tabla" class="minimalistBlack">
     <thead>
     <tr>
@@ -46,7 +83,7 @@
                 <c:out value="${game.creatorPlayer.user.username}"/>
             </td>
             <td>
-                <c:out value="${game.usernamePlayerWinner}"/>
+                <c:out value="${game.playerWinner.user.username}"/>
             </td>
         </tr>
     </c:forEach>

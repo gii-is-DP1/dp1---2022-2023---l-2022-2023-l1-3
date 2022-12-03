@@ -43,8 +43,9 @@ public class PlayerController {
     private static final String PLAYERS_LIST = "players/playersList";
     private static final String PROFILE = "players/viewProfile";
     private static final String EDIT_PROFILE = "players/editProfile";
-    private static final String MY_WINS= "players/myWins";
+    private static final String ALL_MY_MATCHS= "players/allMyMatchs";
 
+    
 
     @Autowired
     public PlayerController(PlayerService playerService, PlayerValidator playerValidator,
@@ -118,7 +119,7 @@ public class PlayerController {
 
     @PostMapping(path="/{username}")
     public ModelAndView showProfilePost(@RequestParam String enabled, @PathVariable("username") String username){
-        ModelAndView mav = new ModelAndView("redirect:/players/"+ username);
+        ModelAndView mav = new ModelAndView("redirect:/players");
         
         User user = this.playerService.findByUsername(username).getUser();
         System.out.println("--- el usuario "+ user.getUsername()+" esta: "+ enabled);
@@ -172,12 +173,17 @@ public class PlayerController {
     
     }
     
-    @GetMapping(path="{username}/myWins")
-    public ModelAndView matchWinned(@PathVariable("username") String username){
-        ModelAndView mav = new ModelAndView(MY_WINS);
-        List<Game> gamesWinned=gameService.getAll().stream().filter(x->x.getUsernamePlayerWinner() !=null && x.getUsernamePlayerWinner().equals(username)).collect(Collectors.toList());
+
+    @GetMapping(path="{username}/myMatchPlayed")
+    public ModelAndView allMyMatch(@PathVariable("username") String username){
+        ModelAndView mav = new ModelAndView(ALL_MY_MATCHS);
+        Player p= this.playerService.findByUsername(username);
+        List<Game> games=gameService.getAll().stream().filter(x->x.getPlayers().contains(p)).collect(Collectors.toList());
+        mav.addObject("games", games);
+        mav.addObject("player", p);
+
+        List<Game> gamesWinned=gameService.getAll().stream().filter(x->x.getPlayerWinner() !=null && x.getPlayerWinner().getUser().getUsername().equals(username)).collect(Collectors.toList());
         mav.addObject("gamesWinned", gamesWinned);
-        mav.addObject("player", this.playerService.findByUsername(username));
         return mav;
     }
 }
