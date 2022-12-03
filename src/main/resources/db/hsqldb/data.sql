@@ -86,9 +86,18 @@ INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',1,4);
 INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',6,1);
 
 
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id) VALUES
-(1,3,'PARCHIS', 'Partida 1', 1, TRUE, null);
-
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+(1,3,'PARCHIS', 'Partida 1', 1, TRUE, null,'WAITING_PLAYERS');
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+(2,2,'PARCHIS', 'Partida 2', 2, TRUE, null,'WAITING_PLAYERS');
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+(3,3,'PARCHIS', 'Partida 3', 3, TRUE, null,'STARTED');
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game,player_winner) VALUES
+(4,4,'PARCHIS', 'Partida 4', 4, TRUE, null,'FINISHED','Hamil');
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game,player_winner) VALUES
+(5,3,'PARCHIS', 'Partida 5', 1, TRUE, null,'FINISHED','Hamil');
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game,player_winner) VALUES
+(6,3,'PARCHIS', 'Partida 6', 1, FALSE, null,'FINISHED','xavi');
 
 
 

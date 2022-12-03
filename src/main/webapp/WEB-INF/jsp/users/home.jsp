@@ -47,7 +47,10 @@
                     <a class="button" href = "<spring:url value="/admins"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
                     licorice-64px">Lista admins</div></a>
                 </div>
-    
+                <div style = 'margin-bottom: 9vh'>
+                    <a class="button" href = "<spring:url value="/admins/listAllGames"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                    licorice-64px">Ver listado de partidas</div></a>
+                </div>
         </c:if>
 
     <c:if test="${esAdmin == false}">

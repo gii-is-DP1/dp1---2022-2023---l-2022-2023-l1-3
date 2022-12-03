@@ -1,49 +1,22 @@
 package org.springframework.samples.xtreme.friendship;
-import java.security.Principal;
+
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.xtreme.friendship.Friendship;
-import org.springframework.samples.xtreme.friendship.FriendshipService;
-import org.springframework.samples.xtreme.friendship.FriendshipState;
-import org.springframework.samples.xtreme.game.Game;
-import org.springframework.samples.xtreme.game.GameService;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
-import org.springframework.samples.xtreme.user.Authorities;
-import org.springframework.samples.xtreme.user.AuthoritiesService;
-import org.springframework.samples.xtreme.user.User;
-import org.springframework.samples.xtreme.user.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -53,10 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class FriendshipController {
 
     private final PlayerService playerService;
-    private final AuthoritiesService authoritiesService;
     private final FriendshipService friendshipService;
-    private final UserService userService;
-    private final GameService gameService;
 
 
     private static final String FRIENDS = "friendship/friends";
@@ -67,14 +37,9 @@ public class FriendshipController {
 
 
     @Autowired
-    public FriendshipController(PlayerService playerService,AuthoritiesService authoritiesService,
-    FriendshipService friendshipService, GameService gameService,
-    UserService userService) {
+    public FriendshipController(PlayerService playerService,FriendshipService friendshipService) {
         this.playerService = playerService;
-        this.authoritiesService = authoritiesService;
         this.friendshipService=friendshipService;
-        this.gameService=gameService;
-        this.userService=userService;
     }
 
     @GetMapping
@@ -238,7 +203,6 @@ public class FriendshipController {
         }
             return mav;
     }
-    
-   
+     
     
 }
