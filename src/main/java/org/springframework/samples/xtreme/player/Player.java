@@ -47,8 +47,7 @@ public class Player extends Person {
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 
-    @ManyToMany
-    @JoinColumn(name = "games")
+    @ManyToMany(mappedBy = "players")
     private List<Game> games;
 
 }

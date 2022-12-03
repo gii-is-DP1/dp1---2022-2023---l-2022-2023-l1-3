@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
     <link rel="manifest" href="/resources/favicon/site.webmanifest">
-
+    
 </head>
 <body>
         <a style="position: absolute;" href="<spring:url value="/games/createGame" htmlEscape="true"/>" class="previous"> < Regresar</a>
@@ -32,11 +32,11 @@
             <h2>Privacidad: privada</h2>
         </c:if>
         <h2>
-            Lista jugadores: <c:out value = "${lista}"/>
+            Lista jugadores:<c:forEach items = "${game.players}" var = "player"> 
+                <c:out value = "${player.user.username}"/>
+            </c:forEach>
         </h2>
-        <c:forEach items = "${lista}" var = "player"> 
-            <c:out value = "${player}"/>
-        </c:forEach>
+
             <div class="form-group submit-buttons">
                 <div class="col-sm-offset-2 col-sm-10">
                 <button class="button" type="submit">Empezar partida</button>

@@ -57,10 +57,8 @@ public class GameController {
             userDetails = (UserDetails) principal;
             Player player = playerService.findByUsername(userDetails.getUsername());
             game.setCreatorPlayer(player);
-            List<Player> players = new ArrayList<>();
-            players.add(player);
-            game.setPlayers(players);
 
+            game.addPlayerToGame(player);
           }
 
         if(res.hasErrors()||game.getGameName()==null||game.getCreatorPlayer()==null){
