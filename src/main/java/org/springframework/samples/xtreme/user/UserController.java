@@ -67,10 +67,11 @@ public class UserController {
     public ModelAndView userLogout() {
         ModelAndView mav = new ModelAndView(LOGOUT);
 
+        if(actualPlayer != null){
         actualPlayer.setIsOnline(false);
         this.playerService.save(actualPlayer);
         actualPlayer=null;
-
+        }
 
         return mav;
     }
@@ -91,11 +92,11 @@ public class UserController {
            System.out.println("su rol es: "+ userDetails.getAuthorities());
             esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
             user = userDetails.getUsername();
-
+            if(!esAdmin){
             actualPlayer= this.playerService.findByUsername(user);
             actualPlayer.setIsOnline(true);
             this.playerService.save(actualPlayer);
-
+            }
           }
 
         mav.addObject("esAdmin", esAdmin);

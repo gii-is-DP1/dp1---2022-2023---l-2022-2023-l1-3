@@ -52,7 +52,7 @@
 
     <c:if test="${esAdmin == false}">
         <div style = 'margin-bottom: 6vh'>
-        <a class="button" href = "<spring:url value="/players/friends"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+        <a class="button" href = "<spring:url value="/friends"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
         licorice-64px">Lista amigos</div></a>
         </div>
     </c:if>

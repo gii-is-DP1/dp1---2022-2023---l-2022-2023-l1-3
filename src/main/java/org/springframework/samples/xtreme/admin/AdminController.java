@@ -56,7 +56,7 @@ public class AdminController{
 
     @PostMapping(path = "/create")
     public ModelAndView createAdmin(@Valid @ModelAttribute("admin") Admin admin, BindingResult res){
-        ModelAndView mav = new ModelAndView("redirect:/");
+        ModelAndView mav = new ModelAndView("redirect:/users/home");
         Admin a = adminService.findByUsername(admin.getUser().getUsername());
         if(res.hasErrors()){
             mav = new ModelAndView(VIEWS_FORM);
