@@ -3,11 +3,8 @@ package org.springframework.samples.xtreme.admin;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.samples.xtreme.user.Authorities;
-import org.springframework.samples.xtreme.user.AuthoritiesService;
+import org.springframework.samples.xtreme.game.GameService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +19,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminController{
     
     private final AdminService adminService;
-    private final AuthoritiesService authoritiesService;
     private final AdminValidator adminValidator;
+    private final GameService gameService;
 
     private static final String VIEWS_FORM = "admins/createAdminForm";
     private static final String USERS_LIST = "admins/adminList";
+    private static final String ALL_GAMES = "admins/listAllGames";
 
     @Autowired
-    public AdminController(AdminService adminService,AuthoritiesService authoritiesService,AdminValidator adminValidator) {
+    public AdminController(AdminService adminService,AdminValidator adminValidator,GameService gameService) {
         this.adminService = adminService;
-        this.authoritiesService = authoritiesService;
         this.adminValidator = adminValidator;
+        this.gameService=gameService;
     }
 
     @InitBinder("admin")
@@ -56,14 +54,20 @@ public class AdminController{
 
     @PostMapping(path = "/create")
     public ModelAndView createAdmin(@Valid @ModelAttribute("admin") Admin admin, BindingResult res){
-        ModelAndView mav = new ModelAndView("redirect:/");
-        Admin a = adminService.findByUsername(admin.getUser().getUsername());
+        ModelAndView mav = new ModelAndView("redirect:/users/home");
         if(res.hasErrors()){
             mav = new ModelAndView(VIEWS_FORM);
             mav.addObject("admin", admin);
         } else{
             adminService.save(admin);
         }
+        return mav;
+    }
+
+    @GetMapping(path="/listAllGames")
+    public ModelAndView viewAllGames(){
+        ModelAndView mav = new ModelAndView(ALL_GAMES);
+        mav.addObject("games", this.gameService.getAll());
         return mav;
     }
 }

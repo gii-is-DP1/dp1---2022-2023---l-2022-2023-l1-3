@@ -18,7 +18,7 @@
 
 </head>
 <body>
-        <a style="position: absolute;" href="<spring:url value="/players/friends/sendFriendship" htmlEscape="true"/>" class="previous"> < Regresar</a>
+        <a style="position: absolute;" href="<spring:url value="/friends/sendFriendship" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
         Foto de perfil: <img src="${player.picProfile}" width="150" height="132">
         <h1>firstName: <c:out value = "${player.firstName}"/></h1>

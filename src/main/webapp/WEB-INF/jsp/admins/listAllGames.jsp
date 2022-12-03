@@ -16,41 +16,54 @@
     <link rel="manifest" href="/resources/favicon/site.webmanifest">
 
 </head>
-
 <body>
+    <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
-    <a style="position: relative;" href="<spring:url value="/players/friends" htmlEscape="true"/>" class="previous"> < Regresar</a>
-
-<h1>Solicitudes de amistad recibidas</h1>
 <div>
-    <table class="minimalistBlack">
+    <table id="tabla" class="minimalistBlack">
     <thead>
     <tr>
-    <th>Nombre</th>
-    <th>Apellido</th>
-    <th>Usuario</th>
-    <th>Aceptar/Rechazar</th>
+    <th>Nombre partida</th>
+    <th>Juego</th>
+    <th>Numero de jugadores</th>
+    <th>Host</th>
+    <th>Privacidad</th>
+    <th>Estado de la partida</th>
+    <th>Ganador</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${friendsPending}" var="friend">
+    <c:forEach items="${games}" var="game">
         <tr>
             <td>
-                <c:out value="${friend.firstName}"/>
+                <c:out value="${game.gameName}"/>
             </td>
             <td>
-                <c:out value="${friend.lastName}"/>
+                <c:out value="${game.typeGame}"/>
             </td>
             <td>
-                <c:out value="${friend.user.username}"/>
+                <c:out value="${game.numPlayers}"/>
             </td>
             <td>
-                <a class="button" href = "<spring:url value="/players/friends/pendingFriendships/${friend.user.username}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-                licorice-64px">Ver usuario</div></a>
+                <c:out value="${game.creatorPlayer.user.username}"/>
+            </td>
+            <td>
+                <c:if test="${game.isPublic}">Publica</c:if>
+                <c:if test="${game.isPublic == false}">Privada</c:if>
+            </td>
+            <td>
+                <c:out value="${game.stateGame}"/>
+            </td>
+            <td>
+                <c:if test="${game.usernamePlayerWinner == null}">Partida en juego...</c:if>
+                <c:if test="${game.usernamePlayerWinner != null}">
+                    <c:out value="${game.usernamePlayerWinner}"/>
+                </c:if>
             </td>
         </tr>
     </c:forEach>
     </tbody>
+    <tfoot></tfoot>
     </table>
-    </div>
+</div>
 </body>

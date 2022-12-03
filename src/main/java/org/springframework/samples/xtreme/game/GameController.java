@@ -3,7 +3,6 @@ package org.springframework.samples.xtreme.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -29,7 +28,6 @@ public class GameController {
     private final GameService gameService;
     private final PlayerService playerService;
 
-    private static final String VIEW_GAMEHOME = "users/home";
     private static final String CREATE_GAME = "games/createGame";
     private static final String VIEW_GAMES = "games/viewGames";
     private static final String LOBBY_VIEW = "games/lobby";
@@ -88,7 +86,7 @@ public class GameController {
     public ModelAndView listingGames(){
         ModelAndView mav = new ModelAndView(VIEW_GAMES);
         Collection<Game> games = gameService.getAll();
-        List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getNumPlayers() <= 3).collect(Collectors.toList());
+        List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getStateGame().equals(StateGame.WAITING_PLAYERS)).collect(Collectors.toList());
         
         mav.addObject("games",filter);
         return mav;
