@@ -106,8 +106,10 @@ INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_publi
 (7,4,'OCA', 'Partida 7', 6, TRUE, null,'WAITING_PLAYERS');
 INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
 (8,4,'OCA', 'Partida 8', 8, TRUE, null,'WAITING_PLAYERS');
+INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+(9,2,'PARCHIS', 'Partida 9', 15, TRUE, null,'WAITING_PLAYERS');
 
 INSERT INTO rel_games_players(game_id,player_id) VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,7),(2,2),(2,8),(3,1),
-(3,10),(4,12),(4,11),(4,9),(5,5),(5,13),(6,12),(6,5),(7,6),(8,8),(8,10);
+(3,10),(4,12),(4,11),(4,9),(5,5),(5,13),(6,12),(6,5),(7,6),(8,8),(8,10),(9,15),(9,14);
 
 

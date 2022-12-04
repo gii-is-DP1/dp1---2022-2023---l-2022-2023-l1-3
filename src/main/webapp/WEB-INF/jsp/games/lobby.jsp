@@ -33,16 +33,26 @@
         </c:if>
         <h2>
             Lista jugadores:<c:forEach items = "${game.players}" var = "player"> 
-                <c:out value = "${player.user.username}"/>
+                <c:out value = "${player.user.username}"/>&nbsp;
             </c:forEach>
         </h2>
-
+        <c:if test = "${(numActualPlayers >= 2 && numActualPlayers <= 4) && isHost}">
             <div class="form-group submit-buttons">
                 <div class="col-sm-offset-2 col-sm-10">
                 <button class="button" type="submit">Empezar partida</button>
                 </div>
             </div>
+        </c:if>
 
+            <form:form modelAttribute="game" class="form-horizontal">
+
+                <div class="form-group submit-buttons">
+                    <div class="col-sm-offset-2 col-sm-10">
+                    <button class="button" type="submit">Salir</button>
+                    </div>
+                </div>
+    
+            </form:form>
        
 
 
