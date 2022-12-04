@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,25 +74,39 @@ public class GameController {
     }
 
     @GetMapping(path="/lobby/{id}")
-    public ModelAndView lobby(@PathVariable Integer id) {
+    public ModelAndView lobby(@PathVariable Integer id, HttpServletResponse response) {
+        Game game=gameService.findGameById(id).get();
         ModelAndView mav = new ModelAndView(LOBBY_VIEW);
-        mav.addObject("game",gameService.findGameById(id).get());
-        mav.addObject("lista", gameService.findGameById(id).get().getPlayers());
-        return mav;
-    }
-    
-    @GetMapping(path = "/joinGame")
-    public ModelAndView listingGames(){
-        ModelAndView mav = new ModelAndView(VIEW_GAMES);
-        Collection<Game> games = gameService.getAll();
-        List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getStateGame().equals(StateGame.WAITING_PLAYERS)).collect(Collectors.toList());
-        
-        mav.addObject("games",filter);
-        return mav;
-    }
 
-    @PostMapping(path = "/joinGame")
-    public ModelAndView joinGame(@Valid @ModelAttribute("game") Game game, BindingResult res){
+        if(game.getPlayers().size() == game.getNumPlayers()){
+            mav = new ModelAndView("redirect:/games/joinGame");
+            return mav;
+        }
+
+        response.addHeader("Refresh", "2");
+        Boolean isHost=false;
+
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            Player player = playerService.findByUsername(userDetails.getUsername());
+            isHost= gameService.findGameById(id).get().getCreatorPlayer().equals(player);
+
+            if(!game.getPlayers().contains(player)){
+                game.addPlayerToGame(player);
+                gameService.save(game);
+            }
+
+          }
+        mav.addObject("game",game);
+        mav.addObject("numActualPlayers",game.getPlayers().size());
+        mav.addObject("isHost", isHost);
+
+        return mav;
+    }
+    @PostMapping(path = "/lobby/{id}")
+    public ModelAndView deleteLobby(@Valid @ModelAttribute("game") Game game, BindingResult res,@PathVariable Integer id){
         ModelAndView mav = new ModelAndView("redirect:/users/home");
 
         Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -99,14 +114,31 @@ public class GameController {
         String usuarioActual = userDetails.getUsername();
 
         Player player = playerService.findByUsername(usuarioActual);
-        game.getPlayers().add(player);
-        gameService.save(game);
+        Boolean isHost= gameService.findGameById(id).get().getCreatorPlayer().equals(player);
+        
+        if(isHost){
+            gameService.deleteGame(id);
+        }else{
+            game = gameService.findGameById(id).get();
+            game.removePlayerToGame(player);
+            gameService.save(game);
+        }
 
         return mav;
         
     }
 
-
+    
+    @GetMapping(path = "/joinGame")
+    public ModelAndView listingGames(HttpServletResponse response){
+        response.addHeader("Refresh", "2");
+        ModelAndView mav = new ModelAndView(VIEW_GAMES);
+        Collection<Game> games = gameService.getAll();
+        List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getStateGame().equals(StateGame.WAITING_PLAYERS)).collect(Collectors.toList());
+        
+        mav.addObject("games",filter);
+        return mav;
+    }
 
 
     

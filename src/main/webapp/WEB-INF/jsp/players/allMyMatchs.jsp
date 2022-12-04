@@ -27,6 +27,7 @@
     <th>Nombre partida</th>
     <th>Juego</th>
     <th>Numero de jugadores</th>
+    <th>Jugadores</th>
     <th>Host</th>
     <th>Ganador</th>
     </tr>
@@ -42,6 +43,11 @@
             </td>
             <td>
                 <c:out value="${game.numPlayers}"/>
+            </td>
+            <td>
+                <c:forEach items = "${game.players}" var = "player"> 
+                    <c:out value = "${player.user.username}"/>&nbsp;
+                </c:forEach>
             </td>
             <td>
                 <c:out value="${game.creatorPlayer.user.username}"/>
@@ -63,6 +69,7 @@
     <th>Nombre partida</th>
     <th>Juego</th>
     <th>Numero de jugadores</th>
+    <th>Jugadores</th>
     <th>Host</th>
     <th>Ganador</th>
     </tr>
@@ -78,6 +85,11 @@
             </td>
             <td>
                 <c:out value="${game.numPlayers}"/>
+            </td>
+            <td>
+                <c:forEach items = "${game.players}" var = "player"> 
+                    <c:out value = "${player.user.username}"/>&nbsp;
+                </c:forEach>
             </td>
             <td>
                 <c:out value="${game.creatorPlayer.user.username}"/>

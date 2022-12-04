@@ -44,7 +44,7 @@ public class Game extends BaseEntity {
     @NotNull
     private TypeGame typeGame;
 
-    @OneToOne(cascade= CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="creator_player")
     private Player creatorPlayer;
  
@@ -82,5 +82,11 @@ public class Game extends BaseEntity {
         }
         
         this.players.add(player);
+    }
+
+    public void removePlayerToGame(Player player){
+        if(this.players != null){
+            this.players.remove(player);
+        }
     }
 }
