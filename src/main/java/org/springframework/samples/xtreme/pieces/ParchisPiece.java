@@ -30,27 +30,25 @@ public class ParchisPiece extends BaseEntity{
     @ManyToOne
     private Player player;
 
-    private Color color;
-
     public Integer getPosicion(){
         return this.cell.getPosition();
     }
 
-    public Integer casillaCasa() {
-        Integer s;
-        if(this.color==Color.BLUE) {
-            s= 101;
-        }else if(this.color==Color.GREEN) {
-            s= 102;
-        }else if(this.color==Color.YELLOW) {
-            s= 103;
-        }else {
-            s= 104;
-        }
-        return s;
-    }
+    // public Integer casillaCasa() {
+    //     Integer s;
+    //     if(this.color==Color.BLUE) {
+    //         s= 101;
+    //     }else if(this.color==Color.GREEN) {
+    //         s= 102;
+    //     }else if(this.color==Color.YELLOW) {
+    //         s= 103;
+    //     }else {
+    //         s= 104;
+    //     }
+    //     return s;
+    // }
 
-    public Integer casillaSalida() {
+    /* public Integer casillaSalida() {
         Integer s;
         if(this.color==Color.BLUE) {
             s= 22;
@@ -62,7 +60,7 @@ public class ParchisPiece extends BaseEntity{
             s= 39;
         }
         return s;
-    }
+    } */
 
 
     public Integer getPositionXInPixels(Integer size) {
