@@ -45,7 +45,7 @@ public class ParchisCell{
     @JoinColumn(name="board_id")
     ParchisBoard board;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "position_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cell")
     private Set<ParchisCellPosition> cellPositions;
 
 
