@@ -37,7 +37,7 @@ public class GameServiceTest {
         Optional<Game> game = gameService.findGameById(1);
         assertNotNull(game);
 
-        Optional<Game> game2 = gameService.findGameById(2);
+        Optional<Game> game2 = gameService.findGameById(10);
         assertEquals(Optional.empty(), game2);;
     }
 

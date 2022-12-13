@@ -32,8 +32,10 @@
 <tr>
 <th>Nombre partida</th>
 <th>Numero de jugadores</th>
+<th>Jugadores en la sala</th>
 <th>Tipo de juego</th>
 <th>Host de la partida</th>
+<th>Unirse</th>
 </tr>
 </thead>
 <tbody>
@@ -46,10 +48,19 @@
             <c:out value="${game.numPlayers}"/>
         </td>
         <td>
+            <c:forEach items = "${game.players}" var = "player"> 
+                <c:out value = "${player.user.username}"/>&nbsp;
+            </c:forEach>
+        </td>
+        <td>
             <c:out value="${game.typeGame}"/>    
         </td>
         <td>
             <c:out value="${game.creatorPlayer.user.username}"/>        
+        </td>
+        <td>
+            <a class="button" href = "<spring:url value="/games/lobby/${game.id}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            licorice-64px">Unirse a partida</div></a>
         </td>
     </tr>
 </c:forEach>
@@ -57,6 +68,38 @@
 <tfoot></tfoot>
 </table>
 </div>
+<div>
+    <table id="tabla" class="minimalistBlack">
+    <thead>
+    <tr>
+    <th>Host</th>
+    <th>Juego</th>
+    <th>Tipo de invitacion</th>
+    <th>Unirse</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${invitations}" var="invitation">
+        <tr>
+            <td>
+                <c:out value="${invitation.player1.user.username}"/>
+            </td>
+            <td>
+                <c:out value="${invitation.game.typeGame}"/>
+            </td>
+            <td>
+                <c:out value="${invitation.invitationType}"/>    
+            </td>
+            <td>
+                <a class="button" href = "<spring:url value="/games/lobby/${invitation.game.id}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                licorice-64px">Unirse a partida</div></a>
+            </td>
+        </tr>
+    </c:forEach>
+    </tbody>
+    <tfoot></tfoot>
+    </table>
+    </div>
 <div>
     <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="regresar"> < Regresar</a>
 </div>

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.samples.xtreme.player.Player;
 
 public interface GameRepository extends CrudRepository<Game, Integer> {
 
@@ -12,7 +13,13 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
     @Query(value = "SELECT g FROM Game g WHERE g.isPublic = false")
     public Collection<Game> findByPrivateGame();
 
+    @Query(value = "SELECT g FROM Game g WHERE g.creatorPlayer.user.username = ?1 AND g.stateGame = 'WAITING_PLAYERS'")
+    public Game findGameByCreatorPlayer(String username);
+
     
+
+
+
     
     
 }

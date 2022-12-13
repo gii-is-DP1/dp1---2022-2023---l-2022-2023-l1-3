@@ -31,9 +31,11 @@
     </c:if>
     <c:if test = "${esUserEqual}">
         <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
+        <div class="large valign-text-middle vt323-normal-licorice-64px">
+        <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>">Editar perfil</a>
 
-        <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-        licorice-64px">Editar perfil</div></a>
+        <a class="button" href="<spring:url value="/players/${player.user.username}/myMatchPlayed"  htmlEscape="true"/>">Ver historial de partidas</a>
+        </div>
 
     </c:if>
     <c:if test = "${esAdmin}">

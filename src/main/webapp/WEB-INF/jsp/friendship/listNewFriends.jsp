@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <a style="position: relative;" href="<spring:url value="/players/friends" htmlEscape="true"/>" class="previous"> < Regresar</a>
+    <a style="position: relative;" href="<spring:url value="/friends" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
 <div>
     <table id="tabla" class="minimalistBlack">
@@ -42,7 +42,7 @@
                 <c:out value="${player.user.username}"/>
             </td>
             <td>
-                <a class="button" href = "<spring:url value="/players/friends/${player.user.username}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+                <a class="button" href = "<spring:url value="/friends/${player.user.username}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
                 licorice-64px">Enviar solicitud</div></a>
             </td>
         </tr>

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.xtreme.player.Player;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,11 @@ public class GameService {
     @Transactional
     public void save(Game game){
         gameRepository.save(game);
+    }
+
+    @Transactional(readOnly = true)
+    public Game findGameByCreatorPlayer(String username){
+        return gameRepository.findGameByCreatorPlayer(username);
     }
 
     
