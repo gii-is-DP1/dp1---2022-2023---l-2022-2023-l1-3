@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.samples.xtreme.friendship.Friendship;
 import org.springframework.samples.xtreme.friendship.FriendshipService;
 import org.springframework.samples.xtreme.invitation.Invitation;
 import org.springframework.samples.xtreme.invitation.InvitationService;
+import org.springframework.samples.xtreme.board.ParchisBoard
+
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -183,6 +186,7 @@ public class GameController {
         return mav;
     }
 
+
     @GetMapping(path = "/inviteFriends/{username}")
     public ModelAndView createInvitation(@PathVariable String username){
        ModelAndView mav= new ModelAndView(CREATE_INVITATION);
@@ -217,11 +221,12 @@ public class GameController {
         return mav;
     }
 
+     @GetMapping(path="/parchis")
+    public ModelAndView parchis() {
+        ModelAndView mav = new ModelAndView("game/parchisBoard");
+        mav.addObject("board",new ParchisBoard());
+      
+        return mav;
+    }
 
-
-
-
-
-
-    
 }

@@ -33,5 +33,15 @@ public class OcaPiece extends BaseEntity{
 
    @OneToOne
    private Player player;
+
+   public Integer getPositionXInPixels(Integer size) {
+      //TODO
+      return null;
+   }
+
+   public Integer getPositionYInPixels(Integer size) {
+      //TODO
+      return null;
+   }
     
 }

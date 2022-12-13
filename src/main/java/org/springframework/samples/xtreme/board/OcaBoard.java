@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 
 import org.springframework.samples.xtreme.model.BaseEntity;
 import org.springframework.samples.xtreme.pieces.OcaPiece;
@@ -18,7 +19,21 @@ import lombok.Setter;
 @Table(name="ocaBoard")
 public class OcaBoard extends BaseEntity{
 
+    String background;
+
     @OneToMany
     private List<OcaPiece> pieces;
+    
+    @Positive
+    int width;
+
+    @Positive
+    int height;
+
+    public OcaBoard() {
+        this.background="resources/img/boards/oca/ocaBoard.svg";
+        this.width=800;
+        this.height=800;
+    }
     
 }
