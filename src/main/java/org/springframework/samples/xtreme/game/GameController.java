@@ -14,7 +14,7 @@ import org.springframework.samples.xtreme.friendship.Friendship;
 import org.springframework.samples.xtreme.friendship.FriendshipService;
 import org.springframework.samples.xtreme.invitation.Invitation;
 import org.springframework.samples.xtreme.invitation.InvitationService;
-import org.springframework.samples.xtreme.board.ParchisBoard
+import org.springframework.samples.xtreme.board.ParchisBoard;
 
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
