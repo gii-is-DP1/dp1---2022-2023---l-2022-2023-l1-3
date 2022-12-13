@@ -18,8 +18,6 @@
     
 </head>
 <body>
-        <a style="position: absolute;" href="<spring:url value="/games/createGame" htmlEscape="true"/>" class="previous"> < Regresar</a>
-
        
         <h1>Nombre partida: <c:out value = "${game.gameName}"/></h1>
         <h2>Numero de jugadores: <c:out value = "${game.numPlayers}"/></h2>
@@ -36,6 +34,10 @@
                 <c:out value = "${player.user.username}"/>&nbsp;
             </c:forEach>
         </h2>
+        <div style = 'margin-bottom: 9vh; margin-top: 6vh'>
+            <a class="button" href = "<spring:url value="/games/inviteFriends"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            licorice-64px">Invitar jugadores</div></a>
+        </div>
         <c:if test = "${(numActualPlayers >= 2 && numActualPlayers <= 4) && isHost}">
             <div class="form-group submit-buttons">
                 <div class="col-sm-offset-2 col-sm-10">

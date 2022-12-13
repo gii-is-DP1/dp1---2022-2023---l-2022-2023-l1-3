@@ -9,7 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.xtreme.board.ParchisBoard;
+
+import org.springframework.samples.xtreme.friendship.Friendship;
+import org.springframework.samples.xtreme.friendship.FriendshipService;
+import org.springframework.samples.xtreme.invitation.Invitation;
+import org.springframework.samples.xtreme.invitation.InvitationService;
+import org.springframework.samples.xtreme.board.ParchisBoard
+
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -29,15 +36,23 @@ public class GameController {
 
     private final GameService gameService;
     private final PlayerService playerService;
+    private final FriendshipService friendshipService;
+    private final InvitationService invitationService;
 
     private static final String CREATE_GAME = "games/createGame";
     private static final String VIEW_GAMES = "games/viewGames";
     private static final String LOBBY_VIEW = "games/lobby";
+    private static final String INVITE_FRIENDS = "games/inviteFriends";
+    private static final String CREATE_INVITATION = "games/createInvitation";
+
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService){
+    public GameController(GameService gameService, PlayerService playerService, FriendshipService friendshipService,
+            InvitationService invitationService){
+        this.friendshipService = friendshipService;
         this.gameService = gameService;
         this.playerService = playerService;
+        this.invitationService = invitationService;
 
     }
 
@@ -79,7 +94,7 @@ public class GameController {
         Game game=gameService.findGameById(id).get();
         ModelAndView mav = new ModelAndView(LOBBY_VIEW);
 
-        if(game.getPlayers().size() == game.getNumPlayers()){
+        if((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(StateGame.WAITING_PLAYERS))){
             mav = new ModelAndView("redirect:/games/joinGame");
             return mav;
         }
@@ -136,17 +151,82 @@ public class GameController {
         ModelAndView mav = new ModelAndView(VIEW_GAMES);
         Collection<Game> games = gameService.getAll();
         List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getStateGame().equals(StateGame.WAITING_PLAYERS)).collect(Collectors.toList());
-        
+       
         mav.addObject("games",filter);
+        
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            Player p= playerService.findByUsername(userDetails.getUsername());
+            mav.addObject("invitations", this.invitationService.findRecievedInvitationsByUsername(p.getUser().getUsername()));
+        }
         return mav;
     }
 
-    @GetMapping(path="/parchis")
+    @GetMapping(path = "/inviteFriends")
+    public ModelAndView inivteFriends(){
+        
+        ModelAndView mav = new ModelAndView(INVITE_FRIENDS);
+        // obtener el usuario actualmente logueado
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
+            Player p= playerService.findByUsername(userDetails.getUsername());
+            Collection<Friendship> col = friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername());
+            List<Player> friends = col.stream().filter(x->x.getPlayer1().equals(p)).map(x->x.getPlayer2()).collect(Collectors.toList());    
+            List<Player> friends2 = col.stream().filter(x->x.getPlayer2().equals(p)).map(x->x.getPlayer1()).collect(Collectors.toList());    
+            friends.addAll(friends2);
+
+            //Obtener solo los amigos online
+            List<Player> online = friends.stream().filter(x-> x.getIsOnline() == true).collect(Collectors.toList());
+            mav.addObject("friendsOnline", online);
+        }
+        return mav;
+    }
+
+
+    @GetMapping(path = "/inviteFriends/{username}")
+    public ModelAndView createInvitation(@PathVariable String username){
+       ModelAndView mav= new ModelAndView(CREATE_INVITATION);
+       Player player = playerService.findByUsername(username);
+       Game game = gameService.findGameByCreatorPlayer(player.getUser().getUsername());
+       mav.addObject("player", player);
+       mav.addObject("game", game);
+
+
+        return mav;
+    }
+
+    @PostMapping(path="/inviteFriends/{username}")
+    public ModelAndView createFriendshipAcceptedPost(@Valid @ModelAttribute("invitation") Invitation invitation, BindingResult res, @PathVariable("username") String username){
+
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+
+        Player player1 = playerService.findByUsername(userDetails.getUsername());
+        Player player2 = this.playerService.findByUsername(username);
+
+        Game game = gameService.findGameByCreatorPlayer(player1.getUser().getUsername());
+        String id = game.getId().toString();
+        ModelAndView mav = new ModelAndView("redirect:/games/lobby/"+id);
+
+        invitation.setGame(game);
+        invitation.setPlayer1(player1);
+        invitation.setPlayer2(player2);
+
+        invitationService.save(invitation);
+
+        return mav;
+    }
+
+     @GetMapping(path="/parchis")
     public ModelAndView parchis() {
         ModelAndView mav = new ModelAndView("game/parchisBoard");
         mav.addObject("board",new ParchisBoard());
       
         return mav;
     }
-    
+
 }

@@ -25,7 +25,7 @@ INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_pro
 INSERT INTO authorities(id,username,authority) VALUES (2,'Hamil','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('elon','musk',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (2,'Elon','Musk','elon','elon777@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCNjL_xJ_VGaNFfQQvtjzqHfbXQBMcTmMTw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (2,'Elon','Musk','elon','elon777@gmail.com',TRUE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSCNjL_xJ_VGaNFfQQvtjzqHfbXQBMcTmMTw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (3,'elon','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('harry','maguire',TRUE);
@@ -57,7 +57,7 @@ INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_pro
 INSERT INTO authorities(id,username,authority) VALUES (10,'user4','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user5','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (10,'User5','User_lastName5','user5','prueba5@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (10,'User5','User_lastName5','user5','prueba5@gmail.com',TRUE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (11,'user5','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user6','contraseña12345',TRUE);
@@ -69,7 +69,7 @@ INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_pro
 INSERT INTO authorities(id,username,authority) VALUES (13,'user7','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user8','contraseña12345',TRUE);
-INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (13,'User8','User_lastName8','user8','prueba8@gmail.com',FALSE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
+INSERT INTO players(id, first_name, last_name, username, email,is_online,pic_profile) VALUES (13,'User8','User_lastName8','user8','prueba8@gmail.com',TRUE,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsDo9LQ-Zw5EFDG-GpCOGYGB5F5k6RMmEYAw&usqp=CAU');
 INSERT INTO authorities(id,username,authority) VALUES (14,'user8','player');
 
 INSERT INTO users(username,password,enabled) VALUES ('user9','contraseña12345',TRUE);
@@ -88,6 +88,8 @@ INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',3,4);
 INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',1,4);
 INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',1,13);
 INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',6,1);
+INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',7,1);
+INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',10,1);
 
 
 INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game,player_winner) VALUES
@@ -111,6 +113,8 @@ INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_publi
 
 INSERT INTO rel_games_players(game_id,player_id) VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,7),(2,2),(2,8),(3,1),
 (3,10),(4,12),(4,11),(4,9),(5,5),(5,13),(6,12),(6,5),(7,6),(8,8),(8,10),(9,15),(9,14);
+
+INSERT INTO invitations (player1,player2,game,type) VALUES (1,10,1,'GAME');
 
 INSERT INTO parchis_cell(position) VALUES(101);
 INSERT INTO parchis_cell(position) VALUES(102);

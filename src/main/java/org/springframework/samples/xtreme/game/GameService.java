@@ -40,5 +40,10 @@ public class GameService {
         gameRepository.save(game);
     }
 
+    @Transactional(readOnly = true)
+    public Game findGameByCreatorPlayer(String username){
+        return gameRepository.findGameByCreatorPlayer(username);
+    }
+
     
 }

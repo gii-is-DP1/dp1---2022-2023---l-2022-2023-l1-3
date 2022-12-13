@@ -96,7 +96,7 @@ public class FriendshipController {
                     
                     allPlayers.removeAll(friends1);
                     allPlayers.remove(p);
-                     mav.addObject("players", allPlayers);
+                    mav.addObject("players", allPlayers);
             
                 }   
 

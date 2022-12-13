@@ -38,7 +38,6 @@ public class PlayerController {
     private final PlayerValidator playerValidator;
 
 
-
     private static final String VIEWS_FORM = "players/createPlayerForm";
     private static final String PLAYERS_LIST = "players/playersList";
     private static final String PROFILE = "players/viewProfile";
