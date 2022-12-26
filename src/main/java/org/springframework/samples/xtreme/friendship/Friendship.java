@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Entity
-@Table(name ="friendships") //para que no se puedan repetir las solicitudes
+@Table(name ="friendships")
 public class Friendship extends BaseEntity{
     
     @Column(name = "state")

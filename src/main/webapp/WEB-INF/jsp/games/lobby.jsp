@@ -37,7 +37,10 @@
         <div style = 'margin-bottom: 9vh; margin-top: 6vh'>
             <a class="button" href = "<spring:url value="/games/inviteFriends"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
             licorice-64px">Invitar jugadores</div></a>
-        </div>
+            <a class="button"  href="<spring:url value="/games/lobby/${game.id}/chat"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+            licorice-64px">Chat</div></a></div>
+
+            
         <c:if test = "${(numActualPlayers >= 2 && numActualPlayers <= 4) && isHost}">
             <div class="form-group submit-buttons">
                 <div class="col-sm-offset-2 col-sm-10">
@@ -45,6 +48,8 @@
                 </div>
             </div>
         </c:if>
+
+
 
             <form:form modelAttribute="game" class="form-horizontal">
 

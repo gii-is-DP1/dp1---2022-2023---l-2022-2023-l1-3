@@ -23,7 +23,7 @@ public class FriendshipService {
 
     @Transactional(readOnly = true)
     public Collection<Friendship> getAll(){
-        return friendshipRepository.findALl();
+        return friendshipRepository.findAll();
     }
 
     @Transactional(readOnly = true)

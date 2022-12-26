@@ -1,6 +1,5 @@
 package org.springframework.samples.xtreme.game;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,13 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.samples.xtreme.board.ParchisBoard;
+import org.springframework.samples.xtreme.chat.Chat;
+import org.springframework.samples.xtreme.chat.ChatService;
+import org.springframework.samples.xtreme.chat.Mensaje;
+import org.springframework.samples.xtreme.chat.MensajeService;
 import org.springframework.samples.xtreme.friendship.Friendship;
 import org.springframework.samples.xtreme.friendship.FriendshipService;
 import org.springframework.samples.xtreme.invitation.Invitation;
 import org.springframework.samples.xtreme.invitation.InvitationService;
-import org.springframework.samples.xtreme.board.ParchisBoard;
-
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -38,21 +38,27 @@ public class GameController {
     private final PlayerService playerService;
     private final FriendshipService friendshipService;
     private final InvitationService invitationService;
+    private final MensajeService mensajeService;
+    private final ChatService chatService;
+
 
     private static final String CREATE_GAME = "games/createGame";
     private static final String VIEW_GAMES = "games/viewGames";
     private static final String LOBBY_VIEW = "games/lobby";
     private static final String INVITE_FRIENDS = "games/inviteFriends";
     private static final String CREATE_INVITATION = "games/createInvitation";
+    private static final String CHAT_GAME="games/chat";
 
 
     @Autowired
     public GameController(GameService gameService, PlayerService playerService, FriendshipService friendshipService,
-            InvitationService invitationService){
+            InvitationService invitationService,MensajeService mensajeService,ChatService chatService){
         this.friendshipService = friendshipService;
         this.gameService = gameService;
         this.playerService = playerService;
         this.invitationService = invitationService;
+        this.mensajeService=mensajeService;
+        this.chatService=chatService;
 
     }
 
@@ -83,6 +89,8 @@ public class GameController {
             mav.addObject("game", game);
             
         }else{
+            Chat chat= new Chat();
+            game.setChat(chat);
             gameService.save(game);
             mav = new ModelAndView("redirect:/"+LOBBY_VIEW+"/"+game.getId());
         }
@@ -94,27 +102,26 @@ public class GameController {
         Game game=gameService.findGameById(id).get();
         ModelAndView mav = new ModelAndView(LOBBY_VIEW);
 
-        if((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(StateGame.WAITING_PLAYERS))){
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails=(UserDetails) principal;
+        Player player = playerService.findByUsername(userDetails.getUsername());
+
+        if(!game.getPlayers().contains(player) &&
+         ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(StateGame.WAITING_PLAYERS)))){
             mav = new ModelAndView("redirect:/games/joinGame");
             return mav;
         }
 
-        response.addHeader("Refresh", "2");
+        response.addHeader("Refresh", "5");
+
         Boolean isHost=false;
+        isHost= gameService.findGameById(id).get().getCreatorPlayer().equals(player);
 
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-            Player player = playerService.findByUsername(userDetails.getUsername());
-            isHost= gameService.findGameById(id).get().getCreatorPlayer().equals(player);
+        if(!game.getPlayers().contains(player)){
+            game.addPlayerToGame(player);
+            gameService.save(game);
+        }
 
-            if(!game.getPlayers().contains(player)){
-                game.addPlayerToGame(player);
-                gameService.save(game);
-            }
-
-          }
         mav.addObject("game",game);
         mav.addObject("numActualPlayers",game.getPlayers().size());
         mav.addObject("isHost", isHost);
@@ -144,7 +151,41 @@ public class GameController {
         
     }
 
-    
+    @GetMapping(path="/lobby/{id}/chat")
+    public ModelAndView chatGame(@PathVariable Integer id, HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView(CHAT_GAME);
+        response.addHeader("Refresh", "7");
+
+        
+        mav.addObject("id", id);
+        Game game=gameService.findGameById(id).get();
+        if(game.getChat().getMensaje() !=null){
+        mav.addObject("chat", game.getChat().getMensaje());
+        }
+        return mav;
+    }
+
+    @PostMapping(path="/lobby/{id}/chat")
+    public ModelAndView postChatGame(@Valid @ModelAttribute("mensaje") Mensaje mensaje, BindingResult res, @PathVariable Integer id){
+        ModelAndView mav = new ModelAndView("redirect:/games/lobby/"+id+"/chat");
+        if(mensaje.getText() != null){
+            Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) principal;
+            String usuarioActual = userDetails.getUsername();
+            Player player = playerService.findByUsername(usuarioActual);
+
+
+            mensaje.setPlayer(player);
+            Chat chat= gameService.findChatByGameId(id);
+            mensaje.setChat(chat);
+            mensaje.setText(mensaje.getText());
+            chat.getMensaje().add(mensaje);
+            chatService.save(chat);
+        }
+        return mav;
+    }
+
+
     @GetMapping(path = "/joinGame")
     public ModelAndView listingGames(HttpServletResponse response){
         response.addHeader("Refresh", "2");
