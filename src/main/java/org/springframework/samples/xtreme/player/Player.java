@@ -16,6 +16,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.samples.xtreme.chat.Mensaje;
 import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.model.Person;
 import org.springframework.samples.xtreme.user.User;
@@ -50,4 +51,6 @@ public class Player extends Person {
     @ManyToMany(mappedBy = "players")
     private List<Game> games;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    private List<Mensaje> mensaje;
 }

@@ -25,7 +25,8 @@ public class Mensaje extends BaseEntity{
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name="player_id")
+    @ManyToOne
+    @JoinColumn(name = "player_id")
     private Player player;
+
 }

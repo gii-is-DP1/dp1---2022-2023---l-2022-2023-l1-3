@@ -12,7 +12,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface FriendshipRepository extends CrudRepository<Friendship,Integer>{
     
     @Query("SELECT f FROM Friendship f")
-    public Collection<Friendship> findALl();
+    public Collection<Friendship> findAll();
 
     @Query("SELECT f FROM Friendship f WHERE lower(f.player1.user.username) = lower(?1) or lower(f.player2.user.username) = lower(?1)")
     public Collection<Friendship> findAllByUsername(String username);
