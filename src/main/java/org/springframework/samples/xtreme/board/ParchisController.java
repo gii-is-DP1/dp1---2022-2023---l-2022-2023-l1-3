@@ -25,4 +25,13 @@ public class ParchisController {
         mav.addObject("board", parchisService.findById(1).get());
         return mav;
     }
+
+    //1. asignar colores a los jugadores
+    //2. inicializar tablero con fichas en casa
+    //3. quien tira primero (random)
+    //4. Tira dado y si saca 5, automaticamente la ficha pasa de casa a casillaInicial
+    //5. Moverse en el tablero
+    //6. Casillas en las que no se puede comer / casilla puente
+    //7. Si te chocas con un puente te deja en la casilla anterior al puente
+    //8. Si llegas al final, la ficha se queda en la casilla final y no se puede mover
 }
