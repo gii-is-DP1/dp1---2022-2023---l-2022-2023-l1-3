@@ -33,6 +33,7 @@ public class ParchisPiece extends BaseEntity{
     public Integer getPosicion(){
         return this.cell.getPosition();
     }
+    
 
     // public Integer casillaCasa() {
     //     Integer s;
@@ -62,15 +63,10 @@ public class ParchisPiece extends BaseEntity{
         return s;
     } */
 
-
-    public Integer getPositionXInPixels(Integer size) {
-        //TODO
-        return null;
+    
+    public Double getPositionInPixels(Integer size, Double position) {
+        return position*size;
     }
   
-    public Integer getPositionYInPixels(Integer size) {
-        //TODO
-        return null;
-    }
-    
+
 }
