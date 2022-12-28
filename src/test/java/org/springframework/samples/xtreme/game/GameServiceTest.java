@@ -46,7 +46,7 @@ public class GameServiceTest {
         GameService gameService = new GameService(gameRepository);
         Game game = new Game();
         game.setGameName("Partida 2");
-        game.setTypeGame(TypeGame.PARCHIS);
+        game.setTypeGame(GameType.PARCHIS);
         game.setNumPlayers(4);
         game.setIsPublic(true);
 
@@ -63,7 +63,7 @@ public class GameServiceTest {
     public void testDeleteGame(){
         Game game = new Game();
         game.setGameName("Partida 3");
-        game.setTypeGame(TypeGame.PARCHIS);
+        game.setTypeGame(GameType.PARCHIS);
         game.setNumPlayers(4);
         game.setIsPublic(true);
 

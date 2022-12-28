@@ -82,14 +82,14 @@ public class GameController {
             game.setCreatorPlayer(player);
 
             game.addPlayerToGame(player);
-          }
+        }
 
-        if(res.hasErrors()||game.getGameName()==null||game.getCreatorPlayer()==null){
+        if (res.hasErrors()||game.getGameName()==null||game.getCreatorPlayer()==null) {
             mav = new ModelAndView(CREATE_GAME);
             mav.addObject("game", game);
             
-        }else{
-            Chat chat= new Chat();
+        } else {
+            Chat chat = new Chat();
             game.setChat(chat);
             gameService.save(game);
             mav = new ModelAndView("redirect:/"+LOBBY_VIEW+"/"+game.getId());
@@ -107,7 +107,7 @@ public class GameController {
         Player player = playerService.findByUsername(userDetails.getUsername());
 
         if(!game.getPlayers().contains(player) &&
-         ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(StateGame.WAITING_PLAYERS)))){
+         ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
             mav = new ModelAndView("redirect:/games/joinGame");
             return mav;
         }
@@ -191,7 +191,7 @@ public class GameController {
         response.addHeader("Refresh", "2");
         ModelAndView mav = new ModelAndView(VIEW_GAMES);
         Collection<Game> games = gameService.getAll();
-        List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getStateGame().equals(StateGame.WAITING_PLAYERS)).collect(Collectors.toList());
+        List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getStateGame().equals(GameState.WAITING_PLAYERS)).collect(Collectors.toList());
        
         mav.addObject("games",filter);
         
