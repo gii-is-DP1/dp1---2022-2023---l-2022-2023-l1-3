@@ -1,5 +1,5 @@
 package org.springframework.samples.xtreme.game;
 
-public enum StateGame {
+public enum GameState {
     WAITING_PLAYERS,STARTED,FINISHED
 }

@@ -42,7 +42,7 @@ public class Game extends BaseEntity {
     @Column(name="type_game")
     @Enumerated(EnumType.STRING)
     @NotNull
-    private TypeGame typeGame;
+    private GameType typeGame;
 
     @OneToOne
     @JoinColumn(name="creator_player")
@@ -62,7 +62,7 @@ public class Game extends BaseEntity {
     @Column(name="state_game")
     @Enumerated(EnumType.STRING)
     @NotNull
-    private StateGame stateGame= StateGame.WAITING_PLAYERS;
+    private GameState stateGame= GameState.WAITING_PLAYERS;
 
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="player_winner")

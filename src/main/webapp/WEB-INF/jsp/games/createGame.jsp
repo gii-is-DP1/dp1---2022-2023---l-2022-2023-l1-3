@@ -81,17 +81,19 @@
     <form:form modelAttribute="game" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>
 		<xtreme:inputField name="gameName" type="text" label="Nombre de la partida"/>
+		<div style="display: flex; justify-content: space-evenly;">
 		<div>
 		<label for="numPlayers">Número de jugadores:</label>
-		<input type="number" name="numPlayers" step="1" min="2" max="4" required>
-		<span class="validity"></span>
+		<input type="number" name="numPlayers" value="2" step="1" min="2" max="4" required>
 		</div>
-		<label><input type="checkbox" name="isPublic" checked > Partida publica</label>
 		<div>
+		<labe for="isPublic"> Partida publica</label>
+		<input type="checkbox" name="isPublic" checked>
+		</div>
 		<select name="typeGame">
 			<option value="PARCHIS">Parchis</option>
 			<option value="OCA" selected>Oca</option>
-		  </select>
+		</select>
 		</div>
 		<div class="form-group submit-buttons">
             <div class="col-sm-offset-2 col-sm-10">
