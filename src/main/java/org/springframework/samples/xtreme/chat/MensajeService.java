@@ -16,6 +16,10 @@ public class MensajeService {
     public MensajeService(MensajeRepository mensajeRepository) {
         this.mensajeRepository = mensajeRepository;
     }
+    @Transactional(readOnly = true)
+    public Iterable<Mensaje> findAll(){
+       return mensajeRepository.findAll();
+    }
 
     @Transactional
     public Mensaje save(Mensaje m){
