@@ -41,7 +41,7 @@
 		<labe for="isPublic"> Partida publica</label>
 		<input type="checkbox" name="isPublic" checked>
 		</div>
-		<select name="typeGame">
+		<select name="gameType">
 			<option value="PARCHIS">Parchis</option>
 			<option value="OCA" selected>Oca</option>
 		</select>

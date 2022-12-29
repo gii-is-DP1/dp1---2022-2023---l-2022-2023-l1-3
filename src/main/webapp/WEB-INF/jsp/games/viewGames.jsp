@@ -53,7 +53,7 @@
             </c:forEach>
         </td>
         <td>
-            <c:out value="${game.typeGame}"/>    
+            <c:out value="${game.gameType}"/>    
         </td>
         <td>
             <c:out value="${game.creatorPlayer.user.username}"/>        
@@ -85,7 +85,7 @@
                 <c:out value="${invitation.player1.user.username}"/>
             </td>
             <td>
-                <c:out value="${invitation.game.typeGame}"/>
+                <c:out value="${invitation.game.gameType}"/>
             </td>
             <td>
                 <c:out value="${invitation.invitationType}"/>    
