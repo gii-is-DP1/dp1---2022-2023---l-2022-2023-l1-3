@@ -8,14 +8,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <head>
+    <xtreme:head></xtreme:head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/form.css">
-    <title>Xtreme Parchis&Oca</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/resources/favicon/site.webmanifest">
-
 </head>
 <body>
         <a style="position: absolute;" href="<spring:url value="/friends/sendFriendship" htmlEscape="true"/>" class="previous"> < Regresar</a>
