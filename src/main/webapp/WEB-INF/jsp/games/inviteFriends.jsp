@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
+    <a style="position: relative;" href="<spring:url value="/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
 <div>
     <table id="tabla" class="minimalistBlack">

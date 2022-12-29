@@ -63,7 +63,7 @@
 </table>
 </div>
 <div>
-    <a style="position: relative;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="regresar"> < Regresar</a>
+    <a style="position: relative;" href="<spring:url value="/home" htmlEscape="true"/>" class="regresar"> < Regresar</a>
 </div>
 </body>
 
