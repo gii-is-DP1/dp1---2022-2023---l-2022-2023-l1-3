@@ -7,8 +7,8 @@
 <%@ taglib prefix="xtreme" tagdir="/WEB-INF/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-
 <head>
+    <xtreme:head></xtreme:head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/form.css">
 </head>
