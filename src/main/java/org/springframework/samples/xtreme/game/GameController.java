@@ -71,7 +71,7 @@ public class GameController {
     }
 
     @PostMapping(path = "/createGame")
-    public ModelAndView createGame(@Valid Game game, BindingResult res){
+    public ModelAndView createGame(@Valid @ModelAttribute("game") Game game, BindingResult res){
         ModelAndView mav = new ModelAndView("redirect:/"+CREATE_GAME);
        
         Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -237,7 +237,7 @@ public class GameController {
        mav.addObject("game", game);
 
 
-        return mav;
+       return mav;
     }
 
     @PostMapping(path="/inviteFriends/{username}")

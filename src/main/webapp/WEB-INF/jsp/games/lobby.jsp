@@ -21,7 +21,7 @@
        
         <h1>Nombre partida: <c:out value = "${game.gameName}"/></h1>
         <h2>Numero de jugadores: <c:out value = "${game.numPlayers}"/></h2>
-        <h1>Tipo de juego: <c:out value = "${game.typeGame}"/></h1>
+        <h1>Tipo de juego: <c:out value = "${game.gameType}"/></h1>
         <h1>Host: <c:out value = "${game.creatorPlayer.user.username}"/></h1>
         <c:if test = "${game.isPublic}">
             <h2>Privacidad: publica</h2>

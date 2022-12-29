@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.xtreme.chat.Chat;
@@ -36,13 +37,13 @@ public class Game extends BaseEntity {
     @Max(4)
     private Integer numPlayers;
 
-    @NotNull
+    @NotEmpty
     private String gameName;
 
-    @Column(name="type_game")
+    @Column(name="game_type")
     @Enumerated(EnumType.STRING)
     @NotNull
-    private GameType typeGame;
+    private GameType gameType;
 
     @OneToOne
     @JoinColumn(name="creator_player")
@@ -52,14 +53,11 @@ public class Game extends BaseEntity {
     //@NotNull
     private Boolean isPublic = false;
 
-    
-
-
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="chat_id")
     private Chat chat;
 
-    @Column(name="state_game")
+    @Column(name="game_state")
     @Enumerated(EnumType.STRING)
     @NotNull
     private GameState stateGame= GameState.WAITING_PLAYERS;
