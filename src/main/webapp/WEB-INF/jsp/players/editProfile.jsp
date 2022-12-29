@@ -19,7 +19,7 @@
 </head>
 <body>
     <a style="position: absolute;" href="<spring:url value="/players/${player.user.username}" htmlEscape="true"/>" class="previous"> < Regresar</a>
-    <c:if test = "${esUserEqual}">
+    <c:if test = "${isCurrentUser}">
     <form:form modelAttribute="player" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>
         <xtreme:inputField name="picProfile" type="text" label="Pega la url de tu foto de perfil:" val = "${player.picProfile}"/>
@@ -35,7 +35,7 @@
         </div>
     </form:form>
     </c:if>
-    <c:if test = "${esUserEqual==false}">
+    <c:if test = "${isCurrentUser==false}">
     <h1>NO DEBERIAS ESTAR AQUI</h1>
 
     </c:if>

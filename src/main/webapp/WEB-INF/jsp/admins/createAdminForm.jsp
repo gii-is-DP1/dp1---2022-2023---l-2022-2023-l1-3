@@ -22,7 +22,7 @@
 
 
 <body translate="no" class="vsc-initialized">
-	<a href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
+	<a href="<spring:url value="/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
 	<xtreme:title title="REGISTRO" x="0" y="100"></xtreme:title>
     <form:form modelAttribute="admin" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>

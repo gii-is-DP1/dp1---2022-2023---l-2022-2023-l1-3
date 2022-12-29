@@ -25,12 +25,12 @@
     <h1>Username: <c:out value = "${player.user.username}"/></h1>
     <h2>Email: <c:out value = "${player.email}"/></h2>
 
-    <c:if test = "${esUserEqual == false}">
+    <c:if test = "${isCurrentUser == false}">
         <a class="previous" onClick="history.go(-1);" htmlEscape="true"/> < Regresar</a>
 
     </c:if>
-    <c:if test = "${esUserEqual}">
-        <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
+    <c:if test = "${isCurrentUser}">
+        <a style="position: absolute;" href="<spring:url value="/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
         <div class="large valign-text-middle vt323-normal-licorice-64px">
         <a class="button" href="<spring:url value="/players/${player.user.username}/edit"  htmlEscape="true"/>">Editar perfil</a>
 
@@ -38,7 +38,7 @@
         </div>
 
     </c:if>
-    <c:if test = "${esAdmin}">
+    <c:if test = "${isAdmin}">
         <a style="position: absolute;" href="<spring:url value="/players" htmlEscape="true"/>" class="previous"> < Regresar</a>
 
 

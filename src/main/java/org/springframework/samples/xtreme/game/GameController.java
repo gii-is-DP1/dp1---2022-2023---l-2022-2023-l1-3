@@ -19,7 +19,7 @@ import org.springframework.samples.xtreme.invitation.Invitation;
 import org.springframework.samples.xtreme.invitation.InvitationService;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.samples.xtreme.util.UserUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,14 +34,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(path="/games")
 public class GameController {
 
-    private final GameService gameService;
-    private final PlayerService playerService;
-    private final FriendshipService friendshipService;
-    private final InvitationService invitationService;
-    private final MensajeService mensajeService;
-    private final ChatService chatService;
-
-
     private static final String CREATE_GAME = "games/createGame";
     private static final String VIEW_GAMES = "games/viewGames";
     private static final String LOBBY_VIEW = "games/lobby";
@@ -49,6 +41,14 @@ public class GameController {
     private static final String CREATE_INVITATION = "games/createInvitation";
     private static final String CHAT_GAME="games/chat";
 
+    private final GameService gameService;
+    private final PlayerService playerService;
+    private final FriendshipService friendshipService;
+    private final InvitationService invitationService;
+    private final MensajeService mensajeService;
+    private final ChatService chatService;
+
+    private UserUtils userUtils = new UserUtils();
 
     @Autowired
     public GameController(GameService gameService, PlayerService playerService, FriendshipService friendshipService,
@@ -74,15 +74,11 @@ public class GameController {
     public ModelAndView createGame(@Valid @ModelAttribute("game") Game game, BindingResult res){
         ModelAndView mav = new ModelAndView("redirect:/"+CREATE_GAME);
        
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-            Player player = playerService.findByUsername(userDetails.getUsername());
-            game.setCreatorPlayer(player);
+        UserDetails currentUser = userUtils.getUserDetails();
 
-            game.addPlayerToGame(player);
-        }
+        Player player = playerService.findByUsername(currentUser.getUsername());
+        game.setCreatorPlayer(player);
+        game.addPlayerToGame(player);
 
         if (res.hasErrors()||game.getGameName()==null||game.getCreatorPlayer()==null) {
             mav = new ModelAndView(CREATE_GAME);
@@ -102,9 +98,9 @@ public class GameController {
         Game game=gameService.findGameById(id).get();
         ModelAndView mav = new ModelAndView(LOBBY_VIEW);
 
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=(UserDetails) principal;
-        Player player = playerService.findByUsername(userDetails.getUsername());
+        UserDetails currentUser = userUtils.getUserDetails();
+
+        Player player = playerService.findByUsername(currentUser.getUsername());
 
         if(!game.getPlayers().contains(player) &&
          ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
@@ -130,13 +126,12 @@ public class GameController {
     }
     @PostMapping(path = "/lobby/{id}")
     public ModelAndView deleteLobby(@Valid @ModelAttribute("game") Game game, BindingResult res,@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("redirect:/users/home");
+        ModelAndView mav = new ModelAndView("redirect:/home");
 
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
-        String usuarioActual = userDetails.getUsername();
+        UserDetails currentUser = userUtils.getUserDetails();
 
-        Player player = playerService.findByUsername(usuarioActual);
+        Player player = playerService.findByUsername(currentUser.getUsername());
+
         Boolean isHost= gameService.findGameById(id).get().getCreatorPlayer().equals(player);
         
         if(isHost){
@@ -169,10 +164,9 @@ public class GameController {
     public ModelAndView postChatGame(@Valid @ModelAttribute("mensaje") Mensaje mensaje, BindingResult res, @PathVariable Integer id){
         ModelAndView mav = new ModelAndView("redirect:/games/lobby/"+id+"/chat");
         if(mensaje.getText() != null){
-            Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            UserDetails userDetails = (UserDetails) principal;
-            String usuarioActual = userDetails.getUsername();
-            Player player = playerService.findByUsername(usuarioActual);
+            UserDetails currentUser = userUtils.getUserDetails();
+
+            Player player = playerService.findByUsername(currentUser.getUsername());
 
 
             mensaje.setPlayer(player);
@@ -195,13 +189,12 @@ public class GameController {
        
         mav.addObject("games",filter);
         
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-            Player p= playerService.findByUsername(userDetails.getUsername());
-            mav.addObject("invitations", this.invitationService.findRecievedInvitationsByUsername(p.getUser().getUsername()));
-        }
+        UserDetails currentUser = userUtils.getUserDetails();
+
+        Player player = playerService.findByUsername(currentUser.getUsername());
+            
+        mav.addObject("invitations", this.invitationService.findRecievedInvitationsByUsername(player.getUser().getUsername()));
+        
         return mav;
     }
 
@@ -209,21 +202,20 @@ public class GameController {
     public ModelAndView inivteFriends(){
         
         ModelAndView mav = new ModelAndView(INVITE_FRIENDS);
-        // obtener el usuario actualmente logueado
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-            Player p= playerService.findByUsername(userDetails.getUsername());
-            Collection<Friendship> col = friendshipService.getAcceptedFriendshipsByUsername(userDetails.getUsername());
-            List<Player> friends = col.stream().filter(x->x.getPlayer1().equals(p)).map(x->x.getPlayer2()).collect(Collectors.toList());    
-            List<Player> friends2 = col.stream().filter(x->x.getPlayer2().equals(p)).map(x->x.getPlayer1()).collect(Collectors.toList());    
-            friends.addAll(friends2);
+       
+        UserDetails currentUser = userUtils.getUserDetails();
 
-            //Obtener solo los amigos online
-            List<Player> online = friends.stream().filter(x-> x.getIsOnline() == true).collect(Collectors.toList());
-            mav.addObject("friendsOnline", online);
-        }
+        Player player = playerService.findByUsername(currentUser.getUsername());
+
+        Collection<Friendship> col = friendshipService.getAcceptedFriendshipsByUsername(currentUser.getUsername());
+        List<Player> friends = col.stream().filter(x->x.getPlayer1().equals(player)).map(x->x.getPlayer2()).collect(Collectors.toList());    
+        List<Player> friends2 = col.stream().filter(x->x.getPlayer2().equals(player)).map(x->x.getPlayer1()).collect(Collectors.toList());    
+        friends.addAll(friends2);
+
+        //Obtener solo los amigos online
+        List<Player> online = friends.stream().filter(x-> x.getIsOnline() == true).collect(Collectors.toList());
+        mav.addObject("friendsOnline", online);
+        
         return mav;
     }
 
@@ -243,10 +235,9 @@ public class GameController {
     @PostMapping(path="/inviteFriends/{username}")
     public ModelAndView createFriendshipAcceptedPost(@Valid @ModelAttribute("invitation") Invitation invitation, BindingResult res, @PathVariable("username") String username){
 
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
+        UserDetails currentUser = userUtils.getUserDetails();
 
-        Player player1 = playerService.findByUsername(userDetails.getUsername());
+        Player player1 = playerService.findByUsername(currentUser.getUsername());
         Player player2 = this.playerService.findByUsername(username);
 
         Game game = gameService.findGameByCreatorPlayer(player1.getUser().getUsername());
@@ -262,7 +253,7 @@ public class GameController {
         return mav;
     }
 
-     @GetMapping(path="/parchis")
+    @GetMapping(path="/parchis")
     public ModelAndView parchis() {
         ModelAndView mav = new ModelAndView("game/parchisBoard");
         mav.addObject("board",new ParchisBoard());

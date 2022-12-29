@@ -14,7 +14,7 @@
 
 
 <body style="background-color: black;">
-    <a style="position: absolute;" href="<spring:url value="/users/home" htmlEscape="true"/>" class="previous"> < Regresar</a></Regresar>
+    <a style="position: absolute;" href="<spring:url value="/home" htmlEscape="true"/>" class="previous"> < Regresar</a></Regresar>
     <pre style="position: absolute; top: 50; left: 50; transform:translate(-50 -50); color: white;">
        ___/\\\_______/\\\______________________________________________________________________________        
         __\///\\\___/\\\/_______________________________________________________________________________       

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.model.Person;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
+import org.springframework.samples.xtreme.util.UserUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ public class WelcomeController {
 	private static final String HOME = "home";
 
 	private final PlayerService playerService;
+
+	private UserUtils userUtils = new UserUtils();
     
     @Autowired
     public WelcomeController(PlayerService playerService){
@@ -69,27 +72,17 @@ public class WelcomeController {
     public ModelAndView gameHome() {
         ModelAndView mav = new ModelAndView(HOME);
 
-        // obtener el usuario actualmente logueado
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        Boolean esAdmin = false;
-        String user = "";
-        if (principal instanceof UserDetails) {
+		UserDetails currentUser = userUtils.getUserDetails();
+		Boolean isAdmin = userUtils.isAdmin(currentUser);
 
-            userDetails = (UserDetails) principal;
-            System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
-            System.out.println("su rol es: "+ userDetails.getAuthorities());
-            esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
-            user=userDetails.getUsername();
-            if(!esAdmin){
-            	Player actualPlayer= this.playerService.findByUsername(user);
-            	actualPlayer.setIsOnline(true);
-            	this.playerService.save(actualPlayer);
-            }
-        }
+		if (!isAdmin) {
+			Player actualPlayer= this.playerService.findByUsername(currentUser.getUsername());
+            actualPlayer.setIsOnline(true);
+            this.playerService.save(actualPlayer);
+		}
 
-        mav.addObject("esAdmin", esAdmin);
-        mav.addObject("user", user);
+        mav.addObject("isAdmin", isAdmin);
+        mav.addObject("username", currentUser.getUsername());
         return mav;
     }
 

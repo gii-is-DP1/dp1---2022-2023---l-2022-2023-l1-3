@@ -57,7 +57,7 @@ public class UserControllerTest {
     @WithMockUser
     @Test
     public void testHome() throws Exception {
-        mockMvc.perform(get("/users/home"))
+        mockMvc.perform(get("/home"))
         .andExpect(status().isOk())
         //.andExpect(view().name("users/home"))
         .andExpect(model().attributeDoesNotExist("users"))
