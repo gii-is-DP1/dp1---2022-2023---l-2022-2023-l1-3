@@ -25,6 +25,8 @@ public class WelcomeController {
 
 	private final PlayerService playerService;
 
+	private Player actualPlayer;
+	
 	private UserUtils userUtils = new UserUtils();
     
     @Autowired
@@ -65,6 +67,13 @@ public class WelcomeController {
 		model.put("persons",persons);
 		model.put("title","Xtreme Parchis&Oca");
 		model.put("group","L1-3");
+
+		if(actualPlayer != null){
+			actualPlayer.setIsOnline(false);
+			this.playerService.save(actualPlayer);
+			actualPlayer=null;
+			}
+
 	    return WELCOME;
 	}
 
@@ -76,7 +85,7 @@ public class WelcomeController {
 		Boolean isAdmin = userUtils.isAdmin(currentUser);
 
 		if (!isAdmin) {
-			Player actualPlayer= this.playerService.findByUsername(currentUser.getUsername());
+			actualPlayer= this.playerService.findByUsername(currentUser.getUsername());
             actualPlayer.setIsOnline(true);
             this.playerService.save(actualPlayer);
 		}

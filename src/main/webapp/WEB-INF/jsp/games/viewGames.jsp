@@ -98,5 +98,6 @@
 <div>
     <a style="position: relative;" href="<spring:url value="/home" htmlEscape="true"/>" class="regresar"> < Regresar</a>
 </div>
+<span class="help-inline"><c:out value="${message}"/></span>
 </body>
 

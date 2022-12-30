@@ -34,7 +34,7 @@
                 <c:out value="${game.gameName}"/>
             </td>
             <td>
-                <c:out value="${game.typeGame}"/>
+                <c:out value="${game.gameType}"/>
             </td>
             <td>
                 <c:out value="${game.numPlayers}"/>
@@ -76,7 +76,7 @@
                 <c:out value="${game.gameName}"/>
             </td>
             <td>
-                <c:out value="${game.typeGame}"/>
+                <c:out value="${game.gameType}"/>
             </td>
             <td>
                 <c:out value="${game.numPlayers}"/>

@@ -31,6 +31,16 @@ public class InvitationService {
         return invitationRepository.findRecievedInvitationsByUsername(username);
     }
 
+    @Transactional(readOnly = true)
+    public Invitation findInvitationPlayerToGame(Integer playerId,Integer gameId){
+        return invitationRepository.findInvitationPlayerToGame(playerId,gameId);
+    }
+
+    @Transactional(readOnly = true)
+    public Invitation findInvitationToGameByPlayers(Integer player1Id,Integer player2Id,Integer gameId){
+        return invitationRepository.findInvitationToGameByPlayers(player1Id,player2Id,gameId);
+    }
+
 
     @Transactional
     public void save(Invitation i){
