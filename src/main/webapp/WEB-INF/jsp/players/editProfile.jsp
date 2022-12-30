@@ -8,18 +8,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <head>
+    <xtreme:head></xtreme:head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/form.css">
-    <title>Xtreme Parchis&Oca</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/resources/favicon/site.webmanifest">
-
 </head>
 <body>
     <a style="position: absolute;" href="<spring:url value="/players/${player.user.username}" htmlEscape="true"/>" class="previous"> < Regresar</a>
-    <c:if test = "${esUserEqual}">
+    <c:if test = "${isCurrentUser}">
     <form:form modelAttribute="player" class="form-horizontal">
         <span class="help-inline"><c:out value="${message}"/></span>
         <xtreme:inputField name="picProfile" type="text" label="Pega la url de tu foto de perfil:" val = "${player.picProfile}"/>
@@ -35,7 +30,7 @@
         </div>
     </form:form>
     </c:if>
-    <c:if test = "${esUserEqual==false}">
+    <c:if test = "${isCurrentUser==false}">
     <h1>NO DEBERIAS ESTAR AQUI</h1>
 
     </c:if>

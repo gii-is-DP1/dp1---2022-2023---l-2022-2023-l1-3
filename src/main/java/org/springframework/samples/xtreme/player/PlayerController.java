@@ -1,7 +1,5 @@
 package org.springframework.samples.xtreme.player;
 
-
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +10,7 @@ import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.game.GameService;
 import org.springframework.samples.xtreme.user.User;
 import org.springframework.samples.xtreme.user.UserService;
+import org.springframework.samples.xtreme.util.UserUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,13 +22,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Controller
 @RequestMapping(path="/players")
 public class PlayerController {
 
+    private static final String VIEWS_FORM = "players/createPlayerForm";
+    private static final String PLAYERS_LIST = "players/playersList";
+    private static final String PROFILE = "players/viewProfile";
+    private static final String EDIT_PROFILE = "players/editProfile";
+    private static final String ALL_MY_MATCHS= "players/allMyMatchs";
     
     private final PlayerService playerService;
     private final UserService userService;
@@ -37,14 +40,7 @@ public class PlayerController {
 
     private final PlayerValidator playerValidator;
 
-
-    private static final String VIEWS_FORM = "players/createPlayerForm";
-    private static final String PLAYERS_LIST = "players/playersList";
-    private static final String PROFILE = "players/viewProfile";
-    private static final String EDIT_PROFILE = "players/editProfile";
-    private static final String ALL_MY_MATCHS= "players/allMyMatchs";
-
-    
+    private UserUtils userUtils = new UserUtils();
 
     @Autowired
     public PlayerController(PlayerService playerService, PlayerValidator playerValidator,
@@ -55,13 +51,10 @@ public class PlayerController {
         this.gameService=gameService;
     }
 
-    
     @InitBinder("player")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(playerValidator);
     }
-
-
     
     @GetMapping
     public ModelAndView showPlayerList() {
@@ -69,8 +62,6 @@ public class PlayerController {
         mav.addObject("players", this.playerService.getAllPlayers());
         return mav;
     }
-
-
 
     @GetMapping(path="/create")
     public ModelAndView viewForm(){
@@ -91,8 +82,6 @@ public class PlayerController {
         }
         return mav;
     }
-    
-
 
     @GetMapping(path="/{username}")
     public ModelAndView showProfile(@PathVariable String username){
@@ -100,19 +89,13 @@ public class PlayerController {
         Player player = this.playerService.findByUsername(username);
         mav.addObject("isBanned", player.getUser().isEnabled());
         mav.addObject("player", player);
-        // obtener el usuario actualmente logueado
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        Boolean esAdmin = false;
-        Boolean esUserEqual = false;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-            esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
-            esUserEqual = userDetails.getUsername().equals(username);
-        }
+
+        UserDetails currentUser = userUtils.getUserDetails();
+        Boolean isAdmin = userUtils.isAdmin(currentUser);
+        Boolean isCurrentUser = currentUser.getUsername().equals(username);
         
-        mav.addObject("esAdmin", esAdmin);
-        mav.addObject("esUserEqual", esUserEqual);
+        mav.addObject("isAdmin", isAdmin);
+        mav.addObject("isCurrentUser", isCurrentUser);
         return mav;
     }
 
@@ -132,23 +115,16 @@ public class PlayerController {
         
         return mav;
     }
-    
-
 
     @GetMapping(path="/{username}/edit")
     public ModelAndView editProfile(@PathVariable("username") String username){
         ModelAndView mav = new ModelAndView(EDIT_PROFILE);
         Player player = this.playerService.findByUsername(username);
-        // obtener el usuario actualmente logueado
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        Boolean esUserEqual = false;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-            esUserEqual = userDetails.getUsername().equals(username);
-        }
-        mav.addObject("esUserEqual", esUserEqual);
-        System.out.println(esUserEqual);
+
+        UserDetails currentUser = userUtils.getUserDetails();
+        Boolean isCurrentUser = currentUser.getUsername().equals(username);
+
+        mav.addObject("isCurrentUser", isCurrentUser);
         mav.addObject("player", player);
         return mav;
     }

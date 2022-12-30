@@ -1,11 +1,5 @@
 package org.springframework.samples.xtreme.user;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.xtreme.player.Player;
-import org.springframework.samples.xtreme.player.PlayerService;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,18 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     
     private static final String LOGIN_FORM = "users/loginForm";
-    private static final String LOGOUT = "users/logout";
-    private static final String HOME = "users/home";
-
-
-    private final PlayerService playerService;
-
-    private Player actualPlayer;
-    
-    @Autowired
-    public UserController(PlayerService playerService){
-        this.playerService=playerService;
-    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -42,47 +24,4 @@ public class UserController {
         mav.addObject("user", new User());
         return mav;
     }
-
-    @GetMapping(path = "/logout-screen")
-    public ModelAndView userLogout() {
-        ModelAndView mav = new ModelAndView(LOGOUT);
-
-        if(actualPlayer != null){
-        actualPlayer.setIsOnline(false);
-        this.playerService.save(actualPlayer);
-        actualPlayer=null;
-        }
-
-        return mav;
-    }
-
-    @GetMapping(path="/home")
-    public ModelAndView gameHome() {
-        ModelAndView mav = new ModelAndView(HOME);
-
-        // obtener el usuario actualmente logueado
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails=null;
-        Boolean esAdmin = false;
-        String user = "";
-        if (principal instanceof UserDetails) {
-
-            userDetails = (UserDetails) principal;
-           System.out.println("---Nombre actual del usuario logueado: "+userDetails.getUsername());
-           System.out.println("su rol es: "+ userDetails.getAuthorities());
-            esAdmin=userDetails.getAuthorities().stream().anyMatch(x-> x.getAuthority().equals("admin"));
-            user = userDetails.getUsername();
-            if(!esAdmin){
-            actualPlayer= this.playerService.findByUsername(user);
-            actualPlayer.setIsOnline(true);
-            this.playerService.save(actualPlayer);
-            }
-          }
-
-        mav.addObject("esAdmin", esAdmin);
-        mav.addObject("user", user);
-        return mav;
-    }
-
-    
 }

@@ -6,16 +6,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.model.Person;
+import org.springframework.samples.xtreme.player.Player;
+import org.springframework.samples.xtreme.player.PlayerService;
+import org.springframework.samples.xtreme.util.UserUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class WelcomeController {
 	
-	
-	  @GetMapping({"/","/welcome"})
-	  public String welcome(Map<String, Object> model) {	    
+	private static final String WELCOME = "welcome";
+	private static final String HOME = "home";
+
+	private final PlayerService playerService;
+
+	private UserUtils userUtils = new UserUtils();
+    
+    @Autowired
+    public WelcomeController(PlayerService playerService){
+        this.playerService=playerService;
+    }
+
+	@GetMapping({"/","/welcome"})
+	public String welcome(Map<String, Object> model) {	    
 		List<Person> persons = new ArrayList<Person>();
     
 		Person p1 = new Person();
@@ -47,6 +65,25 @@ public class WelcomeController {
 		model.put("persons",persons);
 		model.put("title","Xtreme Parchis&Oca");
 		model.put("group","L1-3");
-	    return "welcome";
-	  }
+	    return WELCOME;
+	}
+
+	@GetMapping(path="/home")
+    public ModelAndView gameHome() {
+        ModelAndView mav = new ModelAndView(HOME);
+
+		UserDetails currentUser = userUtils.getUserDetails();
+		Boolean isAdmin = userUtils.isAdmin(currentUser);
+
+		if (!isAdmin) {
+			Player actualPlayer= this.playerService.findByUsername(currentUser.getUsername());
+            actualPlayer.setIsOnline(true);
+            this.playerService.save(actualPlayer);
+		}
+
+        mav.addObject("isAdmin", isAdmin);
+        mav.addObject("username", currentUser.getUsername());
+        return mav;
+    }
+
 }

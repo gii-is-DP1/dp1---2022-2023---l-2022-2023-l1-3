@@ -92,23 +92,23 @@ INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',7,1);
 INSERT INTO friendships (state,player1,player2) VALUES ('PENDING',10,1);
 
 
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game,player_winner) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state,player_winner) VALUES
 (1,3,'PARCHIS', 'Partida 1', 1, TRUE, null,'FINISHED',1);
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game,player_winner) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state,player_winner) VALUES
 (2,2,'OCA', 'Partida 2', 2, TRUE, null,'FINISHED',1);
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game,player_winner) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state,player_winner) VALUES
 (3,3,'PARCHIS', 'Partida 3', 10, TRUE, null,'FINISHED',10);
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state) VALUES
 (4,4,'OCA', 'Partida 4', 12, TRUE, null,'STARTED');
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state) VALUES
 (5,3,'PARCHIS', 'Partida 5', 13, TRUE, null,'STARTED');
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state) VALUES
 (6,3,'OCA', 'Partida 6', 5, FALSE, null,'WAITING_PLAYERS');
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state) VALUES
 (7,4,'OCA', 'Partida 7', 6, TRUE, null,'WAITING_PLAYERS');
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state) VALUES
 (8,4,'OCA', 'Partida 8', 8, TRUE, null,'WAITING_PLAYERS');
-INSERT INTO game(id, num_players, type_game, game_name, creator_player, is_public, chat_id,state_game) VALUES
+INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_public, chat_id,game_state) VALUES
 (9,2,'PARCHIS', 'Partida 9', 15, TRUE, null,'WAITING_PLAYERS');
 
 INSERT INTO rel_games_players(game_id,player_id) VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,7),(2,2),(2,8),(3,1),

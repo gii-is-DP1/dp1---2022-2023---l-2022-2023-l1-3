@@ -1,6 +1,5 @@
 package org.springframework.samples.xtreme.game;
 
-public enum TypeGame {
+public enum GameType {
     PARCHIS, OCA
-    
 }

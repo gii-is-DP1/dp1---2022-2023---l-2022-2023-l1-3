@@ -8,20 +8,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <head>
+    <xtreme:head></xtreme:head>
     <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/form.css">
-    <title>Xtreme Parchis&Oca</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/resources/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/resources/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/resources/favicon/site.webmanifest">
-    
 </head>
 <body>
        
         <h1>Nombre partida: <c:out value = "${game.gameName}"/></h1>
         <h2>Numero de jugadores: <c:out value = "${game.numPlayers}"/></h2>
-        <h1>Tipo de juego: <c:out value = "${game.typeGame}"/></h1>
+        <h1>Tipo de juego: <c:out value = "${game.gameType}"/></h1>
         <h1>Host: <c:out value = "${game.creatorPlayer.user.username}"/></h1>
         <c:if test = "${game.isPublic}">
             <h2>Privacidad: publica</h2>

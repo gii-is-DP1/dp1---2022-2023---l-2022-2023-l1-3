@@ -37,8 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/players/create", "/users/login","/users/logout", "/users/logout-screen","/parchis").permitAll()
-				.antMatchers("/users/home","/games/**","/players/friends/**", "/players/{username}/**","/friends/**").hasAnyAuthority("admin","player")
+				.antMatchers("/players/create", "/users/login","/users/logout","/parchis").permitAll()
+				.antMatchers("/home","/games/**","/players/friends/**", "/players/{username}/**","/friends/**").hasAnyAuthority("admin","player")
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/admins/**", "/players","/admins").hasAnyAuthority("admin")	
 				.antMatchers("/players/{username}/edit").hasAnyAuthority("player")			
@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.passwordParameter("password")
 					.loginPage("/users/login").failureUrl("/users/login?error=true")
 				.and()
-					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/users/logout")).logoutSuccessUrl("/users/logout-screen");
+					.logout().logoutRequestMatcher(new AntPathRequestMatcher("/users/logout")).logoutSuccessUrl("/");
                 // Configuración para que funcione la consola de administración 
                 // de la BD H2 (deshabilitar las cabeceras de protección contra
                 // ataques de tipo csrf y habilitar los framesets si su contenido
