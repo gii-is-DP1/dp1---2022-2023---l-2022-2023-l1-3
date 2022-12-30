@@ -50,6 +50,8 @@ public class GameController {
 
     private UserUtils userUtils = new UserUtils();
 
+    private String message=null;
+    private Integer gameId;
     @Autowired
     public GameController(GameService gameService, PlayerService playerService, FriendshipService friendshipService,
             InvitationService invitationService,MensajeService mensajeService,ChatService chatService){
@@ -98,15 +100,22 @@ public class GameController {
         Game game=gameService.findGameById(id).get();
         ModelAndView mav = new ModelAndView(LOBBY_VIEW);
 
+        gameId=id;
         UserDetails currentUser = userUtils.getUserDetails();
 
         Player player = playerService.findByUsername(currentUser.getUsername());
-
+        Invitation invitation= this.invitationService.findInvitationPlayerToGame(player.getId(), id);
         if(!game.getPlayers().contains(player) &&
          ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
             mav = new ModelAndView("redirect:/games/joinGame");
+            message="La partida a la que ha intentado unirse está llena o ya ha empezado";
             return mav;
         }
+        if(!game.getPlayers().contains(player) && (invitation == null && !game.getIsPublic())){
+           mav = new ModelAndView("redirect:/games/joinGame");
+            message="Está intentando unirse a una partida privada sin invitación";
+           return mav;
+       }
 
         response.addHeader("Refresh", "5");
 
@@ -182,7 +191,7 @@ public class GameController {
 
     @GetMapping(path = "/joinGame")
     public ModelAndView listingGames(HttpServletResponse response){
-        response.addHeader("Refresh", "2");
+        response.addHeader("Refresh", "5");
         ModelAndView mav = new ModelAndView(VIEW_GAMES);
         Collection<Game> games = gameService.getAll();
         List<Game> filter = games.stream().filter(x -> x.getIsPublic() == true && x.getStateGame().equals(GameState.WAITING_PLAYERS)).collect(Collectors.toList());
@@ -194,7 +203,10 @@ public class GameController {
         Player player = playerService.findByUsername(currentUser.getUsername());
             
         mav.addObject("invitations", this.invitationService.findRecievedInvitationsByUsername(player.getUser().getUsername()));
-        
+        if(message != null){
+            mav.addObject("message", message);
+            message= null;
+        }
         return mav;
     }
 
@@ -215,6 +227,7 @@ public class GameController {
         //Obtener solo los amigos online
         List<Player> online = friends.stream().filter(x-> x.getIsOnline() == true).collect(Collectors.toList());
         mav.addObject("friendsOnline", online);
+        mav.addObject("gameId", gameId);
         
         return mav;
     }
@@ -243,6 +256,11 @@ public class GameController {
         Game game = gameService.findGameByCreatorPlayer(player1.getUser().getUsername());
         String id = game.getId().toString();
         ModelAndView mav = new ModelAndView("redirect:/games/lobby/"+id);
+        Invitation exist_invitation= this.invitationService.findInvitationToGameByPlayers(player1.getId(), player2.getId(), game.getId());
+        
+        if(exist_invitation != null){
+            return mav;
+        }
 
         invitation.setGame(game);
         invitation.setPlayer1(player1);

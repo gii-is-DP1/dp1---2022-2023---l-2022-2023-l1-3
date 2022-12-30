@@ -46,7 +46,7 @@ public class ParchisCell{
     ParchisBoard board;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cell")
-    private Set<ParchisCellPosition> cellPositions;
+    private List<ParchisCellPosition> cellPositions;
 
 
     /* public  Boolean isSafe() {

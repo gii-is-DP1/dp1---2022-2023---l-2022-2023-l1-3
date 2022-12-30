@@ -541,4 +541,4 @@ INSERT INTO parchis_cell_position (position_id,position_x,position_y, position )
 INSERT INTO parchis_cell_position (position_id,position_x,position_y, position ) VALUES ('BM3',675.5,575.5,100);
 INSERT INTO parchis_cell_position (position_id,position_x,position_y, position ) VALUES ('BM4',675.5,625.5,100);
 
-INSERT INTO parchis_board(id,background,height,width) VALUES (1,'resources/img/boards/parchis/parchisBoard.svg',1151,1151);
+INSERT INTO parchis_board(id,background,height,width) VALUES (1,'resources/img/boards/parchis/parchisBoard.svg',1151.5,1151.5);

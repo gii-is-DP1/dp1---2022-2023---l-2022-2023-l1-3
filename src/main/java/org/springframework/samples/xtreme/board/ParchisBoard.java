@@ -25,15 +25,15 @@ public class ParchisBoard extends BaseEntity{
     String background;
 
     @Positive
-    int width;
+    Double width;
 
     @Positive
-    int height;
+    Double height;
 
     public ParchisBoard() {
         this.background="resources/img/boards/parchis/parchisBoard.svg";
-        this.width=800;
-        this.height=800;
+        this.width=1151.5;
+        this.height=1151.5;
     }
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "board", fetch = FetchType.EAGER)
