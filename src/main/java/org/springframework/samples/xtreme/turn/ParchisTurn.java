@@ -6,9 +6,11 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.model.BaseEntity;
 import org.springframework.samples.xtreme.player.Player;
 
@@ -29,8 +31,11 @@ public class ParchisTurn extends BaseEntity {
     @OneToOne
     private Player currentPlayer;
 
-    private Boolean isThrown;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "gameId", referencedColumnName = "id")
+    private Game game;
 
+    private Boolean isThrown;
 
     public void TurnInit(List<Player> players) {
         this.turn = 0;
