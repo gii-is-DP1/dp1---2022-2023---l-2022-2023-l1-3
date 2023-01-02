@@ -18,5 +18,9 @@ public interface InvitationRepository extends CrudRepository<Invitation, Integer
     @Query("SELECT i FROM Invitation i WHERE lower(i.player2.user.username) = lower(?1)")
     public Collection<Invitation> findRecievedInvitationsByUsername(String username);
 
-    
+    @Query("SELECT i FROM Invitation i WHERE lower(i.player2.id) = lower(?1) and lower(i.game.id) = lower(?2)")
+    public Invitation findInvitationPlayerToGame(Integer playerId,Integer gameId);
+
+    @Query("SELECT i FROM Invitation i WHERE lower(i.player1.id) = lower(?1) and lower(i.player2.id) = lower(?2) and lower(i.game.id) = lower(?3)")
+    public Invitation findInvitationToGameByPlayers(Integer player1Id,Integer player2Id,Integer gameId);
 }
