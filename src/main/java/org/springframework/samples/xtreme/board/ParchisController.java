@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(path="/parchis")
 public class ParchisController {
+
+    private static final String GAME_VIEW = "parchis/parchisView";
     
     @Autowired
     ParchisBoardService parchisService;
@@ -30,8 +32,8 @@ public class ParchisController {
 
     @GetMapping(path = "/{id}")
     public ModelAndView gameRoom(@PathVariable Integer id, HttpServletResponse response) {
-        // TODO: Vista principal del tablero
-        return null;
+        ModelAndView mav = new ModelAndView(GAME_VIEW);
+        return mav;
     }
 
     @GetMapping(path = "/{id}/turn")
