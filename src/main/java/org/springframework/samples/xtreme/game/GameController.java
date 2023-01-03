@@ -271,12 +271,4 @@ public class GameController {
         return mav;
     }
 
-    @GetMapping(path="/parchis")
-    public ModelAndView parchis() {
-        ModelAndView mav = new ModelAndView("game/parchisBoard");
-        mav.addObject("board",new ParchisBoard());
-      
-        return mav;
-    }
-
 }
