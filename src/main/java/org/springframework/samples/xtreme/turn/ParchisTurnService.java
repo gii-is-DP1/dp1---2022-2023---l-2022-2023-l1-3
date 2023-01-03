@@ -16,7 +16,7 @@ public class ParchisTurnService {
     }
 
     @Transactional(readOnly = true)
-    public ParchisTurn findByGame(String gameId){
+    public ParchisTurn findByGame(Integer gameId){
         return this.parchisTurnRepository.findByGame(gameId);
     }
 }

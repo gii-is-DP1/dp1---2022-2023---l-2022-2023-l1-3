@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ParchisTurnRepository extends CrudRepository<ParchisTurn, Integer> {
 
     @Query("SELECT t FROM ParchisTurn t WHERE t.game.id = ?1")
-    public ParchisTurn findByGame(String gameId);
+    public ParchisTurn findByGame(Integer gameId);
     
 }
