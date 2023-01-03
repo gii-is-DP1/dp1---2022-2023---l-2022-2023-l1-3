@@ -57,6 +57,7 @@ public class ParchisController {
 
     @GetMapping(path = "/{id}")
     public ModelAndView gameRoom(@PathVariable Integer id, HttpServletResponse response) {
+        response.addHeader("Refresh", "5");
         ModelAndView mav = new ModelAndView(HOME);
         Optional<Game> currentGame = gameService.findGameById(id);
         UserDetails currentUser = userUtils.getUserDetails();
