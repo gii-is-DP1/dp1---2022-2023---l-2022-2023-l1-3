@@ -1,0 +1,16 @@
+#game-view {
+    width: 100%;
+    overflow: hidden;
+}
+
+#board {
+    background-color: green;
+}
+
+#char {
+    background-color: red;
+}
+
+#output {
+    background-color: blue;
+}
