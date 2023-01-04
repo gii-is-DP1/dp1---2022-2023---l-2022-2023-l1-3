@@ -50,6 +50,5 @@ public class GameService {
     public Chat findChatByGameId(Integer id){
         return gameRepository.findChatByGameId(id);
     }
-
     
 }

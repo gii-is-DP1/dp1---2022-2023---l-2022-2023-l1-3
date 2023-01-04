@@ -39,6 +39,11 @@ public class PlayerService {
         return this.playerRepository.findByUsername(username);
     }
 
+    @Transactional(readOnly = true)
+    public Player findById(Integer id){
+        return this.playerRepository.findById(id).get();
+    }
+
     @Transactional
     public void remove(Player p){
         this.userService.remove(p.getUser());
