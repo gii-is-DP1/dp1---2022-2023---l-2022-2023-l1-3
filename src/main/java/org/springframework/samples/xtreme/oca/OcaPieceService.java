@@ -1,47 +1,43 @@
 package org.springframework.samples.xtreme.oca;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.xtreme.oca.OcaTurn;
-import org.springframework.samples.xtreme.oca.OcaTurnRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OcaPieceService {
 	
-
-
-	private OcaPieceRepository ocaPieceRepo;
+	private OcaPieceRepository ocaPieceRepository;
 	
 	@Autowired
 	public OcaPieceService(OcaPieceRepository ocaPieceRepo) {
 		super();
-		this.ocaPieceRepo = ocaPieceRepo;
-	}
-
-	@Transactional
-	public Iterable<OcaPiece> findAll(){
-		return ocaPieceRepo.findAll();
+		this.ocaPieceRepository = ocaPieceRepo;
 	}
 	
 	@Transactional
 	public OcaPiece findPieceById(int id){
-		return ocaPieceRepo.findById(id).get();
+		return ocaPieceRepository.findById(id).get();
 	}
 	@Transactional
 	public OcaPiece save(OcaPiece piece){
-		return ocaPieceRepo.save(piece);
+		return ocaPieceRepository.save(piece);
 	}
 	
 	@Transactional
 	public void delete(OcaPiece piece){
-		ocaPieceRepo.delete(piece);
+		ocaPieceRepository.delete(piece);
 	}
 	
 
 	@Transactional
 	public OcaPiece findByPlayerId(Integer playerId) {
-		return ocaPieceRepo.findByPlayerId(playerId).iterator().next();
+		return ocaPieceRepository.findByPlayerId(playerId).iterator().next();
+	}
+	
+	@Transactional
+	public OcaPiece findPiecebyGameAndPlayer(Integer playerId,Integer gameId) {
+		return ocaPieceRepository.findPiecebyGameAndPlayer(playerId,gameId);
 	}
 }

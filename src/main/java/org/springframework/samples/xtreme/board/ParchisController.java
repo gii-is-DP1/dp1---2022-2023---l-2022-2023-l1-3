@@ -2,6 +2,7 @@ package org.springframework.samples.xtreme.board;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,7 +64,7 @@ public class ParchisController {
         UserDetails currentUser = userUtils.getUserDetails();
         ParchisTurn currentParchisTurn = parchisTurnService.findByGame(id);
         Player player = playerService.findByUsername(currentUser.getUsername());
-        Boolean gameExists = gameUtils.gameExists(gameService.getAll().stream().toList(), currentGame.get());
+        Boolean gameExists = gameUtils.gameExists(gameService.getAll().stream().collect(Collectors.toList()), currentGame.get());
         Boolean playerInGame = gameUtils.playerInGame(currentGame.get(), player);
 
         if (gameExists && playerInGame) {

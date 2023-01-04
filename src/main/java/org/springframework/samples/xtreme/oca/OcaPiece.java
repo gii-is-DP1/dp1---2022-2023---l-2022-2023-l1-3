@@ -1,5 +1,10 @@
 package org.springframework.samples.xtreme.oca;
 
+import org.springframework.samples.xtreme.board.OcaBoard;
+import org.springframework.samples.xtreme.game.Game;
+import org.springframework.samples.xtreme.model.BaseEntity;
+import org.springframework.samples.xtreme.player.Player;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +15,6 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.samples.xtreme.board.OcaBoard;
-import org.springframework.samples.xtreme.model.BaseEntity;
-import org.springframework.samples.xtreme.player.Player;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,9 @@ public class OcaPiece extends BaseEntity{
 
    @OneToOne
    private Player player;
+
+   @OneToOne
+   private Game game;
 
    private Integer penalization = 0;
 	

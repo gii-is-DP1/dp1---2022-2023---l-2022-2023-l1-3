@@ -20,8 +20,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.xtreme.chat.Chat;
 import org.springframework.samples.xtreme.model.BaseEntity;
-import org.springframework.samples.xtreme.oca.OcaTurn;
 import org.springframework.samples.xtreme.player.Player;
+import java.util.Random;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -67,9 +67,6 @@ public class Game extends BaseEntity {
     @JoinColumn(name="player_winner")
     private Player playerWinner;
 
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name= "oca_turn")
-    private OcaTurn ocaTurn;
 
     @JoinTable(
         name = "rel_games_players",
@@ -91,5 +88,30 @@ public class Game extends BaseEntity {
         if(this.players != null){
             this.players.remove(player);
         }
+    }
+
+
+    private Integer i=0;//puntero
+    private Integer dice;
+    public  void TurnInit(){
+        this.i=0;
+        this.dice=null;
+    }
+
+    public void throwDice() {
+        Random r = new Random();
+        this.dice=r.nextInt(6)+1;// Entre 0 y 5, más 1
+
+    }
+    public void nextTurn() {
+        if(this.i+1==this.players.size()) {
+        this.i=0;
+        }
+        else {
+            this.i++;
+        }
+    }
+    public Player actualTurn(){
+        return this.players.get(i%players.size()-1);
     }
 }

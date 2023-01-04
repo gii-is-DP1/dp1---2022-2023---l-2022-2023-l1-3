@@ -542,7 +542,3 @@ INSERT INTO parchis_cell_position (position_id,position_x,position_y, position )
 INSERT INTO parchis_cell_position (position_id,position_x,position_y, position ) VALUES ('BM4',675.5,625.5,100);
 
 INSERT INTO parchis_board(id,background,height,width) VALUES (1,'resources/img/boards/parchis/parchisBoard.svg',1151.5,1151.5);
-
-INSERT INTO oca_board(id,background,width,height) VALUES ('1','',800,800);
-INSERT INTO oca_turn(id,dice,player_id,turn,i) VALUES ('1','0',1,'0','0');
-INSERT INTO oca_piece(id,player_id,board_id,position,penalization) VALUES('1',1,1,4,0);

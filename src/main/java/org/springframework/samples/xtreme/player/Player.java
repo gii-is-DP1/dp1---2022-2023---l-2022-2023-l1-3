@@ -20,7 +20,6 @@ import javax.validation.constraints.Size;
 import org.springframework.samples.xtreme.chat.Mensaje;
 import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.model.Person;
-import org.springframework.samples.xtreme.oca.OcaTurn;
 import org.springframework.samples.xtreme.user.User;
 
 import lombok.Getter;
@@ -56,7 +55,4 @@ public class Player extends Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
     private List<Mensaje> mensaje;
 
-    @ManyToOne
-    @JoinColumn(name= "ocaTurn")
-    private OcaTurn ocaTurn;
 }

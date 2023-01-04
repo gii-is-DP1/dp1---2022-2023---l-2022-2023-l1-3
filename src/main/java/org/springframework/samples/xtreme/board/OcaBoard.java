@@ -21,7 +21,7 @@ public class OcaBoard extends BaseEntity{
 
     String background;
 
-    @OneToMany
+    @OneToMany(mappedBy = "board")
     private List<OcaPiece> pieces;
     
     @Positive
