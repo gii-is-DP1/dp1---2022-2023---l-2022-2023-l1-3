@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.chat.Chat;
+import org.springframework.samples.xtreme.oca.OcaTurn;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +50,11 @@ public class GameService {
     @Transactional(readOnly = true)
     public Chat findChatByGameId(Integer id){
         return gameRepository.findChatByGameId(id);
+    }
+
+    @Transactional(readOnly = true)
+    public OcaTurn findOcaTurnByGameId(Integer id){
+        return gameRepository.findOcaTurnByGameId(id);
     }
 
     

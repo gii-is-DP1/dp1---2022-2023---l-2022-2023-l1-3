@@ -1,4 +1,4 @@
-package org.springframework.samples.xtreme.pieces;
+package org.springframework.samples.xtreme.oca;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,10 +24,10 @@ import lombok.Setter;
 @Table(name="ocaPiece")
 public class OcaPiece extends BaseEntity{
 
-   public OcaPiece(){};
 
-   @Column(name="postion")
-   @Size(min=1, max=63)
+   @Column(name="position")
+   @DecimalMax(value="63", inclusive=true)
+	@DecimalMin(value="1", inclusive=true)
    private Integer position;
 
    @ManyToOne(cascade= CascadeType.ALL)
@@ -34,14 +36,10 @@ public class OcaPiece extends BaseEntity{
    @OneToOne
    private Player player;
 
-   public Integer getPositionXInPixels(Integer size) {
-      //TODO
-      return null;
-   }
-
-   public Integer getPositionYInPixels(Integer size) {
-      //TODO
-      return null;
-   }
+   private Integer penalization = 0;
+	
+	public OcaPiece() {
+		this.position=1;
+	}
     
 }

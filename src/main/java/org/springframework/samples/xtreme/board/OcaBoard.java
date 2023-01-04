@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Positive;
 
 import org.springframework.samples.xtreme.model.BaseEntity;
-import org.springframework.samples.xtreme.pieces.OcaPiece;
+import org.springframework.samples.xtreme.oca.OcaPiece;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +31,7 @@ public class OcaBoard extends BaseEntity{
     int height;
 
     public OcaBoard() {
-        this.background="resources/img/boards/oca/ocaBoard.svg";
+        this.background="resources/img/boards/oca/ocaBoard.jpeg";
         this.width=800;
         this.height=800;
     }

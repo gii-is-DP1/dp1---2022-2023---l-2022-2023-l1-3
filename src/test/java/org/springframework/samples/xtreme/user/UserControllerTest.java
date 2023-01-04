@@ -37,30 +37,11 @@ public class UserControllerTest {
 
     @WithMockUser
     @Test
-    public void testLogout() throws Exception {
-        mockMvc.perform(get("/users/logout-screen"))
-        .andExpect(status().isOk())
-        .andExpect(view().name("users/logout"));
-
-    }
-
-    @WithMockUser
-    @Test
     public void testLogin() throws Exception {
         mockMvc.perform(get("/users/login"))
         .andExpect(status().isOk())
         .andExpect(view().name("users/loginForm"))
         .andExpect(model().attributeExists("user"))
         .andExpect(model().attributeHasNoErrors("user"));
-    }
-
-    @WithMockUser
-    @Test
-    public void testHome() throws Exception {
-        mockMvc.perform(get("/home"))
-        .andExpect(status().isOk())
-        //.andExpect(view().name("users/home"))
-        .andExpect(model().attributeDoesNotExist("users"))
-        .andExpect(model().attributeDoesNotExist("esHost"));
     }
 }

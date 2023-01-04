@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.xtreme.chat.Chat;
 import org.springframework.samples.xtreme.model.BaseEntity;
+import org.springframework.samples.xtreme.oca.OcaTurn;
 import org.springframework.samples.xtreme.player.Player;
 
 import lombok.Getter;
@@ -65,6 +66,10 @@ public class Game extends BaseEntity {
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="player_winner")
     private Player playerWinner;
+
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name= "oca_turn")
+    private OcaTurn ocaTurn;
 
     @JoinTable(
         name = "rel_games_players",
