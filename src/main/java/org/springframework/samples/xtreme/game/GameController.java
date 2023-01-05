@@ -18,6 +18,7 @@ import org.springframework.samples.xtreme.friendship.Friendship;
 import org.springframework.samples.xtreme.friendship.FriendshipService;
 import org.springframework.samples.xtreme.invitation.Invitation;
 import org.springframework.samples.xtreme.invitation.InvitationService;
+import org.springframework.samples.xtreme.invitation.InvitationType;
 import org.springframework.samples.xtreme.oca.OcaPiece;
 import org.springframework.samples.xtreme.oca.OcaPieceService;
 import org.springframework.samples.xtreme.oca.OcaRules;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -108,19 +110,7 @@ public class GameController {
         return mav;
     }
 
-   
-    @GetMapping(path="/winner/{id}/{username}")
-	public ModelAndView showWinner(@PathVariable("username") String username,@PathVariable("id") int id) {
-		ModelAndView mav = new ModelAndView("games/winner");
-		Player player = this.playerService.findByUsername(username);
-		Game ocaGame = this.gameService.findGameById(id).get();
-		ocaGame.setPlayerWinner(player);
-        ocaGame.setStateGame(GameState.FINISHED);
-        gameService.save(ocaGame);
-		mav.addObject(ocaGame);
-		mav.addObject(player);
-		return mav;
-	}
+
 
     @GetMapping(path="/lobby/{id}/chat")
     public ModelAndView chatGame(@PathVariable Integer id, HttpServletResponse response) {
@@ -168,8 +158,8 @@ public class GameController {
         UserDetails currentUser = userUtils.getUserDetails();
 
         Player player = playerService.findByUsername(currentUser.getUsername());
-            
-        mav.addObject("invitations", this.invitationService.findRecievedInvitationsByUsername(player.getUser().getUsername()));
+
+        mav.addObject("invitations",this.invitationService.findRecievedInvitationsByUsername(player.getUser().getUsername()));
         if(message != null){
             mav.addObject("message", message);
             message= null;
@@ -213,7 +203,8 @@ public class GameController {
     }
 
     @PostMapping(path="/inviteFriends/{username}")
-    public ModelAndView createFriendshipAcceptedPost(@Valid @ModelAttribute("invitation") Invitation invitation, BindingResult res, @PathVariable("username") String username){
+    public ModelAndView inviteFriendPost(@Valid @ModelAttribute("invitation") Invitation invitation, BindingResult res, @PathVariable("username") String username,
+    @RequestParam String state){
 
         UserDetails currentUser = userUtils.getUserDetails();
 
@@ -224,16 +215,27 @@ public class GameController {
         String id = game.getId().toString();
         ModelAndView mav = new ModelAndView("redirect:/games/lobby/"+id);
         Invitation exist_invitation= this.invitationService.findInvitationToGameByPlayers(player1.getId(), player2.getId(), game.getId());
-        
-        if(exist_invitation != null){
-            return mav;
+
+        if(exist_invitation == null){
+            invitation.setGame(game);
+            invitation.setPlayer1(player1);
+            invitation.setPlayer2(player2);
+            if(state.equals("player")){
+                invitation.setInvitationType(InvitationType.PLAYER);
+            }else{
+                invitation.setInvitationType(InvitationType.VIEWER);
+            }
+            invitationService.save(invitation);
+    
         }
-
-        invitation.setGame(game);
-        invitation.setPlayer1(player1);
-        invitation.setPlayer2(player2);
-
-        invitationService.save(invitation);
+        else{
+            if(state.equals("player")){
+                exist_invitation.setInvitationType(InvitationType.PLAYER);
+            }else{
+                exist_invitation.setInvitationType(InvitationType.VIEWER);
+            }
+            invitationService.save(exist_invitation);
+        }
 
         return mav;
     }
@@ -260,7 +262,7 @@ public class GameController {
         }
 
 
-        if(!game.getPlayers().contains(player) &&
+        if(!game.getPlayers().contains(player) && invitation==null &&
          ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
             mav = new ModelAndView("redirect:/games/joinGame");
             message="La partida a la que ha intentado unirse está llena o ya ha empezado";
@@ -277,11 +279,12 @@ public class GameController {
             gameId=id;
             response.addHeader("Refresh", "5");
 
-            if(!game.getPlayers().contains(player)){
-                game.addPlayerToGame(player);
-                gameService.save(game);
+            if(invitation==null || invitation.getInvitationType().equals(InvitationType.PLAYER)){
+                if(!game.getPlayers().contains(player)){
+                    game.addPlayerToGame(player);
+                    gameService.save(game);
+                }
             }
-        
         mav.addObject("game",game);
         return mav;
         
@@ -306,15 +309,15 @@ public class GameController {
         for(int j=0;j <= game.getPlayers().size()-1;j++){
             mav.addObject("player"+j, game.getPlayers().get(j));
             mav.addObject("piece"+j, this.ocaPieceService.findPiecebyGameAndPlayer(game.getPlayers().get(j).getId(), id));
-
         }
         mav.addObject("isUserEquals",player==game.getPlayers().get(game.getI()));
 		mav.addObject("piece", piece);
 		mav.addObject("player", player);
 		mav.addObject("game", this.gameService.findGameById(id).get());
 		mav.addObject("board", this.ocaBoardService.findById(id));
+        mav.addObject("isViewer", invitation!=null && invitation.getInvitationType().equals(InvitationType.VIEWER));
+
 		return mav;
-	
         }
         else{
             return mav;
@@ -346,7 +349,7 @@ public class GameController {
 
     @GetMapping(path="/{id}/{playerId}")
 	public ModelAndView ocaPlayTurn(@PathVariable("id") int id,@PathVariable("playerId") Integer playerId){
-		OcaPiece piece = this.ocaPieceService.findByPlayerId(playerId);
+		OcaPiece piece = this.ocaPieceService.findPiecebyGameAndPlayer(playerId,id);
 		Game game= gameService.findGameById(id).get();
 
 		if(piece.getPenalization()<=0) {

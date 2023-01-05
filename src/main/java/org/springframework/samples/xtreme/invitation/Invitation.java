@@ -44,7 +44,7 @@ public class Invitation extends BaseEntity{
     
     @Column(name="type")
     @Enumerated(EnumType.STRING)
-    private InvitationType invitationType = InvitationType.GAME;
+    private InvitationType invitationType;
 
     
 }
