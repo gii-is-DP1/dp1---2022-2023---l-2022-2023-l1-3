@@ -23,6 +23,11 @@
     
         <form:form modelAttribute="friendship" class="form-horizontal">
 
+        <select name = "state">
+            <option value= "player">Jugador</option>
+            <option value= "viewer">Espectador</option>
+        </select>
+
             <div class="form-group submit-buttons">
                 <div class="col-sm-offset-2 col-sm-10">
                 <button class="button" type="submit">Invitar a la partida</button>

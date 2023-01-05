@@ -33,20 +33,26 @@ Player 4: <c:out value="${player3.user.username}"/><br>
 Posicion de la ficha: <c:out value="${piece3.position}"/><br>
 </c:if>
 
+<c:if test="${isViewer == false}">
     <div class="col-md-3">
-                    <c:if test="${isUserEquals}">
-                        <spring:url value="/turn/${game.id}/${player.id}" var="joinUrl">
-                        <spring:param name="gameId" value="${game.id}"/>
-                          <spring:param name="playerId" value="${player.id}"/>
-                    </spring:url>
-                    <a class="button" href = "<spring:url value="/games/${game.id}/${player.id}"  htmlEscape="true"/>">Tira el dado</a></c:if>
+        <c:if test="${isUserEquals}">
+            <spring:url value="/turn/${game.id}/${player.id}" var="joinUrl">
+                <spring:param name="gameId" value="${game.id}"/>
+                <spring:param name="playerId" value="${player.id}"/>
+            </spring:url>
+            <a class="button" href = "<spring:url value="/games/${game.id}/${player.id}"  htmlEscape="true"/>">Tira el dado</a></c:if>
                     
-                    <c:if test="${!isUserEquals}">
-                        <h2>No es tu turno</h2></c:if>
-        </div>
-        <div style = 'margin-bottom: 9vh; margin-top: 6vh'>
+            <c:if test="${!isUserEquals}">
+                <h2>No es tu turno</h2>
+            </c:if>
+    </div>
+
+    <div style = 'margin-bottom: 9vh; margin-top: 6vh'>
           <a class="button"  href="<spring:url value="/games/lobby/${game.id}/chat"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
-          licorice-64px">Chat</div></a></div>
-
-
+          licorice-64px">Chat</div></a>
+    </div>
+</c:if>
+<c:if test="${isViewer == true}">
+    <h2>Estas en modo espectador</h2>
+</c:if>
       </xtreme:layout>
