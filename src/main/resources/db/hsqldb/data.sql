@@ -114,7 +114,7 @@ INSERT INTO game(id, num_players, game_type, game_name, creator_player, is_publi
 INSERT INTO rel_games_players(game_id,player_id) VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,7),(2,2),(2,8),(3,1),
 (3,10),(4,12),(4,11),(4,9),(5,5),(5,13),(6,12),(6,5),(7,6),(8,8),(8,10),(9,15),(9,14);
 
-INSERT INTO invitations (player1,player2,game,type) VALUES (1,10,1,'GAME');
+INSERT INTO invitations (player1,player2,game,type) VALUES (15,10,9,'PLAYER');
 
 INSERT INTO parchis_cell(position) VALUES(101);
 INSERT INTO parchis_cell(position) VALUES(102);
