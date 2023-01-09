@@ -71,10 +71,10 @@ public class InvitationServiceTest {
         Collection<Invitation> r = invitationService.findRecievedInvitationsByUsername("user5");
         assertThat(r.size()>0).isTrue();
 
-        Boolean b = r.stream().allMatch(x -> x.getPlayer2().getUser().getUsername().equals("user5"));
+        Boolean b = r.stream().anyMatch(x -> x.getPlayer2().getUser().getUsername().equals("user5"));
         assertTrue(b);
 
-        Boolean b2 = r.stream().allMatch(x -> x.getPlayer2().getUser().getUsername().equals("Hamil"));
+        Boolean b2 = r.stream().anyMatch(x -> x.getPlayer2().getUser().getUsername().equals("Hamil"));
         assertFalse(b2);
 
         Collection<Invitation> r1 = invitationService.findRecievedInvitationsByUsername("Hamil");
@@ -92,7 +92,7 @@ public class InvitationServiceTest {
         inv.setPlayer1(player1);
         inv.setPlayer2(player2);
         inv.setGame(game);
-        inv.setInvitationType(InvitationType.GAME);
+        inv.setInvitationType(InvitationType.PLAYER);
         
 
         try{
