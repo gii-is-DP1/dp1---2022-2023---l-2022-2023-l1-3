@@ -25,48 +25,50 @@ public class ParchisPiece extends BaseEntity{
     @ManyToOne(cascade = CascadeType.ALL)
     private ParchisCell cell;
 
-    private Boolean start=true;
+    private Boolean inBase = true;
 
     @ManyToOne
     private Player player;
 
+    private Color color;
+
     public Integer getPosicion(){
         return this.cell.getPosition();
     }
-    
 
-    // public Integer casillaCasa() {
-    //     Integer s;
-    //     if(this.color==Color.BLUE) {
-    //         s= 101;
-    //     }else if(this.color==Color.GREEN) {
-    //         s= 102;
-    //     }else if(this.color==Color.YELLOW) {
-    //         s= 103;
-    //     }else {
-    //         s= 104;
-    //     }
-    //     return s;
-    // }
-
-    /* public Integer casillaSalida() {
-        Integer s;
-        if(this.color==Color.BLUE) {
-            s= 22;
-        }else if(this.color==Color.GREEN) {
-            s= 56;
-        }else if(this.color==Color.YELLOW) {
-            s= 5;
-        }else {
-            s= 39;
+    public Integer getBaseCell() {
+        Integer cell;
+        if (this.color.equals(Color.YELLOW)) {
+            cell = 101;
+        } else if (this.color.equals(Color.GREEN)) {
+            cell = 102;
+        } else if (this.color.equals(Color.RED)) {
+            cell = 103;
+        } else {
+            cell = 104;
         }
-        return s;
-    } */
+        return cell;
+    }
 
-    
+    public Integer getStartCell() {
+        Integer cell;
+        if (this.color.equals(Color.YELLOW)) {
+            cell = 5;
+        } else if (this.color.equals(Color.GREEN)) {
+            cell = 22;
+        } else if (this.color.equals(Color.RED)) {
+            cell = 39;
+        } else {
+            cell = 59;
+        }
+        return cell;
+    }
+
+
+    /*
     public Double getPositionInPixels(Integer size, Double position) {
         return position*size;
     }
-  
+    */
 
 }

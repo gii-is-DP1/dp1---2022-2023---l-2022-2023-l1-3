@@ -22,6 +22,7 @@ import org.springframework.samples.xtreme.invitation.InvitationType;
 import org.springframework.samples.xtreme.oca.OcaPiece;
 import org.springframework.samples.xtreme.oca.OcaPieceService;
 import org.springframework.samples.xtreme.oca.OcaRules;
+import org.springframework.samples.xtreme.pieces.ParchisPiece;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.util.UserUtils;
@@ -261,63 +262,64 @@ public class GameController {
             gameService.save(game);
         }
 
-
-        if(!game.getPlayers().contains(player) && invitation==null &&
-         ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
+        if(!game.getPlayers().contains(player) && ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
             mav = new ModelAndView("redirect:/games/joinGame");
             message="La partida a la que ha intentado unirse está llena o ya ha empezado";
-        return mav;
+            return mav;
         }
+
         if(!game.getPlayers().contains(player) && (invitation == null && !game.getIsPublic())){
             mav = new ModelAndView("redirect:/games/joinGame");
             message="Está intentando unirse a una partida privada sin invitación";
-        return mav;
-       }
+            return mav;
+        }
 
-       // partida no empezada
-        if(game.getStateGame().equals(GameState.WAITING_PLAYERS)){
+        // partida no empezada
+        if(game.getStateGame().equals(GameState.WAITING_PLAYERS)) {
             gameId=id;
             response.addHeader("Refresh", "5");
 
-            if(invitation==null || invitation.getInvitationType().equals(InvitationType.PLAYER)){
-                if(!game.getPlayers().contains(player)){
-                    game.addPlayerToGame(player);
-                    gameService.save(game);
-                }
+            if(!game.getPlayers().contains(player)) {
+                game.addPlayerToGame(player);
+                gameService.save(game);
             }
-        mav.addObject("game",game);
-        return mav;
+        
+            mav.addObject("game",game);
+            return mav;
         
         // oca
-        }else if(game.getStateGame().equals(GameState.STARTED) && game.getGameType().equals(GameType.OCA)){
+        } else if(game.getStateGame().equals(GameState.STARTED) && game.getGameType().equals(GameType.OCA)) {
             response.addHeader("Refresh", "3");
 
-           OcaPiece piece =ocaPieceService.findPiecebyGameAndPlayer(player.getId(), id);
-           if(piece==null){
-		    piece = new OcaPiece();
-            piece.setPlayer(player);
-            piece.setGame(gameService.findGameById(id).get());
-            this.ocaPieceService.save(piece);
-           }
+            OcaPiece piece =ocaPieceService.findPiecebyGameAndPlayer(player.getId(), id);
+            if(piece==null) {
+		        piece = new OcaPiece();
+                piece.setPlayer(player);
+                piece.setGame(gameService.findGameById(id).get());
+                this.ocaPieceService.save(piece);
+            }
+
             mav = new ModelAndView(OCA_GAME);
 		
-		
-        OcaPiece newPiece=this.ocaPieceService.findByPlayerId(player.getId());
-		if(newPiece!=null) {
-			piece = newPiece;
-		}
-        for(int j=0;j <= game.getPlayers().size()-1;j++){
-            mav.addObject("player"+j, game.getPlayers().get(j));
-            mav.addObject("piece"+j, this.ocaPieceService.findPiecebyGameAndPlayer(game.getPlayers().get(j).getId(), id));
-        }
-        mav.addObject("isUserEquals",player==game.getPlayers().get(game.getI()));
-		mav.addObject("piece", piece);
-		mav.addObject("player", player);
-		mav.addObject("game", this.gameService.findGameById(id).get());
-		mav.addObject("board", this.ocaBoardService.findById(id));
-        mav.addObject("isViewer", invitation!=null && invitation.getInvitationType().equals(InvitationType.VIEWER));
+            OcaPiece newPiece=this.ocaPieceService.findByPlayerId(player.getId());
+		    if(newPiece!=null) {
+			    piece = newPiece;
+		    }
 
-		return mav;
+            for(int j=0;j <= game.getPlayers().size()-1;j++){
+                mav.addObject("player"+j, game.getPlayers().get(j));
+                mav.addObject("piece"+j, this.ocaPieceService.findPiecebyGameAndPlayer(game.getPlayers().get(j).getId(), id));
+            }
+
+            mav.addObject("isUserEquals",player==game.getPlayers().get(game.getI()));
+		    mav.addObject("piece", piece);
+		    mav.addObject("player", player);
+		    mav.addObject("game", this.gameService.findGameById(id).get());
+		    mav.addObject("board", this.ocaBoardService.findById(id));
+		    return mav;
+	
+        } else if(game.getStateGame().equals(GameState.STARTED) && game.getGameType().equals(GameType.PARCHIS)) {
+            response.addHeader("Refresh", "3");
         }
         else{
             return mav;
