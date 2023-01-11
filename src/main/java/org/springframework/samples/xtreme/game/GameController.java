@@ -262,7 +262,7 @@ public class GameController {
             gameService.save(game);
         }
 
-        if(!game.getPlayers().contains(player) && ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
+        if(!game.getPlayers().contains(player) && invitation==null &&  ((game.getPlayers().size() == game.getNumPlayers()) || !(game.getStateGame().equals(GameState.WAITING_PLAYERS)))){
             mav = new ModelAndView("redirect:/games/joinGame");
             message="La partida a la que ha intentado unirse está llena o ya ha empezado";
             return mav;
@@ -279,10 +279,10 @@ public class GameController {
             gameId=id;
             response.addHeader("Refresh", "5");
 
-            if(!game.getPlayers().contains(player)) {
-                game.addPlayerToGame(player);
-                gameService.save(game);
-            }
+            if((invitation==null || invitation.getInvitationType().equals(InvitationType.PLAYER)) && !game.getPlayers().contains(player)){
+                    game.addPlayerToGame(player);
+                    gameService.save(game);
+                }
         
             mav.addObject("game",game);
             return mav;
@@ -316,10 +316,12 @@ public class GameController {
 		    mav.addObject("player", player);
 		    mav.addObject("game", this.gameService.findGameById(id).get());
 		    mav.addObject("board", this.ocaBoardService.findById(id));
+            mav.addObject("isViewer", invitation!=null && invitation.getInvitationType().equals(InvitationType.VIEWER));
 		    return mav;
 	
         } else if(game.getStateGame().equals(GameState.STARTED) && game.getGameType().equals(GameType.PARCHIS)) {
             response.addHeader("Refresh", "3");
+            return mav;
         }
         else{
             return mav;
