@@ -41,6 +41,8 @@ public class ParchisPiece extends BaseEntity{
 
     private String name;
     
+    private Boolean canPlay=true;
+
     public Integer getPosicion(){
         return this.cell.getPosition();
     }
@@ -68,7 +70,7 @@ public class ParchisPiece extends BaseEntity{
         } else if (this.color.equals(Color.RED)) {
             cell = 39;
         } else {
-            cell = 59;
+            cell = 56;
         }
         return cell;
     }

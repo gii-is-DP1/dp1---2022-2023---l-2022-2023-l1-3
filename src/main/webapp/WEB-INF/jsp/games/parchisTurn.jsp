@@ -36,7 +36,7 @@ Posicion de las fichas: <br><br>
 </c:forEach><br><br>
 
 <c:forEach items="${pieces}" var="piece">
-<a class="button" href = "<spring:url value="/move/${game.id}/${player.id}/${piece.id}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
+<a class="button" href = "<spring:url value="/parchis/move/${game.id}/${player.id}/${piece.id}"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
 licorice-64px">Mover <c:out value="${piece.name}"/></div></a>
 </c:forEach>
 

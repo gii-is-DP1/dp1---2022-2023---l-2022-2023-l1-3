@@ -93,6 +93,10 @@ public class ParchisCell extends BaseEntity{
         pieces.remove(piece);
     }
     
+    public Boolean isBifurcacion() {
+		return this.position==68||this.position==17||this.position==34||this.position==51; 
+    }
+
     public Boolean isFinalCell() {
         List<Integer>finalCell=List.of(76,84,92,100);
         return finalCell.contains(this.position);

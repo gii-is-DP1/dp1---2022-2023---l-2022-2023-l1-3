@@ -21,7 +21,7 @@ Turno del jugador: <c:out value="${game.i+1}"/><br><br>
 
 Player 1: <c:out value="${player0.user.username}"/><br>
 Posicion de las fichas: <br><br>
-<c:forEach items="${pieces0}" var="piece0">
+<c:forEach items="${player0.parchisPieces}" var="piece0">
     <tr>      
         <th>(${piece0.name}</th>
         <c:choose>
@@ -37,7 +37,7 @@ Posicion de las fichas: <br><br>
 
 Player 2: <c:out value="${player1.user.username}"/><br>
 Posicion de las fichas: <br><br>
-<c:forEach items="${pieces1}" var="piece1">
+<c:forEach items="${player1.parchisPieces}" var="piece1">
     <tr>      
         <th>(${piece1.name}</th>
         <c:choose>
@@ -54,7 +54,7 @@ Posicion de las fichas: <br><br>
 <c:if test="${player2 != null}">
 Player 3: <c:out value="${player2.user.username}"/><br>
 Posicion de las fichas: <br><br>
-<c:forEach items="${pieces2}" var="piece2">
+<c:forEach items="${player2.parchisPieces}" var="piece2">
     <tr>      
         <th>(${piece2.name}</th>
         <c:choose>
@@ -72,7 +72,7 @@ Posicion de las fichas: <br><br>
 <c:if test="${player3 != null}">
 Player 4: <c:out value="${player3.user.username}"/><br>
 Posicion de las fichas: <br><br>
-<c:forEach items="${pieces3}" var="piece3">
+<c:forEach items="${player3.parchisPieces}" var="piece3">
     <tr>      
         <th>(${piece3.name}</th>
         <c:choose>

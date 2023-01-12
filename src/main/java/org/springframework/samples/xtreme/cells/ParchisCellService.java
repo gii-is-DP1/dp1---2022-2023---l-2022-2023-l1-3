@@ -31,7 +31,7 @@ public class ParchisCellService {
 	}
 	
 	@Transactional
-	public ParchisCell findByPosition(int id){
+	public ParchisCell findByPosition(Integer id){
 		return parchisCellRepository.findById(id).get();
 	}
 	

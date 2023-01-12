@@ -18,6 +18,11 @@ public class ParchisPieceService {
     }
 
     @Transactional
+    public ParchisPiece findById(Integer gameId) {
+        return parchisPieceRepository.findById(gameId).get();
+    }
+
+    @Transactional
     public void save(ParchisPiece piece) {
         parchisPieceRepository.save(piece);
     }
