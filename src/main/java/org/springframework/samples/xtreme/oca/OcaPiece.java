@@ -37,7 +37,7 @@ public class OcaPiece extends BaseEntity{
    @OneToOne
    private Player player;
 
-   @OneToOne
+   @ManyToOne
    private Game game;
 
    private Integer penalization = 0;
