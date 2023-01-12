@@ -1,5 +1,6 @@
 package org.springframework.samples.xtreme.player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ import javax.validation.constraints.Size;
 import org.springframework.samples.xtreme.chat.Mensaje;
 import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.model.Person;
+import org.springframework.samples.xtreme.pieces.ParchisPiece;
 import org.springframework.samples.xtreme.user.User;
 
 import lombok.Getter;
@@ -55,4 +57,20 @@ public class Player extends Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
     private List<Mensaje> mensaje;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "player")
+    private List<ParchisPiece> parchisPieces;
+
+    public void addParchisPiecesToPlayer(ParchisPiece parchisPiece){
+        if(this.parchisPieces == null){
+            this.parchisPieces = new ArrayList<>();
+        }
+        
+        this.parchisPieces.add(parchisPiece);
+    }
+
+    public void removeParchisPiecesToPlayer(ParchisPiece parchisPiece){
+        if(this.parchisPieces != null){
+            this.parchisPieces.remove(parchisPiece);
+        }
+    }
 }

@@ -8,6 +8,8 @@ import java.util.stream.IntStream;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,9 +34,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "parchis_cell")
-public class ParchisCell{
-    @Id
-    @Size(min=0, max=2)
+public class ParchisCell extends BaseEntity{
+
     private Integer position;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -45,25 +46,34 @@ public class ParchisCell{
     @JoinColumn(name="board_id")
     ParchisBoard board;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cell")
-    private List<ParchisCellPosition> cellPositions;
+    @Column(name="color")
+    @Enumerated(EnumType.STRING)
+    private Color color;
 
+    public ParchisCell(List<ParchisPiece> pieces, Integer position, Color color, ParchisBoard board) {
+        this.pieces = pieces;
+        this.position = position;
+        this.color = color;
+        this.board = board;
+    }
 
-    /* public  Boolean isSafe() {
+    public ParchisCell() {
+        
+    }
+
+    public  Boolean isSafe() {
         List<Integer>safe=List.of(12,17,29,34,46,51,63,68);
-        return safe.contains(this.id);
-
+        return safe.contains(this.position);
     }
 
     public  Boolean isHouse() {
         List<Integer>house=List.of(101,102,103,104);
-        return house.contains(this.id);
-
+        return house.contains(this.position);
     }
 
     public Boolean isStart() {
-        List<Integer>start=List.of(5,22,39,56);//5 amarillo 22 azul 39 rojo 56 verde
-        return start.contains(this.id);
+        List<Integer>start=List.of(5,22,39,56);
+        return start.contains(this.position);
     }
 
     public  Boolean isBloqueo() {
@@ -72,7 +82,7 @@ public class ParchisCell{
 
     public  Boolean isStair() {
         List<Integer>stair=IntStream.rangeClosed(69, 100).boxed().collect(Collectors.toList()); 
-        return stair.contains(this.id);
+        return stair.contains(this.position);
     }
 
     public void colocarFicha(ParchisPiece piece) {
@@ -83,16 +93,13 @@ public class ParchisCell{
         pieces.remove(piece);
     }
     
-    public Boolean isFinalSquare() {
-        List<Integer>finalSquare=List.of(76,84,92,100);
-        return finalSquare.contains(this.id);
-    } */
+    public Boolean isBifurcacion() {
+		return this.position==68||this.position==17||this.position==34||this.position==51; 
+    }
 
-
-
-
-
-
-
+    public Boolean isFinalCell() {
+        List<Integer>finalCell=List.of(76,84,92,100);
+        return finalCell.contains(this.position);
+    } 
 
 }
