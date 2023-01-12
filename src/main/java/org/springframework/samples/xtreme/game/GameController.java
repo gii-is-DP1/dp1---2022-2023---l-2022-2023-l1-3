@@ -343,6 +343,7 @@ public class GameController {
             // parchis
         } else if(game.getStateGame().equals(GameState.STARTED) && game.getGameType().equals(GameType.PARCHIS)) {
             response.addHeader("Refresh", "3");
+
             mav = new ModelAndView(PARCHIS_GAME);
 
             List<ParchisPiece> pieces = new ArrayList<>(parchisPieceService.findPieceByBoardAndPlayer(player.getId(),game.getParchisBoard().getId()));
@@ -406,6 +407,7 @@ public class GameController {
 		    mav.addObject("player", player);
 		    mav.addObject("game", this.gameService.findGameById(id).get());
 		    return mav;
+
         }
         else{
             return mav;
