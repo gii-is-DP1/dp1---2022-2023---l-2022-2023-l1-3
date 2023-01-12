@@ -2,11 +2,13 @@ package org.springframework.samples.xtreme.pieces;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.samples.xtreme.board.ParchisBoard;
 import org.springframework.samples.xtreme.cells.ParchisCell;
+import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.model.BaseEntity;
 import org.springframework.samples.xtreme.player.Player;
 
@@ -27,10 +29,18 @@ public class ParchisPiece extends BaseEntity{
 
     private Boolean inBase = true;
 
+    private Boolean canMove = false;
+
     @ManyToOne
     private Player player;
 
     private Color color;
+
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name="game_id")
+    private Game game;
 
     public Integer getPosicion(){
         return this.cell.getPosition();

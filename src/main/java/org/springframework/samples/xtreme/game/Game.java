@@ -11,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -20,6 +22,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.xtreme.chat.Chat;
 import org.springframework.samples.xtreme.model.BaseEntity;
+import org.springframework.samples.xtreme.pieces.ParchisPiece;
 import org.springframework.samples.xtreme.player.Player;
 import java.util.Random;
 
@@ -58,6 +61,9 @@ public class Game extends BaseEntity {
     @JoinColumn(name="chat_id")
     private Chat chat;
 
+    @OneToMany(mappedBy = "game")
+    private List<ParchisPiece> parchisPieces;
+
     @Column(name="game_state")
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -87,6 +93,20 @@ public class Game extends BaseEntity {
     public void removePlayerToGame(Player player){
         if(this.players != null){
             this.players.remove(player);
+        }
+    }
+
+    public void addParchisPiecesToGame(ParchisPiece parchisPiece){
+        if(this.parchisPieces == null){
+            this.parchisPieces = new ArrayList<>();
+        }
+        
+        this.parchisPieces.add(parchisPiece);
+    }
+
+    public void removeParchisPiecesToGame(ParchisPiece parchisPiece){
+        if(this.parchisPieces != null){
+            this.parchisPieces.remove(parchisPiece);
         }
     }
 
