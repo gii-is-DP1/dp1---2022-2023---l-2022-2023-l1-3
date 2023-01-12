@@ -1,5 +1,6 @@
 package org.springframework.samples.xtreme.game;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +11,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.board.OcaBoardService;
 import org.springframework.samples.xtreme.board.ParchisBoard;
+import org.springframework.samples.xtreme.board.ParchisBoardService;
+import org.springframework.samples.xtreme.cells.ParchisCell;
+import org.springframework.samples.xtreme.cells.ParchisCellService;
 import org.springframework.samples.xtreme.chat.Chat;
 import org.springframework.samples.xtreme.chat.ChatService;
 import org.springframework.samples.xtreme.chat.Mensaje;
@@ -22,7 +26,9 @@ import org.springframework.samples.xtreme.invitation.InvitationType;
 import org.springframework.samples.xtreme.oca.OcaPiece;
 import org.springframework.samples.xtreme.oca.OcaPieceService;
 import org.springframework.samples.xtreme.oca.OcaRules;
+import org.springframework.samples.xtreme.pieces.Color;
 import org.springframework.samples.xtreme.pieces.ParchisPiece;
+import org.springframework.samples.xtreme.pieces.ParchisPieceService;
 import org.springframework.samples.xtreme.player.Player;
 import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.util.UserUtils;
@@ -49,7 +55,8 @@ public class GameController {
     private static final String CHAT_GAME="games/chat";
     private static final String OCA_GAME="games/ocaGame";
     private static final String WINNER="games/winner";
-
+    private static final String PARCHIS_GAME="games/parchisGame";
+    private static final String PARCHIS_TURN="games/parchisTurn";
 
     private final GameService gameService;
     private final PlayerService playerService;
@@ -59,6 +66,9 @@ public class GameController {
     private final ChatService chatService;
     private final OcaPieceService ocaPieceService;
     private final OcaBoardService ocaBoardService;
+    private final ParchisPieceService parchisPieceService;
+    private final ParchisCellService parchisCellService;
+    private final ParchisBoardService parchisBoardService;
 
     private UserUtils userUtils = new UserUtils();
 
@@ -67,7 +77,8 @@ public class GameController {
     @Autowired
     public GameController(GameService gameService, PlayerService playerService, FriendshipService friendshipService,
             InvitationService invitationService,MensajeService mensajeService,ChatService chatService, 
-            OcaPieceService ocaPieceService, OcaBoardService ocaBoardService){
+            OcaPieceService ocaPieceService, OcaBoardService ocaBoardService,ParchisPieceService parchisPieceService,
+            ParchisCellService parchisCellService,ParchisBoardService parchisBoardService){
         this.friendshipService = friendshipService;
         this.gameService = gameService;
         this.playerService = playerService;
@@ -76,6 +87,9 @@ public class GameController {
         this.chatService=chatService;
         this.ocaPieceService = ocaPieceService;
         this.ocaBoardService = ocaBoardService;
+        this.parchisPieceService=parchisPieceService;
+        this.parchisCellService=parchisCellService;
+        this.parchisBoardService=parchisBoardService;
 
     }
 
@@ -104,6 +118,12 @@ public class GameController {
         } else {
             Chat chat = new Chat();
             game.setChat(chat);
+            if(game.getGameType().equals(GameType.PARCHIS)){
+                ParchisBoard board= new ParchisBoard();
+                parchisCellService.generateSquares(board);
+                board.setGame(game);
+                game.setParchisBoard(board);
+            }
             gameService.save(game);
             mav = new ModelAndView("redirect:/"+LOBBY_VIEW+"/"+game.getId());
 
@@ -169,7 +189,7 @@ public class GameController {
     }
 
     @GetMapping(path = "/inviteFriends")
-    public ModelAndView inivteFriends(){
+    public ModelAndView inviteFriends(){
         
         ModelAndView mav = new ModelAndView(INVITE_FRIENDS);
        
@@ -319,9 +339,73 @@ public class GameController {
             mav.addObject("isViewer", invitation!=null && invitation.getInvitationType().equals(InvitationType.VIEWER));
 		    return mav;
 	
+
+            // parchis
         } else if(game.getStateGame().equals(GameState.STARTED) && game.getGameType().equals(GameType.PARCHIS)) {
             response.addHeader("Refresh", "3");
-            return mav;
+            mav = new ModelAndView(PARCHIS_GAME);
+
+            List<ParchisPiece> pieces = new ArrayList<>(parchisPieceService.findPieceByBoardAndPlayer(player.getId(),game.getParchisBoard().getId()));
+
+            if (pieces.isEmpty()) {
+                Color color = null;
+                ParchisCell c = new ParchisCell();
+                Integer playerIndex = game.getPlayers().indexOf(player);
+                switch(playerIndex) {
+                    case 0: // Jugador 1, AMARILLO
+                        color = Color.YELLOW;
+                        c = this.parchisCellService.findByPosition(101);
+                        break;
+                    case 1: // Jugador 2, VERDE
+                        color = Color.GREEN;
+                        c = this.parchisCellService.findByPosition(102);
+                        break;
+                    case 2: // Jugador 3, ROJO
+                        color = Color.RED;
+                        c = this.parchisCellService.findByPosition(103);
+                        break;
+                    case 3: // Jugador 4, AZUL
+                        color = Color.BLUE;
+                        c = this.parchisCellService.findByPosition(104);
+                        break;
+                }
+
+                List<ParchisPiece> piecesTemp = c.getPieces();
+                for(int i = 0; i < 4; i++) {
+                    ParchisPiece p = new ParchisPiece();
+                    p.setPlayer(player);
+                    p.setColor(color);
+                    p.setBoard(game.getParchisBoard());
+                    p.setName("PIECE " + i);
+                    p.setCell(c);
+                    p.setInBase(true);
+                    piecesTemp.add(p);
+                    this.parchisPieceService.save(p);
+                    player.addParchisPiecesToPlayer(p);
+                    this.playerService.save(player);
+                    ParchisBoard board= game.getParchisBoard();
+                    board.addParchisPiecesToBoard(p);
+                    this.parchisBoardService.save(board);
+                }
+
+                c.setPieces(piecesTemp);
+                this.parchisCellService.save(c);
+            }
+
+            // MOSTRAR LA POSICION DE LAS PIEZAS DE TODOS LOS JUGADORES
+            for(int j=0;j <= game.getPlayers().size()-1;j++){
+                List<ParchisPiece> playerPieces = new ArrayList<>();
+                mav.addObject("player"+j, game.getPlayers().get(j));
+                for(int i = 0; i <= pieces.size()-1; i++) {
+                    playerPieces.add(pieces.get(i));
+                }
+                mav.addObject("pieces"+j, playerPieces);
+            }
+
+            mav.addObject("isUserEquals",player==game.getPlayers().get(game.getI()));
+		    mav.addObject("player", player);
+		    mav.addObject("game", this.gameService.findGameById(id).get());
+		    return mav;
         }
         else{
             return mav;

@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -18,8 +19,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.samples.xtreme.board.ParchisBoard;
 import org.springframework.samples.xtreme.chat.Chat;
 import org.springframework.samples.xtreme.model.BaseEntity;
+import org.springframework.samples.xtreme.pieces.ParchisPiece;
 import org.springframework.samples.xtreme.player.Player;
 import java.util.Random;
 
@@ -112,6 +115,13 @@ public class Game extends BaseEntity {
         }
     }
     public Player actualTurn(){
-        return this.players.get(i%players.size()-1);
+        return this.players.get(this.i);
     }
+    
+
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name="parchis_board")
+    private ParchisBoard parchisBoard;
+
+
 }

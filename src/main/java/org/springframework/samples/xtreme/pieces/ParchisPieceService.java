@@ -28,7 +28,7 @@ public class ParchisPieceService {
     }
 
     @Transactional
-    public Collection<ParchisPiece> findPieceByGameAndPlayer(Integer playerId, Integer gameId) {
-        return parchisPieceRepository.findPieceByGameAndPlayer(playerId, gameId);
+    public Collection<ParchisPiece> findPieceByBoardAndPlayer(Integer playerId, Integer boardId) {
+        return parchisPieceRepository.findPieceByBoardAndPlayer(playerId, boardId);
     }
 }

@@ -1,9 +1,13 @@
 package org.springframework.samples.xtreme.pieces;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.xtreme.board.ParchisBoard;
 import org.springframework.samples.xtreme.cells.ParchisCell;
@@ -16,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="parchisPiece")
+@Table(name="parchis_piece")
 public class ParchisPiece extends BaseEntity{
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -30,8 +34,13 @@ public class ParchisPiece extends BaseEntity{
     @ManyToOne
     private Player player;
 
+    @Column(name="color")
+    @Enumerated(EnumType.STRING)
+    @NotNull
     private Color color;
 
+    private String name;
+    
     public Integer getPosicion(){
         return this.cell.getPosition();
     }
