@@ -32,8 +32,8 @@ public class ParchisPieceService {
         parchisPieceRepository.delete(piece);
     }
 
-    @Transactional
-    public Collection<ParchisPiece> findPieceByBoardAndPlayer(Integer playerId, Integer boardId) {
+    @Transactional(readOnly = true)
+    public List<ParchisPiece> findPieceByBoardAndPlayer(Integer playerId, Integer boardId) {
         return parchisPieceRepository.findPieceByBoardAndPlayer(playerId, boardId);
     }
     @Transactional(readOnly = true)

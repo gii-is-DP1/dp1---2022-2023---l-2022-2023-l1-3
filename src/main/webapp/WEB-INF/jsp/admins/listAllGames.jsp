@@ -7,8 +7,16 @@
 
 <head>
     <xtreme:head></xtreme:head>
-    <link rel="stylesheet" href="/resources/css/base.css">
     <link rel="stylesheet" href="/resources/css/list.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.csss">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $('#tabla').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+  });
+    </script>
 </head>
 <body>
     <a style="position: relative;" href="<spring:url value="/home" htmlEscape="true"/>" class="previous"> < Regresar</a>
@@ -34,7 +42,7 @@
                 <c:out value="${game.gameName}"/>
             </td>
             <td>
-                <c:out value="${game.typeGame}"/>
+                <c:out value="${game.gameType}"/>
             </td>
             <td>
                 <c:out value="${game.numPlayers}"/>

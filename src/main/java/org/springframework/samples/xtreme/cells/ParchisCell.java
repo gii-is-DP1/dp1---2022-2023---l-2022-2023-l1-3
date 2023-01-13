@@ -76,27 +76,20 @@ public class ParchisCell extends BaseEntity{
         return start.contains(this.position);
     }
 
-    public  Boolean isBloqueo() {
-        return pieces.size()==2;
-    }
 
     public  Boolean isStair() {
         List<Integer>stair=IntStream.rangeClosed(69, 100).boxed().collect(Collectors.toList()); 
         return stair.contains(this.position);
     }
 
-    public void colocarFicha(ParchisPiece piece) {
+    public void addFicha(ParchisPiece piece) {
         pieces.add(piece);
     }
 
-    public void quitarFicha(ParchisPiece piece) {
+    public void reomoveFicha(ParchisPiece piece) {
         pieces.remove(piece);
     }
     
-    public Boolean isBifurcacion() {
-		return this.position==68||this.position==17||this.position==34||this.position==51; 
-    }
-
     public Boolean isFinalCell() {
         List<Integer>finalCell=List.of(76,84,92,100);
         return finalCell.contains(this.position);

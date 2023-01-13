@@ -1,6 +1,5 @@
 package org.springframework.samples.xtreme.oca;
 
-import org.springframework.samples.xtreme.board.OcaBoard;
 import org.springframework.samples.xtreme.game.Game;
 import org.springframework.samples.xtreme.model.BaseEntity;
 import org.springframework.samples.xtreme.player.Player;
@@ -30,9 +29,6 @@ public class OcaPiece extends BaseEntity{
    @DecimalMax(value="63", inclusive=true)
 	@DecimalMin(value="1", inclusive=true)
    private Integer position;
-
-   @ManyToOne(cascade= CascadeType.ALL)
-   private OcaBoard board;
 
    @OneToOne
    private Player player;

@@ -87,6 +87,7 @@ Posicion de las fichas: <br><br>
 </c:forEach>
 </c:if> <br><br>
 
+<c:if test="${isViewer == false}">
     <div class="col-md-3">
                     <c:if test="${isUserEquals}">
 
@@ -98,6 +99,8 @@ Posicion de las fichas: <br><br>
         <div style = 'margin-bottom: 9vh; margin-top: 6vh'>
           <a class="button"  href="<spring:url value="/games/lobby/${game.id}/chat"  htmlEscape="true"/>"><div class="large valign-text-middle vt323-normal-
           licorice-64px">Chat</div></a></div>
-
-
+</c:if>
+<c:if test="${isViewer == true}">
+    <h2>Estas en modo espectador</h2>
+</c:if>
       </xtreme:layout>
