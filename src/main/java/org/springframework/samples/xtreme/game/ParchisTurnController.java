@@ -1,11 +1,9 @@
 package org.springframework.samples.xtreme.game;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.board.ParchisBoard;
@@ -20,13 +18,9 @@ import org.springframework.samples.xtreme.player.PlayerService;
 import org.springframework.samples.xtreme.util.UserUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -45,7 +39,6 @@ public class ParchisTurnController {
 
     private UserUtils userUtils = new UserUtils();
 
-    private Integer extra=null;
 
     @Autowired
     public ParchisTurnController(GameService gameService, PlayerService playerService,ParchisPieceService parchisPieceService,
@@ -69,10 +62,7 @@ public class ParchisTurnController {
 
         ModelAndView mav = new ModelAndView(PARCHIS_TURN);
         game.throwDice();
-		if(extra!=null){
-            game.setDice(extra);
-            extra=null;
-        }
+
         this.gameService.save(game);
 		List<ParchisPiece> pieces = player.getParchisPieces(); 
 
@@ -91,6 +81,7 @@ public class ParchisTurnController {
         Integer dice = game.getDice();
         Player currentPlayer = this.playerService.findById(playerId);
         ParchisPiece p = this.parchisPieceService.findById(pieceId);
+
 
         if(this.parchisCellService.findByPosition(p.getPosicion()).isHouse()) {
             
@@ -118,7 +109,7 @@ public class ParchisTurnController {
         } else{
                 Integer position=p.getPosicion();
                 Integer nextPos=position+dice;
-                if(this.parchisCellService.findByPosition(nextPos).isFinalCell() && this.parchisCellService.findByPosition(nextPos).getPieces().size()==4 ){
+                if(this.parchisCellService.findByPosition(nextPos).isFinalCell() && this.parchisPieceService.findPieceByCellAndBoard(nextPos, game.getParchisBoard().getId()).size() == 4 ){
                     game.setPlayerWinner(currentPlayer);
                     game.setStateGame(GameState.FINISHED);
                     this.gameService.save(game);
@@ -133,12 +124,11 @@ public class ParchisTurnController {
                         bloqueo= true;		
                     }
                  } if(!bloqueo){
-                        eat(nextPos, p);
-                        if(extra!=null){
-                            return new ModelAndView("redirect:/parchis/move/"+gameId+"/"+playerId+"/"+pieceId);		
-                        }
-                        avanzar(nextPos, p);
-                        //
+
+                        avanzar(nextPos, p,game);
+                        eat(nextPos, p.getId(),game);
+                        p= this.parchisPieceService.findById(p.getId());
+
                     }
                     if(game.getDice() == 6){
                         return new ModelAndView("redirect:/parchis/"+gameId+"/"+playerId);		
@@ -148,99 +138,105 @@ public class ParchisTurnController {
                 return new ModelAndView("redirect:/games/lobby/"+gameId);			
         }
     }
-    public void eat(Integer nextPos, ParchisPiece parchisPiece){
-        ParchisCell cell = this.parchisCellService.findByPosition(nextPos);
-        if(cell.getPieces().size()==1 && cell.getPieces().get(0).getColor() != parchisPiece.getColor()){
-            ParchisPiece piece2=this.parchisPieceService.findById(cell.getPieces().get(0).getId());
+    public void eat(Integer nextPos, Integer parchisPieceId,Game game){
+        ParchisBoard board= this.gameService.findGameById(game.getId()).get().getParchisBoard();
+        ParchisPiece piece= this.parchisPieceService.findById(parchisPieceId);
+        ParchisCell cell = piece.getCell();
+        List<ParchisPiece> pieces = this.parchisPieceService.findPieceByCellAndBoard(cell.getPosition(), board.getId());
+        if(!cell.isSafe() && !cell.isStart() && pieces.size() == 2 && !pieces.get(0).getColor().equals(pieces.get(1).getColor())){
+            
+            ParchisPiece piece2=pieces.stream().filter(x->x != piece).collect(Collectors.toList()).get(0);
             piece2.setCell(this.parchisCellService.findByPosition(piece2.getBaseCell()));
             this.parchisPieceService.save(piece2);
-            cell.quitarFicha(piece2);
-            ParchisCell house= this.parchisCellService.findByPosition(piece2.getBaseCell());
-            house.colocarFicha(piece2);
-            this.parchisCellService.save(cell);
-            this.parchisCellService.save(house);
-            extra=20;
+
+            avanzar(piece.getPosicion()+20, piece, game);
+        }
+
+    }
+    public void avanzar(Integer nextPos, ParchisPiece parchisPiece,Game game){
+        if(parchisPiece.getColor().equals(Color.YELLOW) && parchisPiece.getPosicion()>=69 && parchisPiece.getPosicion()<=75){
+            if(76 - (parchisPiece.getPosicion() + game.getDice()) >= 0){
+                parchisPiece.setCell(this.parchisCellService.findByPosition(nextPos));
+                this.parchisPieceService.save(parchisPiece);
+            }
+        }
+        else if(parchisPiece.getColor().equals(Color.GREEN) && parchisPiece.getPosicion()>=77 && parchisPiece.getPosicion()<=83){
+            if(84 - (parchisPiece.getPosicion() + game.getDice()) >= 0){
+                parchisPiece.setCell(this.parchisCellService.findByPosition(nextPos));
+                this.parchisPieceService.save(parchisPiece);
+            }
+        }
+        else if(parchisPiece.getColor().equals(Color.RED) && parchisPiece.getPosicion()>=85 && parchisPiece.getPosicion()<=91){
+            if(92 - (parchisPiece.getPosicion() + game.getDice()) >= 0){
+                parchisPiece.setCell(this.parchisCellService.findByPosition(nextPos));
+                this.parchisPieceService.save(parchisPiece);
+            }
+        }        else if(parchisPiece.getColor().equals(Color.BLUE) && parchisPiece.getPosicion()>=93 && parchisPiece.getPosicion()<=99){
+            if(100 - (parchisPiece.getPosicion() + game.getDice()) >= 0){
+                parchisPiece.setCell(this.parchisCellService.findByPosition(nextPos));
+                this.parchisPieceService.save(parchisPiece);
+            }
+        }
+        else if(!this.parchisCellService.findByPosition(parchisPiece.getPosicion()).isFinalCell()){
+            Boolean b= false;
+            for(int i =parchisPiece.getPosicion()+1; i<=nextPos; i++) {
+                ParchisCell cell=this.parchisCellService.findByPosition(i);
+                if(parchisPiece.getColor().equals(Color.GREEN) && cell.getPosition()==17) {
+                    b=true;
+                    List<ParchisCell> cells = this.parchisCellService.findCellGreen();
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i -1).getPosition()));
+                    this.parchisPieceService.save(parchisPiece);
+                }
+                else if(parchisPiece.getColor().equals(Color.RED) && cell.getPosition()==34) {
+                    b=true;
+                    List<ParchisCell> cells = this.parchisCellService.findCellRed();
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i-1).getPosition()));
+                    this.parchisPieceService.save(parchisPiece);
+                }
+                else if(parchisPiece.getColor().equals(Color.BLUE) && cell.getPosition()==51) {
+                    b=true;
+                    List<ParchisCell> cells = this.parchisCellService.findCellBlue();
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i-1).getPosition()));
+                    this.parchisPieceService.save(parchisPiece);
+                }
+                else if(parchisPiece.getColor().equals(Color.YELLOW) && cell.getPosition()==68) {
+                    b=true;
+                    List<ParchisCell> cells = this.parchisCellService.findCellYellow();
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i-1).getPosition()));
+                    this.parchisPieceService.save(parchisPiece);
+                } 
+                else if(!b && nextPos==i){
+                    if(nextPos>68){
+                        nextPos-=68;
+                        parchisPiece.setCell(this.parchisCellService.findByPosition(nextPos));
+                        this.parchisPieceService.save(parchisPiece);
+                    } else{
+                        parchisPiece.setCell(this.parchisCellService.findByPosition(nextPos));
+                        this.parchisPieceService.save(parchisPiece);
+                    }
+                }
+            }
         }
     }
-    public void avanzar(Integer nextPos, ParchisPiece parchisPiece){
-        if(!this.parchisCellService.findByPosition(parchisPiece.getPosicion()).isFinalCell()){
-            parchisPiece.setCell(this.parchisCellService.findByPosition(nextPos));
-            this.parchisPieceService.save(parchisPiece);
-        }
-    }
-	public void canPlay(Integer dice,ParchisPiece piece) {
-
-		Integer position=piece.getPosicion();
-
-		int nextPos=position+dice;
-
-
-		for(int i =position+1; i<=nextPos; i++) {
-			ParchisCell cell=this.parchisCellService.findByPosition(i);
-			if(cell.isBloqueo()) { //&&!cell.isFinalCell()
-				piece.setCanPlay(false);
-				break;
-			}
-			
-			
-			if(piece.getCell().isStair()) {
-				if(piece.getColor().equals(Color.BLUE)&&nextPos>84) { 
-					piece.setCanPlay(false);
-				}
-				else if(piece.getColor().equals(Color.YELLOW)&&nextPos>76) {
-					piece.setCanPlay(false);
-				}
-				else if(piece.getColor().equals(Color.RED)&&nextPos>92) {
-					piece.setCanPlay(false);
-				}
-				else if(piece.getColor().equals(Color.GREEN)&&nextPos>100) {
-					piece.setCanPlay(false);
-				}
-				
-			}
-
-		}
-
-
-	}
 
 
 	public void sacarFichaDeCasa(ParchisPiece piece) {
-		if(piece.getColor().equals(Color.BLUE) && !this.parchisCellService.findByPosition(22).isBloqueo()) {
+		if(piece.getColor().equals(Color.GREEN) && !this.parchisCellService.findByPosition(22).isBloqueo()) {
 			piece.setInBase(false);
             piece.setCell(this.parchisCellService.findByPosition(22));
-			//return this.parchisCellService.findByPosition(22);
 		}else if(piece.getColor().equals(Color.YELLOW) && !this.parchisCellService.findByPosition(5).isBloqueo()) {
 			piece.setInBase(false);
             piece.setCell(this.parchisCellService.findByPosition(5));
-			//return this.parchisCellService.findByPosition(5);
-		}else if(piece.getColor().equals(Color.GREEN) && !this.parchisCellService.findByPosition(56).isBloqueo()) {
+		}else if(piece.getColor().equals(Color.BLUE) && !this.parchisCellService.findByPosition(56).isBloqueo()) {
 			piece.setInBase(false);
             piece.setCell(this.parchisCellService.findByPosition(56));
-			//return this.parchisCellService.findByPosition(56);
 		}else if(piece.getColor().equals(Color.RED) && !this.parchisCellService.findByPosition(39).isBloqueo()) {
 			piece.setInBase(false);
             piece.setCell(this.parchisCellService.findByPosition(39));
-			//return this.parchisCellService.findByPosition(39);
 		}else {
             piece.setInBase(true);
-			//return this.parchisCellService.findByPosition(piece.getStartCell());
 		}
         this.parchisPieceService.save(piece);
         }
 
-	
-
-
-    public ParchisCell selectStart(Color c) {
-        if(c==Color.YELLOW) {
-            return this.parchisCellService.findByPosition(101);
-        }else if(c==Color.GREEN) {
-            return this.parchisCellService.findByPosition(102);
-        }else if(c==Color.RED) {
-            return this.parchisCellService.findByPosition(103);
-        }else {
-            return this.parchisCellService.findByPosition(104);
-        }
-}
 }

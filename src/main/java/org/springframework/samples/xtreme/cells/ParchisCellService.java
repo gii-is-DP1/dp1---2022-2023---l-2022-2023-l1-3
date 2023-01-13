@@ -1,13 +1,14 @@
 package org.springframework.samples.xtreme.cells;
 
+import java.util.Collection;
 import java.util.List;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.xtreme.board.ParchisBoard;
 import org.springframework.samples.xtreme.pieces.Color;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ParchisCellService {
@@ -42,13 +43,13 @@ public class ParchisCellService {
                 ParchisCell s = new ParchisCell(null,i,Color.YELLOW,board);
                 parchisCellRepository.save(s);
             }else if(77<=i&&i<=84){
-                ParchisCell s = new ParchisCell(null,i,Color.BLUE,board);
+                ParchisCell s = new ParchisCell(null,i,Color.GREEN,board);
                 parchisCellRepository.save(s);
             }else if(85<=i&&i<=92){
                 ParchisCell s = new ParchisCell(null,i,Color.RED,board);
                 parchisCellRepository.save(s);
             }else if(93<=i&&i<=100){
-                ParchisCell s = new ParchisCell(null,i,Color.GREEN,board);
+                ParchisCell s = new ParchisCell(null,i,Color.BLUE,board);
                 parchisCellRepository.save(s);
             }else {
                 ParchisCell s = new ParchisCell(null,i,null,board);
@@ -56,4 +57,21 @@ public class ParchisCellService {
             }
         }
     }
+
+    @Transactional(readOnly = true)
+	public List<ParchisCell> findCellYellow(){
+		return parchisCellRepository.findCellYellow();
+	}
+    @Transactional(readOnly = true)
+	public List<ParchisCell> findCellGreen(){
+		return parchisCellRepository.findCellGreen();
+	}
+    @Transactional(readOnly = true)
+	public List<ParchisCell> findCellRed(){
+		return parchisCellRepository.findCellRed();
+	}
+    @Transactional(readOnly = true)
+	public List<ParchisCell> findCellBlue(){
+		return parchisCellRepository.findCellBlue();
+	}
 }

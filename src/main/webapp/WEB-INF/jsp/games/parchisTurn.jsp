@@ -14,7 +14,7 @@
 <div>
 Nombre de la partida:<c:out value="${game.gameName}"/><br>
 </div>
-<div><img class="card-img-top" src="/resources/img/boards/parchis/parchisBoard.jpg" width="600" height="600">
+<div><img class="card-img-top" src="/resources/img/boards/parchis/parchis.jpg" width="600" height="600">
 </div>
 Dice: <c:out value="${game.dice}"/><br>
 Turno del jugador: <c:out value="${game.i+1}"/><br><br>
