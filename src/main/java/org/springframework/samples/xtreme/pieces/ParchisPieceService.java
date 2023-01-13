@@ -1,11 +1,11 @@
 package org.springframework.samples.xtreme.pieces;
 
 import java.util.Collection;
-
-import javax.transaction.Transactional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ParchisPieceService {
@@ -36,4 +36,9 @@ public class ParchisPieceService {
     public Collection<ParchisPiece> findPieceByBoardAndPlayer(Integer playerId, Integer boardId) {
         return parchisPieceRepository.findPieceByBoardAndPlayer(playerId, boardId);
     }
+    @Transactional(readOnly = true)
+    public List<ParchisPiece> findPieceByCellAndBoard(Integer position, Integer boardId) {
+        return parchisPieceRepository.findPieceByCellAndBoard(position, boardId);
+    }
+
 }

@@ -14,12 +14,12 @@
 <div>
 Nombre de la partida:<c:out value="${game.gameName}"/><br>
 </div>
-<div><img class="card-img-top" src="/resources/img/boards/parchis/parchisBoard.jpg" width="600" height="600">
+<div><img class="card-img-top" src="/resources/img/boards/parchis/parchis.jpg" width="600" height="600">
 </div>
 Dice: <c:out value="${game.dice}"/><br>
 Turno del jugador: <c:out value="${game.i+1}"/><br><br>
 
-Player 1: <c:out value="${player0.user.username}"/><br>
+Player 1: <c:out value="${player0.user.username}"/>&nbsp;&nbsp;&nbsp;Color: Amarillo&nbsp;&nbsp;&nbsp;Casilla meta: 76<br>
 Posicion de las fichas: <br><br>
 <c:forEach items="${player0.parchisPieces}" var="piece0">
     <tr>      
@@ -35,7 +35,7 @@ Posicion de las fichas: <br><br>
     </tr>
 </c:forEach><br><br>
 
-Player 2: <c:out value="${player1.user.username}"/><br>
+Player 2: <c:out value="${player1.user.username}"/>&nbsp;&nbsp;&nbsp;Color: Verde&nbsp;&nbsp;&nbsp;Casilla meta: 84<br>
 Posicion de las fichas: <br><br>
 <c:forEach items="${player1.parchisPieces}" var="piece1">
     <tr>      
@@ -52,7 +52,7 @@ Posicion de las fichas: <br><br>
 </c:forEach><br><br>
 
 <c:if test="${player2 != null}">
-Player 3: <c:out value="${player2.user.username}"/><br>
+Player 3: <c:out value="${player2.user.username}"/>&nbsp;&nbsp;&nbsp;Color: Rojo&nbsp;&nbsp;&nbsp;Casilla meta: 92<br>
 Posicion de las fichas: <br><br>
 <c:forEach items="${player2.parchisPieces}" var="piece2">
     <tr>      
@@ -70,7 +70,7 @@ Posicion de las fichas: <br><br>
 </c:if> <br><br>
 
 <c:if test="${player3 != null}">
-Player 4: <c:out value="${player3.user.username}"/><br>
+Player 4: <c:out value="${player3.user.username}"/>&nbsp;&nbsp;&nbsp;Color: Azul&nbsp;&nbsp;&nbsp;Casilla meta: 100<br>
 Posicion de las fichas: <br><br>
 <c:forEach items="${player3.parchisPieces}" var="piece3">
     <tr>      
