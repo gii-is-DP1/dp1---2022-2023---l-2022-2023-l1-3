@@ -215,35 +215,35 @@ public class ParchisTurnController {
                 ParchisCell cell=this.parchisCellService.findByPosition(i);
                 List<ParchisPiece> pieces = this.parchisPieceService.findPieceByCellAndBoard(cell.getPosition(), game.getParchisBoard().getId());
                 // se comprueba que no hay bloqueos
-                if(pieces.size() == 2 && pieces.get(0).getColor().equals(pieces.get(1).getColor())){
+                if(pieces.size() == 2){
                     b=true;
                 }
                 // meter en la linea de meta a las fichas verdes
-                else if(!b && parchisPiece.getColor().equals(Color.GREEN) && cell.getPosition()==17) {
+                else if(!b && parchisPiece.getColor().equals(Color.GREEN) && cell.getPosition()==18) {
                     b=true;
                     List<ParchisCell> cells = this.parchisCellService.findCellGreen();
-                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i -1).getPosition()));
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i ).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
                 }
                 // meter en la linea de meta a las fichas rojas
-                else if(!b && parchisPiece.getColor().equals(Color.RED) && cell.getPosition()==34) {
+                else if(!b && parchisPiece.getColor().equals(Color.RED) && cell.getPosition()==35) {
                     b=true;
                     List<ParchisCell> cells = this.parchisCellService.findCellRed();
-                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i-1).getPosition()));
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
                 }
                 // meter en la linea de meta a las fichas azules
-                else if(!b && parchisPiece.getColor().equals(Color.BLUE) && cell.getPosition()==51) {
+                else if(!b && parchisPiece.getColor().equals(Color.BLUE) && cell.getPosition()==52) {
                     b=true;
                     List<ParchisCell> cells = this.parchisCellService.findCellBlue();
-                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i-1).getPosition()));
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
                 }
                 // meter en la linea de meta a las fichas amarillas
-                else if(!b && parchisPiece.getColor().equals(Color.YELLOW) && cell.getPosition()==68) {
+                else if(!b && parchisPiece.getColor().equals(Color.YELLOW) && cell.getPosition()==69) {
                     b=true;
                     List<ParchisCell> cells = this.parchisCellService.findCellYellow();
-                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i-1).getPosition()));
+                    parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
                 }
                 // otro caso 
