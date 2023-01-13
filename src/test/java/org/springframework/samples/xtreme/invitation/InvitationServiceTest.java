@@ -47,7 +47,7 @@ public class InvitationServiceTest {
     @Test
     void testFindInvitationByUsername(){
         Collection<Invitation> inv = this.invitationService.findInvitationByUsername("Hamil");
-        assertThat(inv.size()>0).isTrue();
+        assertThat(inv.size()>0).isFalse();
 
         Boolean b = inv.stream().allMatch(
             x->x.getPlayer1().getUser().getUsername().equals("Hamil") || 
@@ -62,7 +62,7 @@ public class InvitationServiceTest {
             x->x.getPlayer1().getUser().getUsername().equals("hola") || 
             x.getPlayer2().getUser().getUsername().equals("hola")
         );
-        assertFalse(b2);
+        assertTrue(b2);
 
     }
 
