@@ -134,6 +134,7 @@ public class ParchisTurnController {
             
             ParchisPiece piece2=pieces.stream().filter(x->x != piece).collect(Collectors.toList()).get(0);
             piece2.setCell(this.parchisCellService.findByPosition(piece2.getBaseCell()));
+            piece2.setInBase(true);
             this.parchisPieceService.save(piece2);
 
             avanzar(piece.getPosicion()+20, piece, game);
@@ -221,30 +222,38 @@ public class ParchisTurnController {
                 // meter en la linea de meta a las fichas verdes
                 else if(!b && parchisPiece.getColor().equals(Color.GREEN) && cell.getPosition()==18) {
                     b=true;
+                    if(nextPos - i<= 7){ // para que no se salga de cells.size() si comes una ficha justo antes de entrar por ejemplo
                     List<ParchisCell> cells = this.parchisCellService.findCellGreen();
                     parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i ).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
+                    }
                 }
                 // meter en la linea de meta a las fichas rojas
                 else if(!b && parchisPiece.getColor().equals(Color.RED) && cell.getPosition()==35) {
                     b=true;
+                    if(nextPos - i<= 7){
                     List<ParchisCell> cells = this.parchisCellService.findCellRed();
                     parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
+                    }
                 }
                 // meter en la linea de meta a las fichas azules
                 else if(!b && parchisPiece.getColor().equals(Color.BLUE) && cell.getPosition()==52) {
                     b=true;
+                    if(nextPos - i<= 7){
                     List<ParchisCell> cells = this.parchisCellService.findCellBlue();
                     parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
+                    }
                 }
                 // meter en la linea de meta a las fichas amarillas
                 else if(!b && parchisPiece.getColor().equals(Color.YELLOW) && cell.getPosition()==69) {
                     b=true;
+                    if(nextPos - i<= 7){
                     List<ParchisCell> cells = this.parchisCellService.findCellYellow();
                     parchisPiece.setCell(this.parchisCellService.findByPosition(cells.get(nextPos - i).getPosition()));
                     this.parchisPieceService.save(parchisPiece);
+                    }
                 }
                 // otro caso 
                 else if(!b && nextPos==i){
