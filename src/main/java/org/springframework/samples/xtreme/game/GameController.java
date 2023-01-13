@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.xtreme.board.OcaBoardService;
 import org.springframework.samples.xtreme.board.ParchisBoard;
 import org.springframework.samples.xtreme.board.ParchisBoardService;
 import org.springframework.samples.xtreme.cells.ParchisCell;
@@ -65,7 +64,6 @@ public class GameController {
     private final MensajeService mensajeService;
     private final ChatService chatService;
     private final OcaPieceService ocaPieceService;
-    private final OcaBoardService ocaBoardService;
     private final ParchisPieceService parchisPieceService;
     private final ParchisCellService parchisCellService;
     private final ParchisBoardService parchisBoardService;
@@ -77,7 +75,7 @@ public class GameController {
     @Autowired
     public GameController(GameService gameService, PlayerService playerService, FriendshipService friendshipService,
             InvitationService invitationService,MensajeService mensajeService,ChatService chatService, 
-            OcaPieceService ocaPieceService, OcaBoardService ocaBoardService,ParchisPieceService parchisPieceService,
+            OcaPieceService ocaPieceService,ParchisPieceService parchisPieceService,
             ParchisCellService parchisCellService,ParchisBoardService parchisBoardService){
         this.friendshipService = friendshipService;
         this.gameService = gameService;
@@ -86,7 +84,6 @@ public class GameController {
         this.mensajeService=mensajeService;
         this.chatService=chatService;
         this.ocaPieceService = ocaPieceService;
-        this.ocaBoardService = ocaBoardService;
         this.parchisPieceService=parchisPieceService;
         this.parchisCellService=parchisCellService;
         this.parchisBoardService=parchisBoardService;
@@ -335,7 +332,6 @@ public class GameController {
 		    mav.addObject("piece", piece);
 		    mav.addObject("player", player);
 		    mav.addObject("game", this.gameService.findGameById(id).get());
-		    mav.addObject("board", this.ocaBoardService.findById(id));
             mav.addObject("isViewer", invitation!=null && invitation.getInvitationType().equals(InvitationType.VIEWER));
 		    return mav;
 	
@@ -348,7 +344,7 @@ public class GameController {
 
             List<ParchisPiece> pieces = new ArrayList<>(parchisPieceService.findPieceByBoardAndPlayer(player.getId(),game.getParchisBoard().getId()));
 
-            if (pieces.isEmpty()) {
+            if (pieces.isEmpty() && game.getPlayers().contains(player)) {
                 Color color = null;
                 ParchisCell c = new ParchisCell();
                 Integer playerIndex = game.getPlayers().indexOf(player);
@@ -406,6 +402,8 @@ public class GameController {
             mav.addObject("isUserEquals",player==game.getPlayers().get(game.getI()));
 		    mav.addObject("player", player);
 		    mav.addObject("game", this.gameService.findGameById(id).get());
+            mav.addObject("isViewer", invitation!=null && invitation.getInvitationType().equals(InvitationType.VIEWER));
+
 		    return mav;
 
         }

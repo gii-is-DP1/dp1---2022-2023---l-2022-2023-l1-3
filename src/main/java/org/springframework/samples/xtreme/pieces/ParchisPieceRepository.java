@@ -9,8 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ParchisPieceRepository extends CrudRepository<ParchisPiece, Integer> {
 
-    @Query("SELECT p FROM ParchisPiece p WHERE p.player.id = ?1 AND p.board.id = ?2")
-    public Collection<ParchisPiece> findPieceByBoardAndPlayer(Integer playerId, Integer boardId);
+    @Query("SELECT p FROM ParchisPiece p WHERE p.player.id = ?1 AND p.board.id = ?2 ORDER BY p.id ASC")
+    public List<ParchisPiece> findPieceByBoardAndPlayer(Integer playerId, Integer boardId);
     
     @Query("SELECT p FROM ParchisPiece p WHERE p.cell.position = ?1 AND p.board.id = ?2")
     public List<ParchisPiece> findPieceByCellAndBoard(Integer position, Integer boardId);
